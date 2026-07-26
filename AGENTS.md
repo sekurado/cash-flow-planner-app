@@ -139,11 +139,11 @@ Work is tracked on **GitHub Issues** and the
 2. **Project** — add the issue to [Project #2](https://github.com/users/sekurado/projects/2).
 3. **Fields** — set **Type** (Story or Task), **Story** (parent story issue link for tasks), and **Status** (Todo → In Progress → Done). **Status lives only on the project board** — do not duplicate it in issue bodies.
 4. **Implementation** — move **Status** to In Progress when work begins; only one task should be in progress at a time.
-5. **Commit** — when task implementation is committed (on a feature branch), move project **Status** to **Done**. The GitHub issue stays **open**.
-6. **Pull request** — reference the issue (`Fixes #N` or `Closes #N`). The issue closes automatically only when the PR merges to `main`.
-7. **Story complete** — close the story issue when all child task issues are closed (merged to `main`); update `docs/DESIGN.md` if architecture changed.
+5. **Commit** — when task implementation is complete, move project **Status** to **Done** and include `Closes #N` (or `Fixes #N`) in the commit message. GitHub closes the linked issue as soon as that commit is **pushed** — on any branch, not only after merge to `main`.
+6. **Pull request** — open a PR to merge the branch into `main`. Do not repeat `Closes #N` if the task issue is already closed; reference the issue for traceability instead.
+7. **Story complete** — close the story issue when all child task issues are closed; update `docs/DESIGN.md` if architecture changed.
 
-**Issue state vs project Status:** project **Status** → Done tracks implementation complete on the branch; issue **closed** tracks merge to `main`. Do not close task issues manually before merge.
+**Issue state vs project Status:** project **Status** → Done tracks implementation complete; issue **closed** tracks a pushed commit or merged PR with `Closes #N` / `Fixes #N`. Do not use closing keywords until the task is actually done.
 
 ### Story → Issue Map (31–35)
 
@@ -157,7 +157,7 @@ Work is tracked on **GitHub Issues** and the
 
 Do **not** create files under `tasks/` — that legacy folder was removed. Put specs directly in issue bodies.
 
-When committing completed task work, move the task's project **Status** to **Done** (the issue remains open until merge to `main`).
+When committing completed task work, move the task's project **Status** to **Done** and add `Closes #N` to the commit message when ready to close the issue on push.
 
 Never add `Co-authored-by` (or any other commit-message trailer) unless the user explicitly requests it.
 

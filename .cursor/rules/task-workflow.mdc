@@ -23,18 +23,18 @@ All planning and active work is tracked on **GitHub Issues** and the
 2. **Project** — add the issue to [Project #2](https://github.com/users/sekurado/projects/2).
 3. **Fields** — set **Type** (Story or Task), **Story** (link to parent story issue for tasks), and **Status** (Todo → In Progress → Done). **Status lives only on the project board** — do not duplicate it in issue bodies.
 4. **Implementation** — move **Status** to In Progress when work begins; only one task should be in progress at a time.
-5. **Commit** — when task implementation is committed (on a feature branch), move project **Status** to **Done**. The GitHub issue stays **open**.
-6. **Pull request** — reference the issue (`Fixes #N` or `Closes #N`). The issue closes automatically only when the PR merges to `main`.
-7. **Story complete** — when all child task issues are closed (merged to `main`), close the story issue and update `docs/DESIGN.md` if architecture changed.
+5. **Commit** — when task implementation is complete, move project **Status** to **Done** and include `Closes #N` (or `Fixes #N`) in the commit message. GitHub closes the linked issue as soon as that commit is **pushed** — on any branch, not only after merge to `main`.
+6. **Pull request** — open a PR to merge the branch into `main`. Do not repeat `Closes #N` if the task issue is already closed; reference the issue for traceability instead.
+7. **Story complete** — when all child task issues are closed, close the story issue and update `docs/DESIGN.md` if architecture changed.
 
 ### Issue state vs project Status
 
 | Signal | When it changes |
 |--------|-----------------|
-| Project **Status** → Done | Implementation commit lands on the feature branch |
-| Issue **closed** | PR with `Closes #N` merges to `main` |
+| Project **Status** → Done | Task implementation commit is made |
+| Issue **closed** | Pushed commit or merged PR contains `Closes #N` / `Fixes #N` (any branch) |
 
-Do not close task issues manually before merge. Do not leave project **Status** at In Progress after the implementation commit.
+Do not use `Closes #N` until the task is actually complete. Do not leave project **Status** at In Progress after the implementation commit.
 
 ## Story → Issue Map (31–35)
 
@@ -51,6 +51,6 @@ Do not close task issues manually before merge. Do not leave project **Status** 
 - Do **not** create or update files under `tasks/` — that folder was removed.
 - Put the full acceptance criteria and spec in the issue body. Do not add a Story Status or task Status column — use the project **Status** field.
 - Link child tasks to their parent story issue in the **Story** project field and in the task body.
-- When committing completed task work, move the task's project **Status** to **Done** (issue remains open until merge to `main`).
+- When committing completed task work, move the task's project **Status** to **Done** and add `Closes #N` to the commit message when ready to close the issue on push.
 - Never add `Co-authored-by` (or any other trailer) to commit messages unless the user explicitly asks for it.
 - After completing a story, update [`docs/DEVELOPMENT_HISTORY.md`](../../docs/DEVELOPMENT_HISTORY.md) if the roadmap changed.

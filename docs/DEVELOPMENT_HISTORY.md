@@ -65,9 +65,9 @@ commit that still contains `tasks/`.
 
 - **Stories** — GitHub Issues [#2](https://github.com/sekurado/cash-flow-planner-app/issues/2)–[#6](https://github.com/sekurado/cash-flow-planner-app/issues/6) (epic-level)
 - **Tasks** — Child issues linked on the [project board](https://github.com/users/sekurado/projects/2) with **Type** = Task and **Story** field set
-- **Status** — Project **Status** column (Todo / In Progress / Done); move to **Done** when the implementation commit lands on a feature branch
-- **Issues** — Task issues stay **open** until a PR with `Closes #N` merges to `main`
-- **PRs** — Use `Closes #N` (or `Fixes #N`) in the PR description to close the task issue on merge
+- **Status** — Project **Status** column (Todo / In Progress / Done); move to **Done** when the implementation commit is made
+- **Issues** — Task issues close when a **pushed** commit or merged PR contains `Closes #N` / `Fixes #N` (any branch, not only `main`)
+- **PRs** — Merge feature work to `main`; omit `Closes #N` if the task issue was already closed by the branch commit
 
 See [AGENTS.md](../AGENTS.md) and [`.cursor/rules/task-workflow.mdc`](../.cursor/rules/task-workflow.mdc)
 for agent and contributor workflow.
