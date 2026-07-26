@@ -1,0 +1,99 @@
+{
+  "template_id": "saas_startup",
+  "name": "SaaS startup",
+  "description": "Monthly recurring revenue, cloud costs, and payroll for an early-stage SaaS company.",
+  "suggested_initial_balance": 50000.0,
+  "suggested_base_currency": "USD",
+  "entries": [
+    {
+      "entry_type": "income",
+      "name": "MRR — Subscriptions",
+      "date_pattern": "01..",
+      "amount": 12000.0,
+      "currency": "USD",
+      "category": "revenue",
+      "is_active": true
+    },
+    {
+      "entry_type": "income",
+      "name": "Professional services add-ons",
+      "date_pattern": "15..",
+      "amount": 2500.0,
+      "currency": "USD",
+      "category": "revenue",
+      "is_active": true
+    },
+    {
+      "entry_type": "income",
+      "name": "Seed funding (one-time)",
+      "date_pattern": "15.1.2026",
+      "amount": 500000.0,
+      "currency": "USD",
+      "category": "funding",
+      "is_active": true
+    },
+    {
+      "entry_type": "expense",
+      "name": "Cloud hosting & infrastructure",
+      "date_pattern": "01..",
+      "amount": 3500.0,
+      "currency": "USD",
+      "category": "infrastructure",
+      "is_active": true
+    },
+    {
+      "entry_type": "expense",
+      "name": "Payroll — engineering & product",
+      "date_pattern": "01..",
+      "amount": 45000.0,
+      "currency": "USD",
+      "category": "payroll",
+      "is_active": true
+    },
+    {
+      "entry_type": "expense",
+      "name": "SaaS tools & licenses",
+      "date_pattern": "15..",
+      "amount": 800.0,
+      "currency": "USD",
+      "category": "software",
+      "is_active": true
+    },
+    {
+      "entry_type": "expense",
+      "name": "Office rent",
+      "date_pattern": "01..",
+      "amount": 2500.0,
+      "currency": "USD",
+      "category": "facilities",
+      "is_active": true
+    },
+    {
+      "entry_type": "expense",
+      "name": "Digital marketing",
+      "date_pattern": "01..",
+      "amount": 5000.0,
+      "currency": "USD",
+      "category": "marketing",
+      "is_active": true
+    },
+    {
+      "entry_type": "expense",
+      "name": "Legal & accounting (annual)",
+      "date_pattern": "1.4.",
+      "amount": 12000.0,
+      "currency": "USD",
+      "category": "professional",
+      "is_active": true
+    },
+    {
+      "entry_type": "expense",
+      "name": "Business insurance (annual)",
+      "date_pattern": "1.1.",
+      "amount": 6000.0,
+      "currency": "USD",
+      "category": "insurance",
+      "is_active": true
+    }
+  ]
+}

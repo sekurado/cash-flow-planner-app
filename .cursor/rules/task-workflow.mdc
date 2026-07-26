@@ -1,0 +1,44 @@
+---
+description: GitHub Issues and Project workflow for planning and tracking work
+alwaysApply: true
+---
+
+# GitHub Issues & Project Workflow
+
+All planning and active work is tracked on **GitHub Issues** and the
+[project board](https://github.com/users/sekurado/projects/2). Completed Stories 1–30 are archived in
+[`docs/DEVELOPMENT_HISTORY.md`](../../docs/DEVELOPMENT_HISTORY.md).
+
+## Issue Types
+
+| Type | When to create | Project field **Type** |
+|------|----------------|------------------------|
+| Story | New feature epic spanning multiple tasks | `Story` |
+| Task | Single implementable unit of work | `Task` |
+| Bug | Defect or regression | `Task` (or add a Bug label if used) |
+
+## Workflow
+
+1. **Plan mode** — create a GitHub Issue with the full spec in the body (no separate markdown files).
+2. **Project** — add the issue to [Project #2](https://github.com/users/sekurado/projects/2).
+3. **Fields** — set **Type** (Story or Task), **Story** (link to parent story issue for tasks), and **Status** (Todo → In Progress → Done).
+4. **Implementation** — move **Status** to In Progress when work begins; only one task should be in progress at a time.
+5. **Pull request** — reference the issue (`Fixes #N` or `Closes #N`) so it closes automatically on merge.
+6. **Story complete** — when all child tasks are Done, close the story issue and update `docs/DESIGN.md` if architecture changed.
+
+## Story → Issue Map (31–35)
+
+| Story | Issue |
+|-------|-------|
+| 31 Actual Expense Tracking | [#2](https://github.com/sekurado/cash-flow-planner-app/issues/2) |
+| 32 Expense Analytics | [#3](https://github.com/sekurado/cash-flow-planner-app/issues/3) |
+| 33 Receipt-Assisted Entry | [#4](https://github.com/sekurado/cash-flow-planner-app/issues/4) |
+| 34 Journal Backup & Cloud | [#5](https://github.com/sekurado/cash-flow-planner-app/issues/5) |
+| 35 Open Source Readiness | [#6](https://github.com/sekurado/cash-flow-planner-app/issues/6) |
+
+## Rules for Agents
+
+- Do **not** create or update files under `tasks/` — that folder was removed.
+- Put the full acceptance criteria and spec in the issue body.
+- Link child tasks to their parent story issue in the **Story** project field and in the task body.
+- After completing a story, update [`docs/DEVELOPMENT_HISTORY.md`](../../docs/DEVELOPMENT_HISTORY.md) if the roadmap changed.

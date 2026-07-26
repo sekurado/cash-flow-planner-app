@@ -1,0 +1,16 @@
+module components
+CenteredDialog 1.0 CenteredDialog.qml
+BalanceChart 1.0 BalanceChart.qml
+CurrencyRateEditor 1.0 CurrencyRateEditor.qml
+DatePatternInput 1.0 DatePatternInput.qml
+DatePicker 1.0 DatePicker.qml
+DeficitBanner 1.0 DeficitBanner.qml
+EntryForm 1.0 EntryForm.qml
+EntryFormDrawer 1.0 EntryFormDrawer.qml
+ImportDialog 1.0 ImportDialog.qml
+SegmentedControl 1.0 SegmentedControl.qml
+MonthlyTableView 1.0 MonthlyTableView.qml
+SimulationControls 1.0 SimulationControls.qml
+SuggestionsPanel 1.0 SuggestionsPanel.qml
+WhatIfPanel 1.0 WhatIfPanel.qml
+TemplatePickerDialog 1.0 TemplatePickerDialog.qml

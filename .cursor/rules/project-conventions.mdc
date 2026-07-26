@@ -1,0 +1,54 @@
+---
+description: Core coding conventions, architecture rules, and best practices for Cash Flow Planner Desktop
+alwaysApply: true
+---
+
+# Cash Flow Planner Desktop — Coding Conventions
+
+## Architecture Rules
+
+- **Layer dependency direction**: Presentation → Application → Business → Data. Never reverse.
+- Business logic (`src/domain/`) must be pure Python — zero Qt imports.
+- Repositories are the only classes that touch the SQLAlchemy session. Business logic calls repositories, not sessions.
+- All DB queries use bound parameters via SQLAlchemy Core. Never concatenate SQL strings.
+
+## Qt / PySide6
+
+- UI updates on the **main thread only**. Use `QRunnable` + signals for background work.
+- Expose ViewModel state as `Q_PROPERTY` with `NOTIFY` signals. Never call Python from QML via global state.
+- Wrap all user-visible QML strings in `qsTr()`.
+- Store user preferences in `QSettings`. Store database file in `QStandardPaths.AppDataLocation`.
+
+## Python
+
+- `from __future__ import annotations` in every module.
+- Run `ruff format` + `ruff check` + `mypy --strict` before committing. Fix all violations.
+- No bare `except:`. No mutable default arguments.
+
+## Error Handling
+
+- Business logic raises typed exceptions (e.g., `DatePatternParseError`). No Qt in these exceptions.
+- ViewModels catch all exceptions in `@Slot` methods → set `error` Q_PROPERTY → emit `errorChanged`.
+- Never re-raise from a ViewModel into QML.
+
+## Pydantic
+
+- All domain entities are Pydantic `BaseModel`s.
+- Immutable value objects use `ConfigDict(frozen=True)`.
+- Validate all external input through Pydantic before any DB write.
+
+## Testing
+
+- New features → unit tests in `tests/unit/`.
+- New ViewModels → integration tests in `tests/integration/` with in-memory SQLite.
+- Coverage targets: `date_pattern.py` = 100%, simulation engine = 95%.
+
+## Naming
+
+| Artifact | Convention |
+|----------|-----------|
+| Python files | `snake_case.py` |
+| QML files | `PascalCase.qml` |
+| ViewModel | `<Feature>ViewModel` |
+| Repository | `Sqlite<Entity>Repository` |
+| Qt signals | `camelCaseChanged` |

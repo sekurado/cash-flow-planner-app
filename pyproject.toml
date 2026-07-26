@@ -1,0 +1,90 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cash-flow-planner-desktop"
+version = "1.4.1"
+description = "Offline-first cash flow forecasting desktop app"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "PySide6",
+    "SQLAlchemy>=2",
+    "alembic",
+    "pydantic>=2",
+    "python-dateutil",
+    "openpyxl",
+    "httpx",
+    "reportlab",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-qt",
+    "pytest-cov",
+    "hypothesis",
+    "ruff",
+    "mypy",
+    "types-python-dateutil",
+    "pre-commit",
+    "watchdog",
+    "poethepoet",
+]
+
+[tool.poe.tasks.i18n-update]
+help = "Extract translatable strings from QML into .ts files"
+cmd = "pyside6-lupdate qml/main.qml qml/pages/*.qml qml/components/*.qml src/app/viewmodels/entries_vm.py src/app/i18n/user_messages.py src/app/i18n/suggestion_copy.py src/app/i18n/audit_log_messages.py src/app/i18n/methodology_content.py src/app/i18n/manual_content.py src/app/i18n/pdf_messages.py -extensions py,qml -ts i18n/app_en.ts i18n/app_fr.ts i18n/app_ru.ts i18n/app_es.ts i18n/app_de.ts"
+
+[tool.poe.tasks.i18n-release]
+help = "Compile .ts translation files into .qm binaries"
+shell = "pyside6-lrelease i18n/app_en.ts -qm resources/i18n/app_en.qm && pyside6-lrelease i18n/app_fr.ts -qm resources/i18n/app_fr.qm && pyside6-lrelease i18n/app_ru.ts -qm resources/i18n/app_ru.qm && pyside6-lrelease i18n/app_es.ts -qm resources/i18n/app_es.qm && pyside6-lrelease i18n/app_de.ts -qm resources/i18n/app_de.qm"
+
+[tool.poe.tasks.i18n-bundle]
+help = "Compile translations and embed them in the Qt resource bundle"
+sequence = ["i18n-release", "i18n-rcc"]
+
+[tool.poe.tasks.i18n-rcc]
+help = "Regenerate src/app/resources_rc.py from resources.qrc"
+cmd = "pyside6-rcc resources/resources.qrc -o src/app/resources_rc.py"
+
+[tool.poe.tasks.build]
+help = "Build platform installer (macOS/Linux: ./scripts/build.sh; Windows: .\\scripts\\build.ps1)"
+shell = "./scripts/build.sh"
+
+[tool.poe.tasks.build-pyinstaller]
+help = "PyInstaller bundle only (no installer wrapper)"
+cmd = "pyinstaller cash_flow_planner.spec --noconfirm"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.setuptools.package-data]
+"src.export" = ["fonts/*.ttf"]
+"src.templates" = ["*.json"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = ["src/data/migrations", "src/app/resources_rc.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "ANN"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+exclude = ["src/app/resources_rc\\.py"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+    "unit: pure Python unit tests (no Qt, no filesystem)",
+    "integration: ViewModel and repository integration tests",
+    "e2e: end-to-end tests with offscreen Qt and QML",
+]
+addopts = "--cov=src --cov-report=html"

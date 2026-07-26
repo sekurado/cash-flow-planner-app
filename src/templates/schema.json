@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cashflowplanner.local/schemas/forecast-template.json",
+  "title": "ForecastTemplate",
+  "description": "Bundled forecast template. entries[] matches EntryCreateDTO / PlanExportEntry (no IDs).",
+  "type": "object",
+  "required": [
+    "template_id",
+    "name",
+    "description",
+    "suggested_initial_balance",
+    "suggested_base_currency",
+    "entries"
+  ],
+  "properties": {
+    "template_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "suggested_initial_balance": {
+      "type": "number"
+    },
+    "suggested_base_currency": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "entry_type",
+          "name",
+          "date_pattern",
+          "amount",
+          "currency"
+        ],
+        "properties": {
+          "entry_type": {
+            "enum": ["income", "expense"]
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "date_pattern": {
+            "type": "string",
+            "minLength": 1
+          },
+          "amount": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "currency": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 3
+          },
+          "category": {
+            "type": ["string", "null"]
+          },
+          "is_active": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

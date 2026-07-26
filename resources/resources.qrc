@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/warning.svg</file>
+        <file>icons/edit.svg</file>
+        <file>icons/delete.svg</file>
+        <file>icons/import.svg</file>
+        <file>icons/export.svg</file>
+        <file>icons/settings.svg</file>
+        <file>icons/add.svg</file>
+        <file>icons/app-icon.svg</file>
+    </qresource>
+    <qresource prefix="/i18n">
+        <file alias="app_en.qm">i18n/app_en.qm</file>
+        <file alias="app_fr.qm">i18n/app_fr.qm</file>
+        <file alias="app_ru.qm">i18n/app_ru.qm</file>
+        <file alias="app_es.qm">i18n/app_es.qm</file>
+        <file alias="app_de.qm">i18n/app_de.qm</file>
+    </qresource>
+    <qresource prefix="/manual">
+        <file alias="CashFlowPlanner-UserManual_en.pdf">manual/CashFlowPlanner-UserManual_en.pdf</file>
+        <file alias="CashFlowPlanner-UserManual_fr.pdf">manual/CashFlowPlanner-UserManual_fr.pdf</file>
+        <file alias="CashFlowPlanner-UserManual_ru.pdf">manual/CashFlowPlanner-UserManual_ru.pdf</file>
+        <file alias="CashFlowPlanner-UserManual_es.pdf">manual/CashFlowPlanner-UserManual_es.pdf</file>
+        <file alias="CashFlowPlanner-UserManual_de.pdf">manual/CashFlowPlanner-UserManual_de.pdf</file>
+    </qresource>
+</RCC>

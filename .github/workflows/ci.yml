@@ -1,0 +1,555 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - "*.*.*"
+      - "v*"
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to build and publish (e.g. 1.0.0 or v1.0.0)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  QT_QPA_PLATFORM: offscreen
+  CHECKOUT_REF: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref }}
+
+jobs:
+  lint:
+    name: Lint
+    if: github.ref_type != 'tag'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.CHECKOUT_REF }}
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Ruff check
+        run: ruff check src/
+
+      - name: Ruff format
+        run: ruff format --check src/
+
+  typecheck:
+    name: TypeCheck
+    if: github.ref_type != 'tag'
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.CHECKOUT_REF }}
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Mypy
+        run: mypy --strict src/
+
+  unit-tests:
+    name: UnitTests (Python ${{ matrix.python-version }})
+    if: github.ref_type != 'tag'
+    needs: typecheck
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.CHECKOUT_REF }}
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install Qt runtime dependencies (Linux)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libegl1 \
+            libglib2.0-0 \
+            libxkbcommon-x11-0 \
+            libxcb-cursor0 \
+            libdbus-1-3 \
+            libxcb-icccm4 \
+            libxcb-image0 \
+            libxcb-keysyms1 \
+            libxcb-randr0 \
+            libxcb-render-util0 \
+            libxcb-shape0 \
+            libxcb-xfixes0 \
+            libxcb-xinerama0 \
+            libxcb-xkb1 \
+            libxkbcommon0
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Compile translations
+        run: poe i18n-bundle
+
+      - name: Smoke-test translations
+        run: |
+          python - <<'EOF'
+          from PySide6.QtCore import QCoreApplication, QTranslator
+          from src.app import resources_rc  # noqa: F401 — registers :/i18n/*.qm
+          import sys
+          app = QCoreApplication(sys.argv)
+          for lang in ("en", "fr", "ru", "es", "de"):
+              t = QTranslator()
+              assert t.load(f":/i18n/app_{lang}.qm"), f"Failed to load embedded {lang}"
+          print("All embedded translation files load OK")
+          EOF
+
+      - name: Pytest unit
+        run: pytest tests/unit/ --cov=src --cov-report=term
+
+  integration-tests:
+    name: IntegrationTests (Python ${{ matrix.python-version }})
+    if: github.ref_type != 'tag'
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.CHECKOUT_REF }}
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install Qt runtime dependencies (Linux)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libegl1 \
+            libglib2.0-0 \
+            libxkbcommon-x11-0 \
+            libxcb-cursor0 \
+            libdbus-1-3 \
+            libxcb-icccm4 \
+            libxcb-image0 \
+            libxcb-keysyms1 \
+            libxcb-randr0 \
+            libxcb-render-util0 \
+            libxcb-shape0 \
+            libxcb-xfixes0 \
+            libxcb-xinerama0 \
+            libxcb-xkb1 \
+            libxkbcommon0
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Pytest integration
+        run: pytest tests/integration/
+
+  e2e:
+    name: E2E
+    if: github.ref_type != 'tag'
+    needs: integration-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.CHECKOUT_REF }}
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install Qt runtime dependencies (Linux)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libegl1 \
+            libglib2.0-0 \
+            libxkbcommon-x11-0 \
+            libxcb-cursor0 \
+            libdbus-1-3 \
+            libxcb-icccm4 \
+            libxcb-image0 \
+            libxcb-keysyms1 \
+            libxcb-randr0 \
+            libxcb-render-util0 \
+            libxcb-shape0 \
+            libxcb-xfixes0 \
+            libxcb-xinerama0 \
+            libxcb-xkb1 \
+            libxkbcommon0
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Pytest e2e
+        run: pytest tests/e2e/
+
+  create-release-tag:
+    name: Create release tag
+    if: |
+      always() &&
+      github.ref == 'refs/heads/main' &&
+      github.event_name == 'push' &&
+      needs.e2e.result == 'success'
+    needs: e2e
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      bumped: ${{ steps.detect.outputs.bumped }}
+      version: ${{ steps.detect.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+
+      - name: Detect pyproject.toml version bump
+        id: detect
+        shell: bash
+        run: |
+          set -euo pipefail
+          new_version="$(./scripts/ci/pyproject_version.sh)"
+          old_version="$(git show HEAD~1:pyproject.toml | ./scripts/ci/pyproject_version.sh -)"
+
+          if [[ "${old_version}" == "${new_version}" ]]; then
+            echo "Version unchanged (${new_version}); no tag created."
+            echo "bumped=false" >> "${GITHUB_OUTPUT}"
+            echo "version=" >> "${GITHUB_OUTPUT}"
+            exit 0
+          fi
+
+          if [[ ! "${new_version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "error: version must be semver X.Y.Z, got '${new_version}'" >&2
+            exit 1
+          fi
+
+          if printf '%s\n%s\n' "${old_version}" "${new_version}" | sort -C -V; then
+            :
+          else
+            echo "error: version must increase (${old_version} -> ${new_version})" >&2
+            exit 1
+          fi
+
+          echo "Version bumped: ${old_version} -> ${new_version}"
+          echo "bumped=true" >> "${GITHUB_OUTPUT}"
+          echo "version=${new_version}" >> "${GITHUB_OUTPUT}"
+
+      - name: Create and push tag
+        if: steps.detect.outputs.bumped == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${{ steps.detect.outputs.version }}"
+
+          if git ls-remote --exit-code --tags origin "refs/tags/${version}" >/dev/null 2>&1; then
+            echo "Tag ${version} already exists on origin; skipping."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag "${version}"
+          git push origin "${version}"
+
+  build-macos:
+    name: Build macOS DMG
+    if: |
+      always() &&
+      (
+        github.ref_type == 'tag' ||
+        github.event_name == 'workflow_dispatch' ||
+        needs.create-release-tag.outputs.bumped == 'true'
+      ) &&
+      (
+        needs.e2e.result == 'success' ||
+        needs.e2e.result == 'skipped'
+      ) &&
+      (
+        needs.create-release-tag.result == 'success' ||
+        needs.create-release-tag.result == 'skipped'
+      )
+    needs: [e2e, create-release-tag]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.CHECKOUT_REF }}
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install create-dmg
+        run: brew install create-dmg
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e ".[dev]"
+          pip install pyinstaller pyinstaller-hooks-contrib
+
+      - name: Import signing certificate
+        env:
+          APPLE_CERTIFICATE_P12: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          if [[ -z "${APPLE_CERTIFICATE_P12:-}" ]]; then
+            echo "APPLE_CERTIFICATE_P12 not set; macOS build will use ad-hoc signing."
+            exit 0
+          fi
+          KEYCHAIN="${RUNNER_TEMP}/app-signing.keychain-db"
+          KEYCHAIN_PASSWORD="actions"
+          echo "${APPLE_CERTIFICATE_P12}" | base64 --decode > "${RUNNER_TEMP}/certificate.p12"
+          security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN}"
+          security set-keychain-settings -lut 21600 "${KEYCHAIN}"
+          security unlock-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN}"
+          security import "${RUNNER_TEMP}/certificate.p12" \
+            -P "${APPLE_CERTIFICATE_PASSWORD}" \
+            -A -t cert -f pkcs12 -k "${KEYCHAIN}"
+          security list-keychain -d user -s "${KEYCHAIN}"
+          security set-key-partition-list \
+            -S apple-tool:,apple:,codesign: -s -k "${KEYCHAIN_PASSWORD}" "${KEYCHAIN}"
+
+      - name: Configure notarization credentials
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_NOTARY_KEYCHAIN_PROFILE: ${{ secrets.APPLE_NOTARY_KEYCHAIN_PROFILE }}
+        run: |
+          if [[ -z "${APPLE_ID:-}" || -z "${APPLE_NOTARY_KEYCHAIN_PROFILE:-}" ]]; then
+            echo "Notarization secrets not set; DMG will be ad-hoc signed."
+            exit 0
+          fi
+          xcrun notarytool store-credentials "${APPLE_NOTARY_KEYCHAIN_PROFILE}" \
+            --apple-id "${APPLE_ID}" \
+            --team-id "${APPLE_TEAM_ID}" \
+            --password "${APPLE_APP_SPECIFIC_PASSWORD}"
+
+      - name: Build DMG
+        env:
+          APPLE_SIGN_IDENTITY: ${{ secrets.APPLE_SIGN_IDENTITY }}
+          APPLE_NOTARY_KEYCHAIN_PROFILE: ${{ secrets.APPLE_NOTARY_KEYCHAIN_PROFILE }}
+        run: ./scripts/build.sh --dmg
+
+      - name: Verify distributable contains no database files
+        run: python scripts/verify_bundle_clean.py dist/CashFlowPlanner dist/CashFlowPlanner.app
+
+      - name: Upload macOS installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-dmg
+          path: dist/cash-flow-planner-*-mac.dmg
+          if-no-files-found: error
+
+  build-windows:
+    name: Build Windows installer
+    if: |
+      always() &&
+      (
+        github.ref_type == 'tag' ||
+        github.event_name == 'workflow_dispatch' ||
+        needs.create-release-tag.outputs.bumped == 'true'
+      ) &&
+      (
+        needs.e2e.result == 'success' ||
+        needs.e2e.result == 'skipped'
+      ) &&
+      (
+        needs.create-release-tag.result == 'success' ||
+        needs.create-release-tag.result == 'skipped'
+      )
+    needs: [e2e, create-release-tag]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.CHECKOUT_REF }}
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install Inno Setup
+        run: choco install innosetup -y --no-progress
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e ".[dev]"
+          pip install pyinstaller pyinstaller-hooks-contrib
+
+      - name: Build Windows installer
+        shell: pwsh
+        run: .\scripts\build.ps1
+
+      - name: Verify distributable contains no database files
+        shell: pwsh
+        run: python scripts/verify_bundle_clean.py dist/CashFlowPlanner
+
+      - name: Upload Windows installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-setup
+          path: dist/cash-flow-planner-*-win-setup.exe
+          if-no-files-found: error
+
+  build-linux:
+    name: Build Linux AppImage
+    if: |
+      always() &&
+      (
+        github.ref_type == 'tag' ||
+        github.event_name == 'workflow_dispatch' ||
+        needs.create-release-tag.outputs.bumped == 'true'
+      ) &&
+      (
+        needs.e2e.result == 'success' ||
+        needs.e2e.result == 'skipped'
+      ) &&
+      (
+        needs.create-release-tag.result == 'success' ||
+        needs.create-release-tag.result == 'skipped'
+      )
+    needs: [e2e, create-release-tag]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.CHECKOUT_REF }}
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install Qt runtime dependencies (Linux)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libegl1 \
+            libglib2.0-0 \
+            libxkbcommon-x11-0 \
+            libxcb-cursor0 \
+            libdbus-1-3 \
+            libxcb-icccm4 \
+            libxcb-image0 \
+            libxcb-keysyms1 \
+            libxcb-randr0 \
+            libxcb-render-util0 \
+            libxcb-shape0 \
+            libxcb-xfixes0 \
+            libxcb-xinerama0 \
+            libxcb-xkb1 \
+            libxkbcommon0
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e ".[dev]"
+          pip install pyinstaller pyinstaller-hooks-contrib
+
+      - name: Build AppImage
+        run: ./scripts/build.sh --appimage
+
+      - name: Verify distributable contains no database files
+        run: python scripts/verify_bundle_clean.py dist/CashFlowPlanner
+
+      - name: Upload Linux AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-appimage
+          path: dist/cash-flow-planner-*-linux.AppImage
+          if-no-files-found: error
+
+  release:
+    name: Release
+    needs: [build-macos, build-windows, build-linux, create-release-tag]
+    if: |
+      always() &&
+      (
+        github.ref_type == 'tag' ||
+        github.event_name == 'workflow_dispatch' ||
+        needs.create-release-tag.outputs.bumped == 'true'
+      ) &&
+      (
+        needs.create-release-tag.result == 'success' ||
+        needs.create-release-tag.result == 'skipped'
+      ) &&
+      needs.build-macos.result == 'success' &&
+      needs.build-windows.result == 'success' &&
+      needs.build-linux.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: "*"
+          path: dist
+          merge-multiple: true
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || (github.ref_type == 'tag' && github.ref_name) || needs.create-release-tag.outputs.version }}
+          files: dist/**
+          generate_release_notes: true
