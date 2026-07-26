@@ -259,6 +259,14 @@ jobs:
         run: |
           set -euo pipefail
           new_version="$(./scripts/ci/pyproject_version.sh)"
+
+          if ! git cat-file -e "HEAD~1:pyproject.toml" 2>/dev/null; then
+            echo "pyproject.toml not present in previous commit; skipping tag creation."
+            echo "bumped=false" >> "${GITHUB_OUTPUT}"
+            echo "version=" >> "${GITHUB_OUTPUT}"
+            exit 0
+          fi
+
           old_version="$(git show HEAD~1:pyproject.toml | ./scripts/ci/pyproject_version.sh -)"
 
           if [[ "${old_version}" == "${new_version}" ]]; then
