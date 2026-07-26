@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cash-flow-planner-desktop"
-version = "1.4.1"
+version = "1.0.0"
 description = "Offline-first cash flow forecasting desktop app"
 readme = "README.md"
 requires-python = ">=3.12"
