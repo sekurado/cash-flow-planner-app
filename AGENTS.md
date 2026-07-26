@@ -137,7 +137,7 @@ Work is tracked on **GitHub Issues** and the
 
 1. **Plan mode** — create a GitHub Issue with the full spec in the body before writing any code.
 2. **Project** — add the issue to [Project #2](https://github.com/users/sekurado/projects/2).
-3. **Fields** — set **Type** (Story or Task), **Story** (parent story issue link for tasks), and **Status** (Todo → In Progress → Done).
+3. **Fields** — set **Type** (Story or Task), **Story** (parent story issue link for tasks), and **Status** (Todo → In Progress → Done). **Status lives only on the project board** — do not duplicate it in issue bodies.
 4. **Implementation** — move **Status** to In Progress when work begins; only one task should be in progress at a time.
 5. **Pull request** — reference the issue (`Fixes #N`) so it closes on merge.
 6. **Story complete** — close the story issue when all child tasks are Done; update `docs/DESIGN.md` if architecture changed.
