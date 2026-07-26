@@ -139,8 +139,11 @@ Work is tracked on **GitHub Issues** and the
 2. **Project** — add the issue to [Project #2](https://github.com/users/sekurado/projects/2).
 3. **Fields** — set **Type** (Story or Task), **Story** (parent story issue link for tasks), and **Status** (Todo → In Progress → Done). **Status lives only on the project board** — do not duplicate it in issue bodies.
 4. **Implementation** — move **Status** to In Progress when work begins; only one task should be in progress at a time.
-5. **Pull request** — reference the issue (`Fixes #N`) so it closes on merge.
-6. **Story complete** — close the story issue when all child tasks are Done; update `docs/DESIGN.md` if architecture changed.
+5. **Commit** — when task implementation is committed (on a feature branch), move project **Status** to **Done**. The GitHub issue stays **open**.
+6. **Pull request** — reference the issue (`Fixes #N` or `Closes #N`). The issue closes automatically only when the PR merges to `main`.
+7. **Story complete** — close the story issue when all child task issues are closed (merged to `main`); update `docs/DESIGN.md` if architecture changed.
+
+**Issue state vs project Status:** project **Status** → Done tracks implementation complete on the branch; issue **closed** tracks merge to `main`. Do not close task issues manually before merge.
 
 ### Story → Issue Map (31–35)
 
@@ -153,6 +156,10 @@ Work is tracked on **GitHub Issues** and the
 | 35 Open Source Readiness | [#6](https://github.com/sekurado/cash-flow-planner-app/issues/6) |
 
 Do **not** create files under `tasks/` — that legacy folder was removed. Put specs directly in issue bodies.
+
+When committing completed task work, move the task's project **Status** to **Done** (the issue remains open until merge to `main`).
+
+Never add `Co-authored-by` (or any other commit-message trailer) unless the user explicitly requests it.
 
 ---
 
