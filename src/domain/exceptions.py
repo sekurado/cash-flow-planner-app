@@ -51,3 +51,7 @@ class TemplateValidationError(ValueError):
 
 class SuggestionAnalysisError(ValueError):
     """Raised when suggestion analysis cannot proceed (e.g. missing simulation result)."""
+
+
+class RecordedExpenseValidationError(ValueError):
+    """Raised when recorded expense input or lookup fails validation."""
