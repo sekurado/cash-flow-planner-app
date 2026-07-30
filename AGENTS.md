@@ -15,6 +15,7 @@ This file provides persistent context, conventions, and best practices for AI ag
 **Key docs:**
 - [`docs/DESIGN.md`](docs/DESIGN.md) — full system design, architecture, domain model, tech decisions
 - [`docs/README.md`](docs/README.md) — documentation index
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — development workflow (human-directed, AI-assisted) and PR expectations
 
 ---
 
