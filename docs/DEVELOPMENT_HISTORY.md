@@ -65,7 +65,7 @@ commit that still contains `tasks/`.
 
 - **Stories** — GitHub Issues [#2](https://github.com/sekurado/cash-flow-planner-app/issues/2)–[#6](https://github.com/sekurado/cash-flow-planner-app/issues/6) (epic-level)
 - **Tasks** — Child issues linked on the [project board](https://github.com/users/sekurado/projects/2) with **Type** = Task and **Story** field set
-- **Status** — Project **Status** column (Todo / In Progress / Done); move **Story** and active **Task** to **In Progress** when work begins; move **Task** to **Done** when the implementation commit is made
+- **Status** — Project **Status** column (Todo / In Progress / Done); move **Story** and active **Task** to **In Progress** when work begins; move **Task** to **Done** after a **user-approved** implementation commit
 - **Issues** — Task issues close when a **pushed** commit or merged PR contains `Closes #N` / `Fixes #N` (any branch, not only `main`)
 - **PRs** — Merge feature work to `main`; omit `Closes #N` if the task issue was already closed by the branch commit
 
