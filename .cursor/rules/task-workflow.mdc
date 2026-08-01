@@ -22,10 +22,11 @@ All planning and active work is tracked on **GitHub Issues** and the
 1. **Plan mode** — create a GitHub Issue with the full spec in the body (no separate markdown files).
 2. **Project** — add the issue to [Project #2](https://github.com/users/sekurado/projects/2).
 3. **Fields** — set **Type** (Story or Task), **Story** (link to parent story issue for tasks), and **Status** (Todo → In Progress → Done). **Status lives only on the project board** — do not duplicate it in issue bodies.
-4. **Implementation** — move **Status** to In Progress when work begins; only one task should be in progress at a time.
-5. **Commit** — when task implementation is complete, move project **Status** to **Done** and include `Closes #N` (or `Fixes #N`) in the commit message. GitHub closes the linked issue as soon as that commit is **pushed** — on any branch, not only after merge to `main`.
-6. **Pull request** — open a PR to merge the branch into `main`. Do not repeat `Closes #N` if the task issue is already closed; reference the issue for traceability instead.
-7. **Story complete** — when all child task issues are closed, close the story issue and update `docs/DESIGN.md` if architecture changed.
+4. **Start story** — when implementation on a story begins (branch opened or first task started), move the **Story** issue **Status** → **In Progress** on the project board.
+5. **Start task** — when work on a task begins, move that **Task** issue **Status** → **In Progress**; only one task should be in progress at a time.
+6. **Commit** — subject line: `<task_number>: <short description>` (e.g. `31_2: Schema, migration, repositories and label search`). When task implementation is complete, move project **Status** to **Done** and add `Closes #N` (or `Fixes #N`) in the commit body. GitHub closes the linked issue as soon as that commit is **pushed** — on any branch, not only after merge to `main`.
+7. **Pull request** — open a PR to merge the branch into `main`. Do not repeat `Closes #N` if the task issue is already closed; reference the issue for traceability instead.
+8. **Story complete** — when all child task issues are closed, close the story issue and update `docs/DESIGN.md` if architecture changed.
 
 ### Issue state vs project Status
 
@@ -35,6 +36,14 @@ All planning and active work is tracked on **GitHub Issues** and the
 | Issue **closed** | Pushed commit or merged PR contains `Closes #N` / `Fixes #N` (any branch) |
 
 Do not use `Closes #N` until the task is actually complete. Do not leave project **Status** at In Progress after the implementation commit.
+
+### Updating project Status (agents)
+
+GitHub MCP `issue_write` + `issue_fields` updates **repo** issue fields only — it cannot set project board **Status**, **Type**, or **Story** (those live on [Project #2](https://github.com/users/sekurado/projects/2)).
+
+To move cards programmatically, use the **GitHub GraphQL API** (`https://api.github.com/graphql`) with `GITHUB_SEKURADO_PAT` (or `GITHUB_TOKEN`) and the `updateProjectV2ItemFieldValue` mutation on `user(login: "sekurado").projectV2(number: 2)`. If `gh` is installed and authenticated with the `project` scope, `gh project item-edit` is an alternative.
+
+Do not tell the user the board cannot be updated without trying GraphQL (or `gh`) first. Never log, echo, commit, or paste `GITHUB_SEKURADO_PAT`, `GITHUB_TOKEN`, or any `ghp_` / `github_pat_` value — read tokens only from the environment inside scripts.
 
 ## Story → Issue Map (31–35)
 
@@ -51,6 +60,8 @@ Do not use `Closes #N` until the task is actually complete. Do not leave project
 - Do **not** create or update files under `tasks/` — that folder was removed.
 - Put the full acceptance criteria and spec in the issue body. Do not add a Story Status or task Status column — use the project **Status** field.
 - Link child tasks to their parent story issue in the **Story** project field and in the task body.
-- When committing completed task work, move the task's project **Status** to **Done** and add `Closes #N` to the commit message when ready to close the issue on push.
+- When starting a story, move the **Story** issue **Status** → **In Progress** on the project board.
+- When starting a task, move that **Task** issue **Status** → **In Progress** on the project board.
+- When committing completed task work, use subject line `<task_number>: <short description>`, move the task's project **Status** to **Done**, and add `Closes #N` in the commit body when ready to close the issue on push.
 - Never add `Co-authored-by` (or any other trailer) to commit messages unless the user explicitly asks for it.
 - After completing a story, update [`docs/DEVELOPMENT_HISTORY.md`](../../docs/DEVELOPMENT_HISTORY.md) if the roadmap changed.
