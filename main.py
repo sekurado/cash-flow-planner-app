@@ -34,6 +34,8 @@ from src.app.identity_migration import migrate_legacy_identity
 from src.app.macos_window import present_main_window
 from src.app.models.entry_list_model import EntryListModel
 from src.app.models.exchange_rate_list_model import ExchangeRateListModel
+from src.app.models.label_suggestion_model import LabelSuggestionModel
+from src.app.models.recorded_expense_list_model import RecordedExpenseListModel
 from src.app.models.snapshot_list_model import SnapshotListModel
 from src.app.models.suggestion_list_model import SuggestionListModel
 from src.app.viewmodels.app_vm import AppViewModel
@@ -44,6 +46,7 @@ from src.app.viewmodels.import_vm import ImportViewModel
 from src.app.viewmodels.methodology_vm import MethodologyViewModel
 from src.app.viewmodels.plan_import_vm import PlanImportViewModel
 from src.app.viewmodels.plan_vm import PlanViewModel
+from src.app.viewmodels.recorded_expenses_view_model import RecordedExpensesViewModel
 from src.app.viewmodels.settings_vm import SettingsViewModel
 from src.app.viewmodels.simulation_vm import SimulationViewModel
 from src.app.viewmodels.suggestions_vm import SuggestionsViewModel
@@ -60,6 +63,7 @@ from src.data.repositories.expense_dictionary_repo import (
 from src.data.repositories.plan_repo import SqlitePlanRepository
 from src.data.repositories.recorded_expense_repo import SqliteRecordedExpenseRepository
 from src.data.repositories.simulation_run_repo import SqliteSimulationRunRepository
+from src.domain.recorded_expenses import RecordedExpenseService
 from src.export.plan_exporter import PlanExporter
 from src.integrations.exchange_rate_fetcher import configure_dev_mode
 from src.integrations.plan_import_service import PlanImportService
@@ -240,6 +244,20 @@ def register_qml_types() -> None:
         QML_MODULE_VERSION_MINOR,
         "SuggestionListModel",
     )
+    qmlRegisterType(  # type: ignore[call-overload]
+        RecordedExpenseListModel,
+        QML_MODULE_URI,
+        QML_MODULE_VERSION_MAJOR,
+        QML_MODULE_VERSION_MINOR,
+        "RecordedExpenseListModel",
+    )
+    qmlRegisterType(  # type: ignore[call-overload]
+        LabelSuggestionModel,
+        QML_MODULE_URI,
+        QML_MODULE_VERSION_MAJOR,
+        QML_MODULE_VERSION_MINOR,
+        "LabelSuggestionModel",
+    )
 
 
 def bootstrap_view_models(
@@ -253,6 +271,7 @@ def bootstrap_view_models(
     PlanImportViewModel,
     CurrencyViewModel,
     AuditLogViewModel,
+    RecordedExpensesViewModel,
     Engine,
     Connection,
 ]:
@@ -265,10 +284,16 @@ def bootstrap_view_models(
     entry_repo = SqliteEntryRepository(db_conn, audit_log_repo)
     exchange_rate_repo = SqliteExchangeRateRepository(db_conn)
     _ = SqliteSimulationRunRepository(db_conn)
-    _ = SqliteExpenseNameRepository(db_conn)
-    _ = SqliteExpenseCategoryRepository(db_conn)
-    _ = SqliteExpensePlaceRepository(db_conn)
-    _ = SqliteRecordedExpenseRepository(db_conn)
+    expense_name_repo = SqliteExpenseNameRepository(db_conn)
+    expense_category_repo = SqliteExpenseCategoryRepository(db_conn)
+    expense_place_repo = SqliteExpensePlaceRepository(db_conn)
+    recorded_expense_repo = SqliteRecordedExpenseRepository(db_conn)
+    recorded_expense_service = RecordedExpenseService(
+        recorded_expense_repo,
+        expense_name_repo,
+        expense_category_repo,
+        expense_place_repo,
+    )
 
     plan_vm = PlanViewModel(
         plan_repo,
@@ -284,6 +309,13 @@ def bootstrap_view_models(
     )
     currency_vm = CurrencyViewModel(exchange_rate_repo)
     audit_log_vm = AuditLogViewModel(audit_log_repo)
+    recorded_expenses_vm = RecordedExpensesViewModel(
+        recorded_expense_service,
+        recorded_expense_repo,
+        expense_name_repo,
+        expense_category_repo,
+        expense_place_repo,
+    )
 
     return (
         plan_vm,
@@ -294,6 +326,7 @@ def bootstrap_view_models(
         plan_import_vm,
         currency_vm,
         audit_log_vm,
+        recorded_expenses_vm,
         db_engine,
         db_conn,
     )
@@ -334,6 +367,7 @@ def main(argv: list[str] | None = None) -> int:
         plan_import_vm,
         currency_vm,
         audit_log_vm,
+        recorded_expenses_vm,
         db_engine,
         db_conn,
     ) = bootstrap_view_models(db_path)
@@ -352,6 +386,7 @@ def main(argv: list[str] | None = None) -> int:
     root_context.setContextProperty("planImportViewModel", plan_import_vm)
     root_context.setContextProperty("ratesViewModel", currency_vm)
     root_context.setContextProperty("auditLogViewModel", audit_log_vm)
+    root_context.setContextProperty("recordedExpensesViewModel", recorded_expenses_vm)
 
     def on_language_changed() -> None:
         nonlocal translator
@@ -367,6 +402,7 @@ def main(argv: list[str] | None = None) -> int:
             plan_import_vm,
             currency_vm,
             audit_log_vm,
+            recorded_expenses_vm,
             methodology_vm,
         ):
             vm.retranslate()
@@ -385,6 +421,7 @@ def main(argv: list[str] | None = None) -> int:
         plan_import_vm,
         currency_vm,
         audit_log_vm,
+        recorded_expenses_vm,
     ):
         vm.setParent(engine)
 
