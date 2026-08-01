@@ -1033,6 +1033,14 @@
     </message>
 </context>
 <context>
+    <name>LabelAutocompleteField</name>
+    <message>
+        <location filename="../qml/components/LabelAutocompleteField.qml" line="54"/>
+        <source>optional</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Methodology</name>
     <message>
         <location filename="../src/app/i18n/methodology_content.py" line="133"/>
@@ -1908,6 +1916,156 @@ The previous day’s closing balance becomes the next day’s starting point, pr
     </message>
 </context>
 <context>
+    <name>RecordedExpenseFormDrawer</name>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="94"/>
+        <source>Add recorded expense</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="95"/>
+        <source>Edit recorded expense</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="104"/>
+        <source>Close</source>
+        <translation type="unfinished">Close</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="200"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="211"/>
+        <source>Amount</source>
+        <translation type="unfinished">Amount</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="209"/>
+        <source>0.00</source>
+        <translation type="unfinished">0.00</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="224"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="234"/>
+        <source>Currency</source>
+        <translation type="unfinished">Currency</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="244"/>
+        <source>Date</source>
+        <translation type="unfinished">Date</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="258"/>
+        <source>Name</source>
+        <translation type="unfinished">Name</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="259"/>
+        <source>e.g. Groceries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="269"/>
+        <source>Category</source>
+        <translation type="unfinished">Category</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="270"/>
+        <source>e.g. Food</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="279"/>
+        <source>Place</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="280"/>
+        <source>e.g. Whole Foods</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="292"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="302"/>
+        <source>Note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="292"/>
+        <source>optional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="301"/>
+        <source>Add a note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="312"/>
+        <source>Save</source>
+        <translation type="unfinished">Save</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="316"/>
+        <source>Save recorded expense</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RecordedExpensesPage</name>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="13"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="47"/>
+        <source>Spending</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="144"/>
+        <source>Edit %1</source>
+        <translation type="unfinished">Edit %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="153"/>
+        <source>Delete %1</source>
+        <translation type="unfinished">Delete %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="188"/>
+        <source>No recorded expenses yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="196"/>
+        <source>Add your first recorded expense using the + button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="219"/>
+        <source>Add recorded expense</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="254"/>
+        <source>Delete recorded expense</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="268"/>
+        <source>Delete &quot;%1&quot;?</source>
+        <translation type="unfinished">Delete &quot;%1&quot;?</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="275"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="282"/>
+        <source>Delete</source>
+        <translation type="unfinished">Delete</translation>
+    </message>
+</context>
+<context>
     <name>SettingsPage</name>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="15"/>
@@ -2162,35 +2320,34 @@ The previous day’s closing balance becomes the next day’s starting point, pr
         <translation>Suggestions</translation>
     </message>
     <message>
-        <location filename="../qml/components/SuggestionsPanel.qml" line="103"/>
-        <location filename="../qml/components/SuggestionsPanel.qml" line="108"/>
+        <location filename="../qml/components/SuggestionsPanel.qml" line="104"/>
         <source>Based on the saved forecast — the chart above reflects your scenario.</source>
         <translation>Based on the saved forecast — the chart above reflects your scenario.</translation>
     </message>
     <message>
-        <location filename="../qml/components/SuggestionsPanel.qml" line="114"/>
+        <location filename="../qml/components/SuggestionsPanel.qml" line="115"/>
         <source>No suggestions for this projection.</source>
         <translation>No suggestions for this projection.</translation>
     </message>
     <message>
-        <location filename="../qml/components/SuggestionsPanel.qml" line="226"/>
+        <location filename="../qml/components/SuggestionsPanel.qml" line="227"/>
         <source>Try in scenario</source>
         <translation>Try in scenario</translation>
     </message>
     <message>
-        <location filename="../qml/components/SuggestionsPanel.qml" line="229"/>
+        <location filename="../qml/components/SuggestionsPanel.qml" line="230"/>
         <source>Try in scenario: %1</source>
         <translation>Try in scenario: %1</translation>
     </message>
     <message>
-        <location filename="../qml/components/SuggestionsPanel.qml" line="255"/>
-        <location filename="../qml/components/SuggestionsPanel.qml" line="258"/>
+        <location filename="../qml/components/SuggestionsPanel.qml" line="256"/>
+        <location filename="../qml/components/SuggestionsPanel.qml" line="259"/>
         <source>Show less</source>
         <translation>Show less</translation>
     </message>
     <message>
-        <location filename="../qml/components/SuggestionsPanel.qml" line="255"/>
-        <location filename="../qml/components/SuggestionsPanel.qml" line="258"/>
+        <location filename="../qml/components/SuggestionsPanel.qml" line="256"/>
+        <location filename="../qml/components/SuggestionsPanel.qml" line="259"/>
         <source>Show more</source>
         <translation>Show more</translation>
     </message>
@@ -2969,17 +3126,29 @@ The previous day’s closing balance becomes the next day’s starting point, pr
     <name>main</name>
     <message>
         <location filename="../qml/main.qml" line="15"/>
-        <location filename="../qml/main.qml" line="70"/>
+        <location filename="../qml/main.qml" line="79"/>
         <source>Cash Flow Planner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="80"/>
+        <location filename="../qml/main.qml" line="89"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="161"/>
+        <location filename="../qml/main.qml" line="123"/>
+        <location filename="../qml/main.qml" line="124"/>
+        <source>Forecasts</source>
+        <translation type="unfinished">Forecasts</translation>
+    </message>
+    <message>
+        <location filename="../qml/main.qml" line="128"/>
+        <location filename="../qml/main.qml" line="129"/>
+        <source>Spending</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/main.qml" line="202"/>
         <source>Dismiss error</source>
         <translation type="unfinished"></translation>
     </message>

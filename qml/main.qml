@@ -21,7 +21,13 @@ ApplicationWindow {
     readonly property bool isDark: Material.theme === Material.Dark
     readonly property color toolbarColor: isDark ? ThemeTokens.primaryDark : ThemeTokens.primary
 
+    property int mainSection: 0
+
     function openSettings() {
+        if (mainSection !== 0) {
+            mainSection = 0
+            sectionTabBar.currentIndex = 0
+        }
         var existing = stackView.find(function (item) {
             return item.objectName === "settingsPage"
         })
@@ -50,6 +56,9 @@ ApplicationWindow {
         }
         if (settingsViewModel && settingsViewModel.error !== "") {
             return settingsViewModel.error
+        }
+        if (recordedExpensesViewModel && recordedExpensesViewModel.error !== "") {
+            return recordedExpensesViewModel.error
         }
         return ""
     }
@@ -83,10 +92,42 @@ ApplicationWindow {
         }
     }
 
-    StackView {
-        id: stackView
+    Item {
         anchors.fill: parent
-        initialItem: planListPageComponent
+        anchors.bottomMargin: sectionTabBar.visible ? sectionTabBar.height : 0
+
+        StackView {
+            id: stackView
+            anchors.fill: parent
+            visible: root.mainSection === 0
+            initialItem: planListPageComponent
+        }
+
+        RecordedExpensesPage {
+            anchors.fill: parent
+            visible: root.mainSection === 1
+        }
+    }
+
+    footer: TabBar {
+        id: sectionTabBar
+        currentIndex: root.mainSection
+
+        onCurrentIndexChanged: {
+            if (currentIndex !== root.mainSection) {
+                root.mainSection = currentIndex
+            }
+        }
+
+        TabButton {
+            text: qsTr("Forecasts")
+            Accessible.name: qsTr("Forecasts")
+        }
+
+        TabButton {
+            text: qsTr("Spending")
+            Accessible.name: qsTr("Spending")
+        }
     }
 
     Component {
@@ -172,6 +213,8 @@ ApplicationWindow {
                         auditLogViewModel.clearError()
                     } else if (settingsViewModel && settingsViewModel.error !== "") {
                         settingsViewModel.clearError()
+                    } else if (recordedExpensesViewModel && recordedExpensesViewModel.error !== "") {
+                        recordedExpensesViewModel.clearError()
                     }
                 }
             }

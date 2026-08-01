@@ -19,6 +19,7 @@ from src.app.viewmodels.currency_vm import CurrencyViewModel
 from src.app.viewmodels.entries_vm import EntriesViewModel
 from src.app.viewmodels.plan_import_vm import PlanImportViewModel
 from src.app.viewmodels.plan_vm import PlanViewModel
+from src.app.viewmodels.recorded_expenses_view_model import RecordedExpensesViewModel
 from src.app.viewmodels.settings_vm import SettingsViewModel
 from src.app.viewmodels.simulation_vm import SimulationViewModel
 from src.app.viewmodels.suggestions_vm import SuggestionsViewModel
@@ -82,6 +83,7 @@ class E2EStack:
     currency_vm: CurrencyViewModel
     plan_import_vm: PlanImportViewModel
     audit_log_vm: AuditLogViewModel
+    recorded_expenses_vm: RecordedExpensesViewModel
 
 
 @pytest.fixture
@@ -99,7 +101,7 @@ def e2e_stack(tmp_path: Path, qt_app: object) -> Generator[E2EStack, None, None]
         plan_import_vm,
         currency_vm,
         audit_log_vm,
-        _,
+        recorded_expenses_vm,
         db_engine,
         db_conn,
     ) = bootstrap_view_models(db_path)
@@ -111,6 +113,7 @@ def e2e_stack(tmp_path: Path, qt_app: object) -> Generator[E2EStack, None, None]
         currency_vm=currency_vm,
         plan_import_vm=plan_import_vm,
         audit_log_vm=audit_log_vm,
+        recorded_expenses_vm=recorded_expenses_vm,
     )
     yield stack
     _dispose_db(db_conn, db_engine)
