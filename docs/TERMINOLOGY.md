@@ -29,6 +29,8 @@ When adding or changing user-visible text, consult this document first. When wri
 | What-if | Scenario | what-if overrides, `WhatIfPanel.qml` | Panel title and override labels |
 | Suggestion | Suggestion | `SuggestionsPanel.qml`, `SuggestionEngine` | Use **Suggestion** (not "Recommendation") for forecast analysis hints |
 | Import plan | Import forecast | `.ftplan` extension | File-picker and menu labels; extension stays `.ftplan` |
+| — | Spending | `RecordedExpensesPage.qml` | Top-level nav tab for the spending journal (not "Budget") |
+| — | Recorded expense | `recorded_expenses` table, `RecordedExpenseService` | Singular transaction in the spending journal; avoid "budget" or "envelope" |
 
 ### Product name exception
 
@@ -77,6 +79,7 @@ Subsequent Story 20 tasks update user-visible strings in these locations. Intern
 | File | Typical strings |
 |------|-----------------|
 | `main.qml` | Navigation labels, app chrome |
+| `pages/RecordedExpensesPage.qml` | Spending journal list, empty state |
 | `pages/PlanListPage.qml` | Forecast list, "New forecast" |
 | `pages/PlanDetailLayout.qml` | Tab labels, forecast context |
 | `pages/EntriesPage.qml` | Cash flows section |
@@ -87,6 +90,7 @@ Subsequent Story 20 tasks update user-visible strings in these locations. Intern
 | `components/WhatIfPanel.qml` | Scenario overrides |
 | `components/SimulationControls.qml` | Run forecast controls |
 | `components/EntryForm.qml`, `EntryFormDrawer.qml` | Add/edit cash flow |
+| `components/RecordedExpenseFormDrawer.qml`, `LabelAutocompleteField.qml` | Add/edit recorded expense |
 | `components/PlanImportDialog.qml`, `ImportDialog.qml` | Import forecast |
 | `components/MonthlyTableView.qml`, `BalanceChart.qml` | Projection display |
 | `components/DatePatternInput.qml`, `DatePicker.qml`, `CurrencyRateEditor.qml` | Form helpers |

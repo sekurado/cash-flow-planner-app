@@ -8,6 +8,8 @@ DeficitBanner 1.0 DeficitBanner.qml
 EntryForm 1.0 EntryForm.qml
 EntryFormDrawer 1.0 EntryFormDrawer.qml
 ImportDialog 1.0 ImportDialog.qml
+LabelAutocompleteField 1.0 LabelAutocompleteField.qml
+RecordedExpenseFormDrawer 1.0 RecordedExpenseFormDrawer.qml
 SegmentedControl 1.0 SegmentedControl.qml
 MonthlyTableView 1.0 MonthlyTableView.qml
 SimulationControls 1.0 SimulationControls.qml

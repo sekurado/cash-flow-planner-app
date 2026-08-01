@@ -66,6 +66,7 @@ The application is self-contained, stores all data locally on the user's machine
 | FR-22 | Executive PDF export includes semantic color-coded tables, a balance projection chart, and a translated methodology appendix; redundant metadata footer removed. |
 | FR-23 | The app ships a **user manual PDF** — a narrative onboarding guide with branded cover, table of contents, callouts, and PDF bookmarks. Content is translatable; English is bundled at ship time; Settings opens the manual for the active locale (fallback to English). |
 | FR-24 | After a baseline projection completes, users receive **actionable cash-flow suggestions** — ways to avoid a cash shortfall, reduce spending, increase income, or save more — from deterministic analysis of their forecast. Suggestions can pre-fill scenario overrides for preview. |
+| FR-25 | Users can record **actual spending** as discrete transactions in an app-wide **spending journal** (name, amount, currency, optional date, category, place). Dictionary tables back autocomplete; the ledger is not tied to a single forecast plan. |
 
 **FR-23 acceptance:**
 
@@ -81,6 +82,15 @@ The application is self-contained, stores all data locally on the user's machine
 - `SuggestionsViewModel` refreshes on baseline simulation completion only (not what-if-only runs); analysis runs on a `QRunnable` worker.
 - `SuggestionsPanel.qml` on the Projection tab shows up to three cards with **Show more**; **Try in scenario** pre-fills `WhatIfPanel` when a structured change hint exists.
 - Suggestion copy uses the `CashFlowSuggestions` translation context (`src/app/i18n/suggestion_copy.py`); language changes retranslate via `SuggestionsViewModel.retranslate()`.
+
+**FR-25 acceptance:**
+
+- App-wide ledger: `recorded_expenses` and dictionary tables (`expense_names`, `expense_categories`, `expense_places`) are not scoped to a `plan_id`.
+- `RecordedExpenseService` validates input and get-or-creates dictionary rows; repositories use bound parameters only.
+- `RecordedExpensesViewModel` exposes CRUD, debounced label search, and list/suggestion models to QML.
+- Top-level **Spending** tab (`RecordedExpensesPage.qml`) lists recent transactions; `RecordedExpenseFormDrawer.qml` supports add/edit with autocomplete.
+- UI copy uses **Spending** / **recorded expense** (not "budget"); see `docs/TERMINOLOGY.md`.
+- Phase 1 excludes analytics (Story 32), receipt OCR (Story 33), and journal backup (Story 34).
 
 ### 2.2 Non-Functional Requirements
 
@@ -1004,17 +1014,25 @@ Qt Quick uses a `StackView` for page navigation. Pages are pushed/popped imperat
 ```mermaid
 flowchart LR
     AppWindow --> ToolBar
+    AppWindow --> TabBar
     AppWindow --> StackView
     ToolBar --> GearButton["Gear ToolButton"]
     GearButton -->|"pushes"| SettingsPage
+
+    TabBar --> ForecastsTab["Forecasts tab"]
+    TabBar --> SpendingTab["Spending tab"]
+    ForecastsTab --> PlanListPage
+    SpendingTab --> RecordedExpensesPage
 
     StackView --> PlanListPage
     StackView --> PlanDetailLayout
     StackView --> SettingsPage
 
-    PlanDetailLayout --> TabBar
-    TabBar --> EntriesPage
-    TabBar --> SimulationPage
+    PlanDetailLayout --> TabBar2["Detail TabBar"]
+    TabBar2 --> EntriesPage
+    TabBar2 --> SimulationPage
+
+    RecordedExpensesPage --> RecordedExpenseFormDrawer
 
     EntriesPage --> IncomeListView
     EntriesPage --> ExpenseListView
@@ -1044,6 +1062,8 @@ flowchart LR
 | `SimulationControls.qml` | Date range pickers (`CalendarView`), initial balance `TextField`, and a `Button` that calls `simulationViewModel.runSimulation`. The end-date picker clamps to today + 10 years. Disabled when `simulationViewModel.isRunning`. |
 | `WhatIfPanel.qml` | Collapsible side panel listing all entries with inline override controls (amount field, active toggle). A "Run what-if" button calls `simulationViewModel.runWhatIf(planId, params, overrides)`. A "Clear overrides" action resets all fields without touching saved data. |
 | `ImportDialog.qml` | File picker (CSV / XLSX) → column-mapping step → preview table → "Import" button calls `importViewModel.importFile(path, mapping)`. |
+| `RecordedExpenseFormDrawer.qml` | Slide-in drawer for creating/editing a recorded expense. Three `LabelAutocompleteField` delegates call debounced `searchExpenseNames` / `searchCategories` / `searchPlaces` slots. |
+| `LabelAutocompleteField.qml` | Reusable typeahead `TextField` with suggestion popup bound to a `LabelSuggestionModel`. |
 
 ### 10.3 UI/UX Principles
 
@@ -1053,6 +1073,7 @@ flowchart LR
 - **App-wide Settings** — a gear `ToolButton` in the persistent toolbar opens `SettingsPage` as a top-level stack entry. Settings (dark mode, language, exchange rates) are not scoped to any plan; they apply to the entire application.
 - **Dark mode** — implemented via Qt's `Material` style palette. A `Switch` in `SettingsPage` toggles `Material.Dark / Material.Light` globally. Preference stored in `QSettings`.
 - **Language switching** — a `ComboBox` in `SettingsPage` calls `settingsViewModel.setLanguage(code)`. The ViewModel swaps the active `QTranslator` and calls `engine.retranslate()` so the entire QML tree re-evaluates `qsTr()` bindings immediately — no app restart required. Selected language persisted in `QSettings`.
+- **Top-level Spending tab** — a footer `TabBar` in `main.qml` switches between **Forecasts** (`StackView` with plan list and drill-down) and **Spending** (`RecordedExpensesPage`). Settings remains reachable from the toolbar on either tab (switching to Forecasts first when opened from Spending).
 
 ---
 
