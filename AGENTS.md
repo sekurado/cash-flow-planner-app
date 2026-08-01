@@ -141,9 +141,10 @@ Work is tracked on **GitHub Issues** and the
 3. **Fields** — set **Type** (Story or Task), **Story** (parent story issue link for tasks), and **Status** (Todo → In Progress → Done). **Status lives only on the project board** — do not duplicate it in issue bodies.
 4. **Start story** — when implementation on a story begins, move the **Story** issue **Status** → **In Progress** on the project board.
 5. **Start task** — when work on a task begins, move that **Task** issue **Status** → **In Progress**; only one task should be in progress at a time.
-6. **Commit** — when task implementation is complete, **stop for user review** before committing. After approval, commit with subject line `<task_number>: <short description>` (e.g. `31_2: Schema, migration, repositories and label search`), move project **Status** to **Done**, and add `Closes #N` (or `Fixes #N`) in the commit body. GitHub closes the linked issue as soon as that commit is **pushed** — on any branch, not only after merge to `main`. **Do not commit without explicit user approval.**
-7. **Pull request** — open a PR to merge the branch into `main`. Do not repeat `Closes #N` if the task issue is already closed; reference the issue for traceability instead.
-8. **Story complete** — close the story issue when all child task issues are closed; update `docs/DESIGN.md` if architecture changed.
+6. **Commit** — when task implementation is complete, **stop for user review** before committing. After approval, commit with subject line `<task_number>: <short description>` (e.g. `31_2: Schema, migration, repositories and label search`), move project **Status** to **Done**, and add `Closes #N` (or `Fixes #N`) in the commit body on its own line with **no trailing punctuation** (use `Closes #7`, not `Closes #7.`). GitHub closes the linked issue when that commit is **pushed** — on any branch, not only after merge to `main`. **Do not commit without explicit user approval.**
+7. **Task complete checklist** — after the approved commit (and push, if requested): update project **Status** → **Done**; confirm the issue closed (fix keyword or close manually if not).
+8. **Pull request** — open a PR to merge the branch into `main`. Do not repeat `Closes #N` if the task issue is already closed; reference the issue for traceability instead.
+9. **Story complete** — close the story issue when all child task issues are closed; update `docs/DESIGN.md` if architecture changed.
 
 **Issue state vs project Status:** project **Status** → Done tracks implementation complete; issue **closed** tracks a pushed commit or merged PR with `Closes #N` / `Fixes #N`. Do not use closing keywords until the task is actually done.
 
@@ -169,7 +170,7 @@ Do **not** create files under `tasks/` — that legacy folder was removed. Put s
 
 When starting a story, move the **Story** issue **Status** → **In Progress** on the project board.
 When starting a task, move that **Task** issue **Status** → **In Progress** on the project board.
-When committing completed task work, **wait for explicit user approval** after implementation is ready for review. Then use subject line `<task_number>: <short description>`, move the task's project **Status** to **Done**, and add `Closes #N` in the commit body when ready to close the issue on push. **Never commit without user review.**
+When committing completed task work, **wait for explicit user approval** after implementation is ready for review. Then use subject line `<task_number>: <short description>`, add `Closes #N` in the commit body (no trailing period), move the task's project **Status** to **Done** in the **same session** via GraphQL/`gh`, and confirm the issue closed after push. **Never commit without user review.** Never leave project **Status** at In Progress or Todo after the implementation commit.
 
 Never add `Co-authored-by` (or any other commit-message trailer) unless the user explicitly requests it.
 
