@@ -93,3 +93,58 @@ audit_log = Table(
     Column("timestamp", String, nullable=False),
     Index("ix_audit_log_plan_id", "plan_id"),
 )
+
+expense_names = Table(
+    "expense_names",
+    metadata,
+    Column("id", String, primary_key=True, default=lambda: str(uuid.uuid4())),
+    Column("label", String, nullable=False),
+    Column("normalized_label", String, nullable=False, unique=True),
+)
+
+expense_categories = Table(
+    "expense_categories",
+    metadata,
+    Column("id", String, primary_key=True, default=lambda: str(uuid.uuid4())),
+    Column("label", String, nullable=False),
+    Column("normalized_label", String, nullable=False, unique=True),
+)
+
+expense_places = Table(
+    "expense_places",
+    metadata,
+    Column("id", String, primary_key=True, default=lambda: str(uuid.uuid4())),
+    Column("label", String, nullable=False),
+    Column("normalized_label", String, nullable=False, unique=True),
+)
+
+recorded_expenses = Table(
+    "recorded_expenses",
+    metadata,
+    Column("id", String, primary_key=True, default=lambda: str(uuid.uuid4())),
+    Column("amount", Float, nullable=False),
+    Column("currency", String, nullable=False),
+    Column("occurred_on", String, nullable=False),
+    Column(
+        "name_id",
+        String,
+        ForeignKey("expense_names.id"),
+        nullable=False,
+    ),
+    Column(
+        "category_id",
+        String,
+        ForeignKey("expense_categories.id"),
+        nullable=True,
+    ),
+    Column(
+        "place_id",
+        String,
+        ForeignKey("expense_places.id"),
+        nullable=True,
+    ),
+    Column("note", String, nullable=True),
+    Column("created_at", String, nullable=False),
+    Column("updated_at", String, nullable=False),
+    Index("ix_recorded_expenses_occurred_on", "occurred_on"),
+)

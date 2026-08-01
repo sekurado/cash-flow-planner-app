@@ -52,7 +52,13 @@ from src.data.migrate import run_migrations as apply_migrations
 from src.data.repositories.audit_log_repo import SqliteAuditLogRepository
 from src.data.repositories.entry_repo import SqliteEntryRepository
 from src.data.repositories.exchange_rate_repo import SqliteExchangeRateRepository
+from src.data.repositories.expense_dictionary_repo import (
+    SqliteExpenseCategoryRepository,
+    SqliteExpenseNameRepository,
+    SqliteExpensePlaceRepository,
+)
 from src.data.repositories.plan_repo import SqlitePlanRepository
+from src.data.repositories.recorded_expense_repo import SqliteRecordedExpenseRepository
 from src.data.repositories.simulation_run_repo import SqliteSimulationRunRepository
 from src.export.plan_exporter import PlanExporter
 from src.integrations.exchange_rate_fetcher import configure_dev_mode
@@ -259,6 +265,10 @@ def bootstrap_view_models(
     entry_repo = SqliteEntryRepository(db_conn, audit_log_repo)
     exchange_rate_repo = SqliteExchangeRateRepository(db_conn)
     _ = SqliteSimulationRunRepository(db_conn)
+    _ = SqliteExpenseNameRepository(db_conn)
+    _ = SqliteExpenseCategoryRepository(db_conn)
+    _ = SqliteExpensePlaceRepository(db_conn)
+    _ = SqliteRecordedExpenseRepository(db_conn)
 
     plan_vm = PlanViewModel(
         plan_repo,
