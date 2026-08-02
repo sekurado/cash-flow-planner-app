@@ -31,7 +31,8 @@ Item {
     }
 
     implicitWidth: root.stacked ? Math.max(dateButton.implicitWidth, 200) : dateButton.implicitWidth
-    implicitHeight: dateButton.implicitHeight
+    implicitHeight: Math.max(dateButton.implicitHeight, 36)
+    height: implicitHeight
 
     function pad2(value) {
         return value < 10 ? "0" + value : "" + value
@@ -72,43 +73,43 @@ Item {
     onMonthChanged: root.clampDay()
     onYearChanged: root.clampDay()
 
-    Button {
-        id: dateButton
-        anchors.left: parent.left
-        anchors.right: root.stacked ? parent.right : undefined
-        flat: true
-        display: AbstractButton.TextBesideIcon
-        icon.name: "office-calendar"
-        text: root.formattedDate
-        Material.foreground: ThemeTokens.primary
-        Accessible.name: qsTr("Date")
-        onClicked: calendarPopup.open()
-
-        background: Rectangle {
-            radius: ThemeTokens.radiusSm
-            color: "transparent"
-            border.color: ThemeTokens.primary
-            border.width: 1
-        }
-    }
-
     Popup {
         id: calendarPopup
         parent: Overlay.overlay
-        modal: false
+        modal: true
+        dim: false
         focus: true
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
         padding: ThemeTokens.spaceMd
-        width: calendarColumn.implicitWidth + 2 * padding
+        implicitWidth: calendarColumn.implicitWidth + 2 * padding
         implicitHeight: calendarColumn.implicitHeight + 2 * padding
-        x: root.popupX()
-        y: root.popupY()
+        width: implicitWidth
+        height: implicitHeight
+        z: 10000
+
+        enter: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 1
+                to: 1
+                duration: 0
+            }
+        }
+
+        exit: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 1
+                to: 1
+                duration: 0
+            }
+        }
 
         background: Rectangle {
             id: popupBackground
             color: root.cardColor
             radius: ThemeTokens.radiusLg
-            layer.enabled: true
+            layer.enabled: calendarPopup.opened
             layer.effect: DropShadow {
                 radius: 8
                 samples: 17
@@ -117,9 +118,11 @@ Item {
             }
         }
 
-        onOpened: {
+        onAboutToShow: {
             root.viewMonth = root.month
             root.viewYear = root.year
+            x = root.popupX()
+            y = root.popupY()
         }
 
         contentItem: ColumnLayout {
@@ -260,6 +263,26 @@ Item {
                     }
                 }
             }
+        }
+    }
+
+    Button {
+        id: dateButton
+        z: 1
+        anchors.fill: parent
+        flat: true
+        display: AbstractButton.TextBesideIcon
+        icon.name: "office-calendar"
+        text: root.formattedDate
+        Material.foreground: ThemeTokens.primary
+        Accessible.name: qsTr("Date")
+        onClicked: calendarPopup.open()
+
+        background: Rectangle {
+            radius: ThemeTokens.radiusSm
+            color: "transparent"
+            border.color: ThemeTokens.primary
+            border.width: 1
         }
     }
 }
