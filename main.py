@@ -42,6 +42,7 @@ from src.app.viewmodels.app_vm import AppViewModel
 from src.app.viewmodels.audit_log_vm import AuditLogViewModel
 from src.app.viewmodels.currency_vm import CurrencyViewModel
 from src.app.viewmodels.entries_vm import EntriesViewModel
+from src.app.viewmodels.expense_analytics_view_model import ExpenseAnalyticsViewModel
 from src.app.viewmodels.import_vm import ImportViewModel
 from src.app.viewmodels.methodology_vm import MethodologyViewModel
 from src.app.viewmodels.plan_import_vm import PlanImportViewModel
@@ -272,6 +273,7 @@ def bootstrap_view_models(
     CurrencyViewModel,
     AuditLogViewModel,
     RecordedExpensesViewModel,
+    ExpenseAnalyticsViewModel,
     Engine,
     Connection,
 ]:
@@ -316,6 +318,11 @@ def bootstrap_view_models(
         expense_category_repo,
         expense_place_repo,
     )
+    expense_analytics_vm = ExpenseAnalyticsViewModel(
+        recorded_expense_repo,
+        exchange_rate_repo,
+        recorded_expenses_vm,
+    )
 
     return (
         plan_vm,
@@ -327,6 +334,7 @@ def bootstrap_view_models(
         currency_vm,
         audit_log_vm,
         recorded_expenses_vm,
+        expense_analytics_vm,
         db_engine,
         db_conn,
     )
@@ -368,6 +376,7 @@ def main(argv: list[str] | None = None) -> int:
         currency_vm,
         audit_log_vm,
         recorded_expenses_vm,
+        expense_analytics_vm,
         db_engine,
         db_conn,
     ) = bootstrap_view_models(db_path)
@@ -387,6 +396,7 @@ def main(argv: list[str] | None = None) -> int:
     root_context.setContextProperty("ratesViewModel", currency_vm)
     root_context.setContextProperty("auditLogViewModel", audit_log_vm)
     root_context.setContextProperty("recordedExpensesViewModel", recorded_expenses_vm)
+    root_context.setContextProperty("expenseAnalyticsViewModel", expense_analytics_vm)
 
     def on_language_changed() -> None:
         nonlocal translator
@@ -403,6 +413,7 @@ def main(argv: list[str] | None = None) -> int:
             currency_vm,
             audit_log_vm,
             recorded_expenses_vm,
+            expense_analytics_vm,
             methodology_vm,
         ):
             vm.retranslate()
@@ -422,6 +433,7 @@ def main(argv: list[str] | None = None) -> int:
         currency_vm,
         audit_log_vm,
         recorded_expenses_vm,
+        expense_analytics_vm,
     ):
         vm.setParent(engine)
 
