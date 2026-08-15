@@ -163,21 +163,26 @@ Page {
     Item {
         anchors.fill: parent
 
-        ListView {
-            id: expenseList
+        Flickable {
+            id: spendingFlickable
             anchors.fill: parent
             anchors.topMargin: ThemeTokens.spaceSm
             anchors.bottomMargin: ThemeTokens.spaceXl + 56
             clip: true
-            spacing: 4
-            visible: recordedExpensesViewModel.expenseListModel.count > 0
-                   || expenseAnalyticsViewModel.totalAmount > 0
-            model: recordedExpensesViewModel.expenseListModel
             boundsBehavior: Flickable.StopAtBounds
+            contentWidth: width
+            contentHeight: spendingColumn.implicitHeight
 
-            header: ColumnLayout {
-                width: expenseList.width
+            ColumnLayout {
+                id: spendingColumn
+                width: parent.width
                 spacing: 0
+
+                ExpenseFilterBar {
+                    Layout.fillWidth: true
+                    Layout.leftMargin: ThemeTokens.spaceMd
+                    Layout.rightMargin: ThemeTokens.spaceMd
+                }
 
                 Item {
                     Layout.preferredHeight: ThemeTokens.spaceSm
@@ -185,20 +190,73 @@ Page {
 
                 ExpenseAnalyticsPanel {
                     Layout.fillWidth: true
+                    Layout.leftMargin: ThemeTokens.spaceMd
+                    Layout.rightMargin: ThemeTokens.spaceMd
                 }
 
                 Item {
-                    Layout.preferredHeight: ThemeTokens.spaceMd
+                    Layout.preferredHeight: ThemeTokens.spaceSm
+                }
+
+                Label {
+                    Layout.fillWidth: true
+                    Layout.leftMargin: ThemeTokens.spaceMd
+                    Layout.rightMargin: ThemeTokens.spaceMd
+                    Layout.topMargin: ThemeTokens.spaceMd
+                    visible: recordedExpensesViewModel.expenseListModel.count === 0
+                             && recordedExpensesViewModel.searchText.trim() !== ""
+                    text: qsTr("No matching expenses")
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: ThemeTokens.fontMd
+                    color: Material.secondaryTextColor
+                    wrapMode: Text.WordWrap
+                }
+
+                Label {
+                    Layout.fillWidth: true
+                    Layout.leftMargin: ThemeTokens.spaceMd
+                    Layout.rightMargin: ThemeTokens.spaceMd
+                    Layout.topMargin: ThemeTokens.spaceXs
+                    visible: recordedExpensesViewModel.expenseListModel.count === 0
+                             && recordedExpensesViewModel.searchText.trim() !== ""
+                    text: qsTr("Try a different search term or clear filters.")
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: ThemeTokens.fontSm
+                    color: Material.secondaryTextColor
+                    wrapMode: Text.WordWrap
+                }
+
+                Item {
+                    id: expenseListContainer
+                    Layout.fillWidth: true
+                    Layout.leftMargin: ThemeTokens.spaceMd
+                    Layout.rightMargin: ThemeTokens.spaceMd
+                    Layout.preferredHeight: expenseList.contentHeight
+
+                    ListView {
+                        id: expenseList
+                        anchors.fill: parent
+                        interactive: false
+                        spacing: 4
+                        model: recordedExpensesViewModel.expenseListModel
+                        delegate: ExpenseCardDelegate {}
+                    }
                 }
             }
+        }
 
-            delegate: ExpenseCardDelegate {}
+        Connections {
+            target: recordedExpensesViewModel.expenseListModel
+            function onCountChanged() {
+                expenseList.forceLayout()
+            }
         }
 
         ColumnLayout {
             anchors.centerIn: parent
             visible: recordedExpensesViewModel.expenseListModel.count === 0
                      && expenseAnalyticsViewModel.totalAmount === 0
+                     && !recordedExpensesViewModel.hasActiveFilters
             spacing: ThemeTokens.spaceSm
             width: Math.min(root.width - ThemeTokens.spaceXl * 2, 360)
 
@@ -213,6 +271,33 @@ Page {
             Label {
                 Layout.fillWidth: true
                 text: qsTr("Add your first recorded expense using the + button")
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.WordWrap
+                font.pixelSize: ThemeTokens.fontSm
+                color: Material.secondaryTextColor
+            }
+        }
+
+        ColumnLayout {
+            anchors.centerIn: parent
+            visible: recordedExpensesViewModel.expenseListModel.count === 0
+                     && expenseAnalyticsViewModel.totalAmount === 0
+                     && recordedExpensesViewModel.hasActiveFilters
+                     && recordedExpensesViewModel.searchText.trim() === ""
+            spacing: ThemeTokens.spaceSm
+            width: Math.min(root.width - ThemeTokens.spaceXl * 2, 360)
+
+            Label {
+                Layout.fillWidth: true
+                text: qsTr("No matching expenses")
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: ThemeTokens.fontMd
+                color: Material.secondaryTextColor
+            }
+
+            Label {
+                Layout.fillWidth: true
+                text: qsTr("Try adjusting your search or date range, or clear filters.")
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.WordWrap
                 font.pixelSize: ThemeTokens.fontSm
@@ -311,6 +396,4 @@ Page {
             }
         }
     }
-
-    Component.onCompleted: recordedExpensesViewModel.loadExpenses()
 }
