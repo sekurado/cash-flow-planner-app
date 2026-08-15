@@ -102,6 +102,7 @@ def e2e_stack(tmp_path: Path, qt_app: object) -> Generator[E2EStack, None, None]
         currency_vm,
         audit_log_vm,
         recorded_expenses_vm,
+        _expense_analytics_vm,
         db_engine,
         db_conn,
     ) = bootstrap_view_models(db_path)

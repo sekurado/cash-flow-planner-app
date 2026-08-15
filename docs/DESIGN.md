@@ -67,6 +67,7 @@ The application is self-contained, stores all data locally on the user's machine
 | FR-23 | The app ships a **user manual PDF** — a narrative onboarding guide with branded cover, table of contents, callouts, and PDF bookmarks. Content is translatable; English is bundled at ship time; Settings opens the manual for the active locale (fallback to English). |
 | FR-24 | After a baseline projection completes, users receive **actionable cash-flow suggestions** — ways to avoid a cash shortfall, reduce spending, increase income, or save more — from deterministic analysis of their forecast. Suggestions can pre-fill scenario overrides for preview. |
 | FR-25 | Users can record **actual spending** as discrete transactions in an app-wide **spending journal** (name, amount, currency, optional date, category, place). Dictionary tables back autocomplete; the ledger is not tied to a single forecast plan. |
+| FR-26 | Users can **analyze recorded spending** on the Spending tab: date-filtered roll-up charts (top categories, places, and names) plus a searchable, filterable transaction list. Search narrows the list only; charts reflect the selected date range. |
 
 **FR-23 acceptance:**
 
@@ -90,7 +91,18 @@ The application is self-contained, stores all data locally on the user's machine
 - `RecordedExpensesViewModel` exposes CRUD, debounced label search, and list/suggestion models to QML.
 - Top-level **Spending** tab (`RecordedExpensesPage.qml`) lists recent transactions; `RecordedExpenseFormDrawer.qml` supports add/edit with autocomplete.
 - UI copy uses **Spending** / **recorded expense** (not "budget"); see `docs/TERMINOLOGY.md`.
-- Phase 1 excludes analytics (Story 32), receipt OCR (Story 33), and journal backup (Story 34).
+- Analytics charts and filtered list are covered by **FR-26** (Story 32).
+
+**FR-26 acceptance:**
+
+- `ExpenseAnalyticsEngine` in `src/domain/expense_analytics.py` aggregates expenses by name, category, and place with multi-currency normalization via stored exchange rates; missing rates raise `CurrencyConversionError`.
+- `ExpenseAnalyticsViewModel` exposes date range, display currency (persisted in `QSettings`), chart series (`categorySeries`, `placeSeries`, `nameSeries`), and `totalAmount`; refreshes when recorded expenses are created, updated, or deleted.
+- `ExpenseFilterBar.qml` provides date presets (this month, last 30 days, YTD, custom) and debounced text search; changing the date range syncs both the analytics ViewModel and the filtered expense list.
+- Text search is a case-insensitive substring match on joined dictionary labels and the expense note; it filters the **transaction list only**, not the charts.
+- Charts show the top eight buckets per dimension; remaining buckets are grouped as **Other** (`group_top_n` helper).
+- `RecordedExpensesPage.qml` combines `ExpenseFilterBar`, `ExpenseAnalyticsPanel` (three `ExpenseBucketBarChart` instances), and the expense list in a single scrollable view.
+- Unit tests cover `ExpenseAnalyticsEngine` aggregation math and `group_top_n`; integration tests cover `ExpenseAnalyticsViewModel` rollups and repository filter queries.
+- All new Spending analytics QML strings are extracted via `pyside6-lupdate` and translated in `i18n/app_*.ts`.
 
 ### 2.2 Non-Functional Requirements
 
@@ -818,6 +830,10 @@ class Suggestion:
 
 Suggestions are read-only analysis — they never mutate the database. Applying a hint is explicit (scenario override or cash-flow edit).
 
+### 8.7 ExpenseAnalyticsEngine (FR-26)
+
+Pure-Python rollups in `src/domain/expense_analytics.py` take recorded expenses, a date range, a display currency, and exchange rates. The engine filters expenses to the inclusive range, normalizes each amount to the display currency, and produces sorted `ExpenseAnalyticsBucket` tuples for **by_name**, **by_category**, and **by_place**. Uncategorized expenses and expenses without a place use stable default labels. The `group_top_n` helper merges buckets beyond the chart limit into an **Other** row for QML bar charts.
+
 ---
 
 ## 9. Application Layer
@@ -1033,6 +1049,9 @@ flowchart LR
     TabBar2 --> SimulationPage
 
     RecordedExpensesPage --> RecordedExpenseFormDrawer
+    RecordedExpensesPage --> ExpenseFilterBar
+    RecordedExpensesPage --> ExpenseAnalyticsPanel
+    ExpenseAnalyticsPanel --> ExpenseBucketBarChart
 
     EntriesPage --> IncomeListView
     EntriesPage --> ExpenseListView
@@ -1063,6 +1082,9 @@ flowchart LR
 | `WhatIfPanel.qml` | Collapsible side panel listing all entries with inline override controls (amount field, active toggle). A "Run what-if" button calls `simulationViewModel.runWhatIf(planId, params, overrides)`. A "Clear overrides" action resets all fields without touching saved data. |
 | `ImportDialog.qml` | File picker (CSV / XLSX) → column-mapping step → preview table → "Import" button calls `importViewModel.importFile(path, mapping)`. |
 | `RecordedExpenseFormDrawer.qml` | Slide-in drawer for creating/editing a recorded expense. Three `LabelAutocompleteField` delegates call debounced `searchExpenseNames` / `searchCategories` / `searchPlaces` slots. |
+| `ExpenseFilterBar.qml` | Search box, date-range presets (this month, last 30 days, YTD, custom), and clear-filters action. Syncs date range to `ExpenseAnalyticsViewModel` and `RecordedExpensesViewModel`. |
+| `ExpenseAnalyticsPanel.qml` | Overview section with three horizontal bar charts bound to `expenseAnalyticsViewModel` series properties. |
+| `ExpenseBucketBarChart.qml` | Reusable Qt Charts horizontal bar chart for a single analytics dimension; handles empty state and dynamic axis margins. |
 | `LabelAutocompleteField.qml` | Reusable typeahead `TextField` with suggestion popup bound to a `LabelSuggestionModel`. |
 
 ### 10.3 UI/UX Principles
@@ -1333,6 +1355,29 @@ sequenceDiagram
     QML->>VM: prefillWhatIfOverride(entry_id, change_json)
     VM->>WIF: whatIfPrefillRequested signal
     WIF->>WIF: applySuggestionPrefill + expand panel
+```
+
+### 11.9 Expense Analytics Flow (FR-26)
+
+The Spending tab loads with a default **this month** date filter. `ExpenseFilterBar` updates `RecordedExpensesViewModel` (filtered list + debounced search) and `ExpenseAnalyticsViewModel` (chart rollups) when the user changes presets or a custom range. Chart refresh runs synchronously on the main thread from repository queries; expense mutations trigger `ExpenseAnalyticsViewModel.refresh()` via Qt signals.
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant FB as ExpenseFilterBar.qml
+    participant REVM as RecordedExpensesViewModel
+    participant EAVM as ExpenseAnalyticsViewModel
+    participant R as RecordedExpenseRepository
+    participant E as ExpenseAnalyticsEngine
+
+    U->>FB: Change date preset or search text
+    FB->>REVM: applyDatePreset / setSearchText
+    FB->>EAVM: setDateRange
+    REVM->>R: list_filtered
+    EAVM->>R: list_for_analytics
+    EAVM->>E: aggregate(expenses, rates, range)
+    E-->>EAVM: rollups by name/category/place
+    EAVM->>EAVM: group_top_n → chart series
 ```
 
 ---

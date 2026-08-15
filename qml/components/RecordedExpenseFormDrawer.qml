@@ -4,6 +4,7 @@ import QtQuick.Controls.Material
 import QtQuick.Layouts
 
 import ThemeTokens 1.0
+import "."
 
 Drawer {
     id: root
@@ -249,6 +250,8 @@ Drawer {
 
                     DatePicker {
                         id: datePicker
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: implicitHeight
                         stacked: true
                     }
                 }

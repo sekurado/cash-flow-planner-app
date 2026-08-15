@@ -5,6 +5,9 @@ CurrencyRateEditor 1.0 CurrencyRateEditor.qml
 DatePatternInput 1.0 DatePatternInput.qml
 DatePicker 1.0 DatePicker.qml
 DeficitBanner 1.0 DeficitBanner.qml
+ExpenseAnalyticsPanel 1.0 ExpenseAnalyticsPanel.qml
+ExpenseBucketBarChart 1.0 ExpenseBucketBarChart.qml
+ExpenseFilterBar 1.0 ExpenseFilterBar.qml
 EntryForm 1.0 EntryForm.qml
 EntryFormDrawer 1.0 EntryFormDrawer.qml
 ImportDialog 1.0 ImportDialog.qml

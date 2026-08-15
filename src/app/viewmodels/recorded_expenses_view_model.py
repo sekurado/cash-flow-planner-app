@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Sequence
+from datetime import date, timedelta
 
 from PySide6.QtCore import Property, QObject, QTimer, Signal, Slot
 
@@ -13,7 +14,10 @@ from src.data.repositories.expense_dictionary_repo import (
     SqliteExpenseNameRepository,
     SqliteExpensePlaceRepository,
 )
-from src.data.repositories.recorded_expense_repo import SqliteRecordedExpenseRepository
+from src.data.repositories.recorded_expense_repo import (
+    RecordedExpenseListFilters,
+    SqliteRecordedExpenseRepository,
+)
 from src.domain.recorded_expenses import (
     ExpenseCategory,
     ExpenseName,
@@ -33,6 +37,14 @@ def _to_label_suggestions(
     return [LabelSuggestion(id=item.id, label=item.label) for item in items]
 
 
+def _parse_iso_date(value: str, *, field_name: str) -> date:
+    try:
+        return date.fromisoformat(value)
+    except ValueError as exc:
+        msg = f"Invalid {field_name}: {value!r}"
+        raise ValueError(msg) from exc
+
+
 class RecordedExpensesViewModel(QObject):
     """Exposes recorded expense CRUD and dictionary autocomplete to QML."""
 
@@ -41,6 +53,9 @@ class RecordedExpensesViewModel(QObject):
     expenseUpdated = Signal(str)
     expenseDeleted = Signal(str)
     errorChanged = Signal()
+    searchTextChanged = Signal()
+    filterDateRangeChanged = Signal()
+    filtersChanged = Signal()
 
     def __init__(
         self,
@@ -70,9 +85,19 @@ class RecordedExpensesViewModel(QObject):
         self._pending_name_prefix = ""
         self._pending_category_prefix = ""
         self._pending_place_prefix = ""
+        self._pending_list_search_text = ""
+        self._search_text = ""
+        self._search: str | None = None
+        self._start_date: date | None = None
+        self._end_date: date | None = None
         self._name_search_timer = self._create_search_timer(self._run_name_search)
         self._category_search_timer = self._create_search_timer(self._run_category_search)
         self._place_search_timer = self._create_search_timer(self._run_place_search)
+        self._list_search_timer = self._create_search_timer(self._run_list_search)
+        today = date.today()
+        self._start_date = today.replace(day=1)
+        self._end_date = today
+        self._reload_list()
 
     @Property(QObject, constant=True)
     def expenseListModel(self) -> RecordedExpenseListModel:
@@ -94,14 +119,101 @@ class RecordedExpensesViewModel(QObject):
     def error(self) -> str:
         return self._errors.message
 
+    @Property(str, notify=searchTextChanged)
+    def searchText(self) -> str:
+        return self._search_text
+
+    @Property(str, notify=filterDateRangeChanged)
+    def filterStartDate(self) -> str:
+        return self._start_date.isoformat() if self._start_date is not None else ""
+
+    @Property(str, notify=filterDateRangeChanged)
+    def filterEndDate(self) -> str:
+        return self._end_date.isoformat() if self._end_date is not None else ""
+
+    @Property(bool, notify=filtersChanged)
+    def hasActiveFilters(self) -> bool:
+        return self._has_list_filters()
+
     @Slot()
     @Slot(int)
     def loadExpenses(self, limit: int = _DEFAULT_LIST_LIMIT) -> None:
         try:
             self._clear_error()
+            self._list_limit = limit
+            if self._has_list_filters():
+                self._reload_list()
+                return
             items = list(self._expense_repo.list_recent(limit))
             self._list_model.reset(items)
             self.expensesChanged.emit()
+        except Exception as exc:
+            self._set_error(exc)
+
+    @Slot(str)
+    def applyDatePreset(self, preset: str) -> None:
+        try:
+            self._clear_error()
+            today = date.today()
+            normalized = preset.strip().lower()
+            if normalized == "this_month":
+                start, end = today.replace(day=1), today
+            elif normalized in {"last_30_days", "last_30"}:
+                start, end = today - timedelta(days=29), today
+            elif normalized == "ytd":
+                start, end = today.replace(month=1, day=1), today
+            else:
+                msg = f"Unknown date preset: {preset!r}"
+                raise ValueError(msg)
+            self._start_date = start
+            self._end_date = end
+            self.filterDateRangeChanged.emit()
+            self.filtersChanged.emit()
+            self._reload_list()
+        except Exception as exc:
+            self._set_error(exc)
+
+    @Slot(str, str)
+    def setFilterDateRange(self, start_iso: str, end_iso: str) -> None:
+        try:
+            self._clear_error()
+            start = _parse_iso_date(start_iso, field_name="start date")
+            end = _parse_iso_date(end_iso, field_name="end date")
+            if start > end:
+                msg = "Start date must be on or before end date"
+                raise ValueError(msg)
+            if start == self._start_date and end == self._end_date:
+                return
+            self._start_date = start
+            self._end_date = end
+            self.filterDateRangeChanged.emit()
+            self.filtersChanged.emit()
+            self._reload_list()
+        except Exception as exc:
+            self._set_error(exc)
+
+    @Slot(str)
+    def setSearchText(self, text: str) -> None:
+        self._pending_list_search_text = text
+        if text != self._search_text:
+            self._search_text = text
+            self.searchTextChanged.emit()
+        self._list_search_timer.start()
+
+    @Slot()
+    def clearFilters(self) -> None:
+        try:
+            self._clear_error()
+            self._search = None
+            self._start_date = None
+            self._end_date = None
+            self._pending_list_search_text = ""
+            if self._search_text != "":
+                self._search_text = ""
+                self.searchTextChanged.emit()
+            self.filterDateRangeChanged.emit()
+            self.filtersChanged.emit()
+            self._reload_list()
         except Exception as exc:
             self._set_error(exc)
 
@@ -192,6 +304,16 @@ class RecordedExpensesViewModel(QObject):
             self._place_suggestions,
         )
 
+    def _run_list_search(self) -> None:
+        try:
+            self._clear_error()
+            stripped = self._pending_list_search_text.strip()
+            self._search = stripped if stripped else None
+            self.filtersChanged.emit()
+            self._reload_list()
+        except Exception as exc:
+            self._set_error(exc)
+
     def _run_label_search(
         self,
         prefix: str,
@@ -205,8 +327,25 @@ class RecordedExpensesViewModel(QObject):
         except Exception as exc:
             self._set_error(exc)
 
+    def _has_list_filters(self) -> bool:
+        return (
+            self._search is not None or self._start_date is not None or self._end_date is not None
+        )
+
     def _reload_list(self) -> None:
-        items = list(self._expense_repo.list_recent(self._list_limit))
+        if self._has_list_filters():
+            items = list(
+                self._expense_repo.list_filtered(
+                    RecordedExpenseListFilters(
+                        start_date=self._start_date,
+                        end_date=self._end_date,
+                        search=self._search,
+                        limit=self._list_limit,
+                    )
+                )
+            )
+        else:
+            items = list(self._expense_repo.list_recent(self._list_limit))
         self._list_model.reset(items)
         self.expensesChanged.emit()
 
