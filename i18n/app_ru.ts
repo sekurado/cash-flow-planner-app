@@ -618,17 +618,17 @@
 <context>
     <name>DatePicker</name>
     <message>
-        <location filename="../qml/components/DatePicker.qml" line="84"/>
+        <location filename="../qml/components/DatePicker.qml" line="278"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="../qml/components/DatePicker.qml" line="137"/>
+        <location filename="../qml/components/DatePicker.qml" line="140"/>
         <source>Previous month</source>
         <translation>Предыдущий месяц</translation>
     </message>
     <message>
-        <location filename="../qml/components/DatePicker.qml" line="160"/>
+        <location filename="../qml/components/DatePicker.qml" line="163"/>
         <source>Next month</source>
         <translation>Следующий месяц</translation>
     </message>
@@ -961,6 +961,115 @@
     <message>
         <source>Save entry</source>
         <translation type="vanished">Сохранить запись</translation>
+    </message>
+</context>
+<context>
+    <name>ExpenseAnalyticsPanel</name>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="16"/>
+        <source>Overview</source>
+        <translation>Обзор</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="32"/>
+        <source>Top categories</source>
+        <translation>Основные категории</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="35"/>
+        <source>No category spending in this period.</source>
+        <translation>Нет расходов по категориям за этот период.</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="40"/>
+        <source>Top places</source>
+        <translation>Основные места</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="43"/>
+        <source>No place spending in this period.</source>
+        <translation>Нет расходов по местам за этот период.</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="48"/>
+        <source>Top names</source>
+        <translation>Основные наименования</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="51"/>
+        <source>No name spending in this period.</source>
+        <translation>Нет расходов по наименованиям за этот период.</translation>
+    </message>
+</context>
+<context>
+    <name>ExpenseBucketBarChart</name>
+    <message>
+        <location filename="../qml/components/ExpenseBucketBarChart.qml" line="16"/>
+        <source>No spending in this period.</source>
+        <translation>Нет расходов за этот период.</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseBucketBarChart.qml" line="44"/>
+        <source>Other</source>
+        <translation>Прочее</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseBucketBarChart.qml" line="217"/>
+        <source>Amount (%1)</source>
+        <translation>Сумма (%1)</translation>
+    </message>
+</context>
+<context>
+    <name>ExpenseFilterBar</name>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="93"/>
+        <source>Search name, category, place, or note</source>
+        <translation>Поиск по наименованию, категории, месту или заметке</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="94"/>
+        <source>Search expenses</source>
+        <translation>Поиск расходов</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="111"/>
+        <source>This month</source>
+        <translation>Этот месяц</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="112"/>
+        <source>Last 30 days</source>
+        <translation>Последние 30 дней</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="113"/>
+        <source>Year to date</source>
+        <translation>С начала года</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="114"/>
+        <source>Custom</source>
+        <translation>Произвольный</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="144"/>
+        <source>From</source>
+        <translation type="unfinished">Из</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="162"/>
+        <source>To</source>
+        <translation type="unfinished">В</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="176"/>
+        <source>Apply</source>
+        <translation>Применить</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="184"/>
+        <source>Clear filters</source>
+        <translation>Сбросить фильтры</translation>
     </message>
 </context>
 <context>
@@ -2106,95 +2215,95 @@ The previous day’s closing balance becomes the next day’s starting point, pr
 <context>
     <name>RecordedExpenseFormDrawer</name>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="94"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="95"/>
         <source>Add recorded expense</source>
-        <translation>Добавить записанный расход</translation>
+        <translation>Добавить расход</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="95"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="96"/>
         <source>Edit recorded expense</source>
         <translation>Изменить записанный расход</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="104"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="105"/>
         <source>Close</source>
         <translation type="unfinished">Закрыть</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="200"/>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="211"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="201"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="212"/>
         <source>Amount</source>
         <translation type="unfinished">Сумма</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="209"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="210"/>
         <source>0.00</source>
         <translation type="unfinished">0.00</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="224"/>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="234"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="225"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="235"/>
         <source>Currency</source>
         <translation type="unfinished">Валюта</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="244"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="245"/>
         <source>Date</source>
         <translation type="unfinished">Дата</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="258"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="261"/>
         <source>Name</source>
         <translation type="unfinished">Название</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="259"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="262"/>
         <source>e.g. Groceries</source>
         <translation>напр. Продукты</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="269"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="272"/>
         <source>Category</source>
         <translation type="unfinished">Категория</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="270"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="273"/>
         <source>e.g. Food</source>
         <translation>напр. Еда</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="279"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="282"/>
         <source>Place</source>
         <translation>Место</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="280"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="283"/>
         <source>e.g. Whole Foods</source>
         <translation>напр. Whole Foods</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="292"/>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="302"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="295"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="305"/>
         <source>Note</source>
         <translation>Заметка</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="292"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="295"/>
         <source>optional</source>
         <translation>необязательно</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="301"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="304"/>
         <source>Add a note</source>
         <translation>Добавить заметку</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="312"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="315"/>
         <source>Save</source>
         <translation type="unfinished">Сохранить</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="316"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="319"/>
         <source>Save recorded expense</source>
         <translation>Сохранить записанный расход</translation>
     </message>
@@ -2218,37 +2327,53 @@ The previous day’s closing balance becomes the next day’s starting point, pr
         <translation type="unfinished">Удалить %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="188"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="208"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="292"/>
+        <source>No matching expenses</source>
+        <translation>Нет подходящих расходов</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="222"/>
+        <source>Try a different search term or clear filters.</source>
+        <translation>Попробуйте другой поисковый запрос или сбросьте фильтры.</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="265"/>
         <source>No recorded expenses yet</source>
-        <translation>Записанных расходов пока нет</translation>
+        <translation>Пока нет записанных расходов</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="196"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="273"/>
         <source>Add your first recorded expense using the + button</source>
-        <translation>Добавьте первый записанный расход с помощью кнопки +</translation>
+        <translation>Добавьте первый расход с помощью кнопки +</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="219"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="300"/>
+        <source>Try adjusting your search or date range, or clear filters.</source>
+        <translation>Измените поиск или диапазон дат либо сбросьте фильтры.</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="323"/>
         <source>Add recorded expense</source>
-        <translation>Добавить записанный расход</translation>
+        <translation>Добавить расход</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="254"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="358"/>
         <source>Delete recorded expense</source>
-        <translation>Удалить записанный расход</translation>
+        <translation>Удалить расход</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="268"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="372"/>
         <source>Delete &quot;%1&quot;?</source>
         <translation type="unfinished">Удалить «%1»?</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="275"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="379"/>
         <source>Cancel</source>
         <translation type="unfinished">Отмена</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="282"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="386"/>
         <source>Delete</source>
         <translation type="unfinished">Удалить</translation>
     </message>

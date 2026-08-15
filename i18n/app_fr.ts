@@ -618,17 +618,17 @@
 <context>
     <name>DatePicker</name>
     <message>
-        <location filename="../qml/components/DatePicker.qml" line="84"/>
+        <location filename="../qml/components/DatePicker.qml" line="278"/>
         <source>Date</source>
         <translation>Date</translation>
     </message>
     <message>
-        <location filename="../qml/components/DatePicker.qml" line="137"/>
+        <location filename="../qml/components/DatePicker.qml" line="140"/>
         <source>Previous month</source>
         <translation>Mois précédent</translation>
     </message>
     <message>
-        <location filename="../qml/components/DatePicker.qml" line="160"/>
+        <location filename="../qml/components/DatePicker.qml" line="163"/>
         <source>Next month</source>
         <translation>Mois suivant</translation>
     </message>
@@ -961,6 +961,115 @@
     <message>
         <source>Save entry</source>
         <translation type="vanished">Enregistrer l&amp;apos;entrée</translation>
+    </message>
+</context>
+<context>
+    <name>ExpenseAnalyticsPanel</name>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="16"/>
+        <source>Overview</source>
+        <translation>Aperçu</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="32"/>
+        <source>Top categories</source>
+        <translation>Principales catégories</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="35"/>
+        <source>No category spending in this period.</source>
+        <translation>Aucune dépense par catégorie sur cette période.</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="40"/>
+        <source>Top places</source>
+        <translation>Principaux lieux</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="43"/>
+        <source>No place spending in this period.</source>
+        <translation>Aucune dépense par lieu sur cette période.</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="48"/>
+        <source>Top names</source>
+        <translation>Principaux libellés</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseAnalyticsPanel.qml" line="51"/>
+        <source>No name spending in this period.</source>
+        <translation>Aucune dépense par libellé sur cette période.</translation>
+    </message>
+</context>
+<context>
+    <name>ExpenseBucketBarChart</name>
+    <message>
+        <location filename="../qml/components/ExpenseBucketBarChart.qml" line="16"/>
+        <source>No spending in this period.</source>
+        <translation>Aucune dépense sur cette période.</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseBucketBarChart.qml" line="44"/>
+        <source>Other</source>
+        <translation>Autre</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseBucketBarChart.qml" line="217"/>
+        <source>Amount (%1)</source>
+        <translation>Montant (%1)</translation>
+    </message>
+</context>
+<context>
+    <name>ExpenseFilterBar</name>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="93"/>
+        <source>Search name, category, place, or note</source>
+        <translation>Rechercher un libellé, une catégorie, un lieu ou une note</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="94"/>
+        <source>Search expenses</source>
+        <translation>Rechercher des dépenses</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="111"/>
+        <source>This month</source>
+        <translation>Ce mois-ci</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="112"/>
+        <source>Last 30 days</source>
+        <translation>30 derniers jours</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="113"/>
+        <source>Year to date</source>
+        <translation>Depuis le début de l'année</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="114"/>
+        <source>Custom</source>
+        <translation>Personnalisé</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="144"/>
+        <source>From</source>
+        <translation type="unfinished">De</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="162"/>
+        <source>To</source>
+        <translation type="unfinished">Vers</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="176"/>
+        <source>Apply</source>
+        <translation>Appliquer</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ExpenseFilterBar.qml" line="184"/>
+        <source>Clear filters</source>
+        <translation>Effacer les filtres</translation>
     </message>
 </context>
 <context>
@@ -2106,95 +2215,95 @@ Le solde de clôture du jour précédent devient le point de départ du jour sui
 <context>
     <name>RecordedExpenseFormDrawer</name>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="94"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="95"/>
         <source>Add recorded expense</source>
         <translation>Ajouter une dépense enregistrée</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="95"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="96"/>
         <source>Edit recorded expense</source>
         <translation>Modifier la dépense enregistrée</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="104"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="105"/>
         <source>Close</source>
         <translation type="unfinished">Fermer</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="200"/>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="211"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="201"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="212"/>
         <source>Amount</source>
         <translation type="unfinished">Montant</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="209"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="210"/>
         <source>0.00</source>
         <translation type="unfinished">0.00</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="224"/>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="234"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="225"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="235"/>
         <source>Currency</source>
         <translation type="unfinished">Devise</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="244"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="245"/>
         <source>Date</source>
         <translation type="unfinished">Date</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="258"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="261"/>
         <source>Name</source>
         <translation type="unfinished">Nom</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="259"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="262"/>
         <source>e.g. Groceries</source>
         <translation>ex. Courses</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="269"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="272"/>
         <source>Category</source>
         <translation type="unfinished">Catégorie</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="270"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="273"/>
         <source>e.g. Food</source>
         <translation>ex. Alimentation</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="279"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="282"/>
         <source>Place</source>
         <translation>Lieu</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="280"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="283"/>
         <source>e.g. Whole Foods</source>
         <translation>ex. Whole Foods</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="292"/>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="302"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="295"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="305"/>
         <source>Note</source>
         <translation>Note</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="292"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="295"/>
         <source>optional</source>
         <translation>facultatif</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="301"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="304"/>
         <source>Add a note</source>
         <translation>Ajouter une note</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="312"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="315"/>
         <source>Save</source>
         <translation type="unfinished">Enregistrer</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="316"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="319"/>
         <source>Save recorded expense</source>
         <translation>Enregistrer la dépense</translation>
     </message>
@@ -2218,37 +2327,53 @@ Le solde de clôture du jour précédent devient le point de départ du jour sui
         <translation type="unfinished">Supprimer %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="188"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="208"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="292"/>
+        <source>No matching expenses</source>
+        <translation>Aucune dépense correspondante</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="222"/>
+        <source>Try a different search term or clear filters.</source>
+        <translation>Essayez un autre terme de recherche ou effacez les filtres.</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="265"/>
         <source>No recorded expenses yet</source>
         <translation>Aucune dépense enregistrée</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="196"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="273"/>
         <source>Add your first recorded expense using the + button</source>
         <translation>Ajoutez votre première dépense enregistrée avec le bouton +</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="219"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="300"/>
+        <source>Try adjusting your search or date range, or clear filters.</source>
+        <translation>Modifiez votre recherche ou la plage de dates, ou effacez les filtres.</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="323"/>
         <source>Add recorded expense</source>
         <translation>Ajouter une dépense enregistrée</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="254"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="358"/>
         <source>Delete recorded expense</source>
         <translation>Supprimer la dépense enregistrée</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="268"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="372"/>
         <source>Delete &quot;%1&quot;?</source>
         <translation type="unfinished">Supprimer « %1 » ?</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="275"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="379"/>
         <source>Cancel</source>
         <translation type="unfinished">Annuler</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RecordedExpensesPage.qml" line="282"/>
+        <location filename="../qml/pages/RecordedExpensesPage.qml" line="386"/>
         <source>Delete</source>
         <translation type="unfinished">Supprimer</translation>
     </message>

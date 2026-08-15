@@ -57,6 +57,22 @@ def _expense(
 
 
 @pytest.mark.unit
+def test_aggregate_empty_expenses_returns_zero_totals() -> None:
+    result = ExpenseAnalyticsEngine.aggregate(
+        [],
+        start_date=date(2026, 3, 1),
+        end_date=date(2026, 3, 31),
+        display_currency="USD",
+        exchange_rates=[],
+    )
+
+    assert result.total_amount == pytest.approx(0.0)
+    assert result.by_name == ()
+    assert result.by_category == ()
+    assert result.by_place == ()
+
+
+@pytest.mark.unit
 def test_aggregate_normalizes_multi_currency_and_groups_by_dimension() -> None:
     expenses = [
         _expense(
