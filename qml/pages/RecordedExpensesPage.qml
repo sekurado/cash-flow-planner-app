@@ -171,8 +171,26 @@ Page {
             clip: true
             spacing: 4
             visible: recordedExpensesViewModel.expenseListModel.count > 0
+                   || expenseAnalyticsViewModel.totalAmount > 0
             model: recordedExpensesViewModel.expenseListModel
             boundsBehavior: Flickable.StopAtBounds
+
+            header: ColumnLayout {
+                width: expenseList.width
+                spacing: 0
+
+                Item {
+                    Layout.preferredHeight: ThemeTokens.spaceSm
+                }
+
+                ExpenseAnalyticsPanel {
+                    Layout.fillWidth: true
+                }
+
+                Item {
+                    Layout.preferredHeight: ThemeTokens.spaceMd
+                }
+            }
 
             delegate: ExpenseCardDelegate {}
         }
@@ -180,6 +198,7 @@ Page {
         ColumnLayout {
             anchors.centerIn: parent
             visible: recordedExpensesViewModel.expenseListModel.count === 0
+                     && expenseAnalyticsViewModel.totalAmount === 0
             spacing: ThemeTokens.spaceSm
             width: Math.min(root.width - ThemeTokens.spaceXl * 2, 360)
 
