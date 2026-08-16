@@ -55,3 +55,11 @@ class SuggestionAnalysisError(ValueError):
 
 class RecordedExpenseValidationError(ValueError):
     """Raised when recorded expense input or lookup fails validation."""
+
+
+class ReceiptOcrError(OSError):
+    """Raised when receipt OCR cannot read or process an image file."""
+
+
+class ReceiptOcrUnavailableError(ReceiptOcrError):
+    """Raised when no OCR provider is available on the current platform."""

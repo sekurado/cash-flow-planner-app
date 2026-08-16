@@ -14,6 +14,7 @@ This folder contains all design and architectural documentation for **Cash Flow 
 | [BUILD.md](./BUILD.md) | Local build guide — prerequisites, one-command installer builds for macOS, Windows, and Linux, and notes for sharing unsigned builds. |
 | [pitch/README.md](./pitch/README.md) | Positioning one-pager — problem, solution, audience, and differentiators for stakeholders and future marketing use. |
 | [TERMINOLOGY.md](./TERMINOLOGY.md) | UI vs internal naming glossary — professional user-facing terms (`Forecast`, `Cash flow`, `Cash shortfall`) mapped to unchanged code identifiers (`Plan`, `Entry`, `plan_id`). |
+| [receipt-ocr.md](./receipt-ocr.md) | Story 33 spike — receipt OCR platform matrix, Tier A/B strategy, PyInstaller notes, and `ReceiptOcrProvider` contract. |
 | [DEVELOPMENT_HISTORY.md](./DEVELOPMENT_HISTORY.md) | Story-level roadmap archive (Stories 1–30 completed under legacy `tasks/` workflow; Stories 31+ on GitHub Issues). |
 | [manual/CashFlowPlanner-UserManual_en.pdf](./manual/CashFlowPlanner-UserManual_en.pdf) | Bundled **user manual** PDFs (reference copies for en, fr, ru, es, de). Regenerate with `python scripts/generate_manual.py --all`. See [manual/README.md](./manual/README.md). |
 
