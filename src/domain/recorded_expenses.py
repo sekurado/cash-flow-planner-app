@@ -2,11 +2,13 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from datetime import date
+from pathlib import Path
 from typing import Protocol
 
 from pydantic import BaseModel, ConfigDict, field_validator
 
 from src.domain.exceptions import RecordedExpenseValidationError
+from src.domain.receipt_image_store import ReceiptImageStore
 
 
 class ExpenseName(BaseModel):
@@ -39,6 +41,7 @@ class RecordedExpense(BaseModel):
     category_id: str | None = None
     place_id: str | None = None
     note: str | None = None
+    receipt_image_path: str | None = None
     created_at: str
     updated_at: str
 
@@ -97,6 +100,7 @@ class RecordedExpensePersistDto(BaseModel):
     category_id: str | None = None
     place_id: str | None = None
     note: str | None = None
+    receipt_image_path: str | None = None
 
 
 class AbstractExpenseNameRepository(Protocol):
@@ -124,6 +128,12 @@ class AbstractRecordedExpenseRepository(Protocol):
 
     def update(self, expense_id: str, dto: RecordedExpensePersistDto) -> RecordedExpense: ...
 
+    def update_receipt_image_path(
+        self,
+        expense_id: str,
+        receipt_image_path: str | None,
+    ) -> RecordedExpense: ...
+
     def delete(self, expense_id: str) -> None: ...
 
 
@@ -139,11 +149,14 @@ class RecordedExpenseService:
         name_repo: AbstractExpenseNameRepository,
         category_repo: AbstractExpenseCategoryRepository,
         place_repo: AbstractExpensePlaceRepository,
+        *,
+        receipt_image_store: ReceiptImageStore | None = None,
     ) -> None:
         self._expense_repo = expense_repo
         self._name_repo = name_repo
         self._category_repo = category_repo
         self._place_repo = place_repo
+        self._receipt_image_store = receipt_image_store
 
     def create(self, data: RecordedExpenseCreate) -> RecordedExpense:
         persist_dto = self._resolve_persist_dto(data)
@@ -157,10 +170,33 @@ class RecordedExpenseService:
         return self._expense_repo.update(expense_id, persist_dto)
 
     def delete(self, expense_id: str) -> None:
-        if self._expense_repo.find_by_id(expense_id) is None:
+        expense = self._expense_repo.find_by_id(expense_id)
+        if expense is None:
             msg = f"Recorded expense not found: {expense_id}"
             raise RecordedExpenseValidationError(msg)
+        if self._receipt_image_store is not None:
+            self._receipt_image_store.delete_receipt_image(expense.receipt_image_path)
         self._expense_repo.delete(expense_id)
+
+    def attach_receipt_image(self, expense_id: str, source_image: Path) -> RecordedExpense:
+        expense = self._expense_repo.find_by_id(expense_id)
+        if expense is None:
+            msg = f"Recorded expense not found: {expense_id}"
+            raise RecordedExpenseValidationError(msg)
+        if self._receipt_image_store is None:
+            msg = "Receipt image storage is not configured"
+            raise RecordedExpenseValidationError(msg)
+
+        relative_path = self._receipt_image_store.save_receipt_image(expense_id, source_image)
+        previous_path = expense.receipt_image_path
+        try:
+            updated = self._expense_repo.update_receipt_image_path(expense_id, relative_path)
+        except Exception:
+            self._receipt_image_store.delete_receipt_image(relative_path)
+            raise
+        if previous_path and previous_path != relative_path:
+            self._receipt_image_store.delete_receipt_image(previous_path)
+        return updated
 
     def _resolve_persist_dto(self, data: RecordedExpenseCreate) -> RecordedExpensePersistDto:
         name = self._name_repo.get_or_create(data.name)

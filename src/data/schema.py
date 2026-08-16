@@ -144,6 +144,7 @@ recorded_expenses = Table(
         nullable=True,
     ),
     Column("note", String, nullable=True),
+    Column("receipt_image_path", String, nullable=True),
     Column("created_at", String, nullable=False),
     Column("updated_at", String, nullable=False),
     Index("ix_recorded_expenses_occurred_on", "occurred_on"),

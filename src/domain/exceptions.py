@@ -63,3 +63,11 @@ class ReceiptOcrError(OSError):
 
 class ReceiptOcrUnavailableError(ReceiptOcrError):
     """Raised when no OCR provider is available on the current platform."""
+
+
+class ReceiptImageError(OSError):
+    """Raised when a receipt image file cannot be stored or removed."""
+
+
+class ReceiptImagePathError(ReceiptImageError):
+    """Raised when a receipt image path is outside the app data directory."""

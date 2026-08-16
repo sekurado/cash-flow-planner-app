@@ -172,6 +172,7 @@ class SqliteRecordedExpenseRepository:
                 category_id=dto.category_id,
                 place_id=dto.place_id,
                 note=dto.note,
+                receipt_image_path=dto.receipt_image_path,
                 created_at=now,
                 updated_at=now,
             )
@@ -193,6 +194,28 @@ class SqliteRecordedExpenseRepository:
                 category_id=dto.category_id,
                 place_id=dto.place_id,
                 note=dto.note,
+                receipt_image_path=dto.receipt_image_path,
+                updated_at=now,
+            )
+        )
+        if result.rowcount == 0:
+            msg = f"Recorded expense not found: {expense_id}"
+            raise ValueError(msg)
+        expense = self.find_by_id(expense_id)
+        assert expense is not None
+        return expense
+
+    def update_receipt_image_path(
+        self,
+        expense_id: str,
+        receipt_image_path: str | None,
+    ) -> RecordedExpense:
+        now = _utc_now_iso()
+        result = self._conn.execute(
+            update(recorded_expenses)
+            .where(recorded_expenses.c.id == expense_id)
+            .values(
+                receipt_image_path=receipt_image_path,
                 updated_at=now,
             )
         )

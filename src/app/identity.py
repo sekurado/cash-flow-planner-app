@@ -7,6 +7,7 @@ QML_MODULE_VERSION_MAJOR = 1
 QML_MODULE_VERSION_MINOR = 0
 PYPROJECT_NAME = "cash-flow-planner-desktop"
 DB_FILENAME = "cash_flow_planner.db"
+RECEIPTS_DIRECTORY_NAME = "receipts"
 CRASH_LOG_FILENAME = "crash.log"
 CRASH_LOGGER_NAME = "cash_flow_planner.crash"
 RUNTIME_ARGV_NAME = "cash-flow-planner"

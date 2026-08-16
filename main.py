@@ -64,6 +64,7 @@ from src.data.repositories.expense_dictionary_repo import (
 from src.data.repositories.plan_repo import SqlitePlanRepository
 from src.data.repositories.recorded_expense_repo import SqliteRecordedExpenseRepository
 from src.data.repositories.simulation_run_repo import SqliteSimulationRunRepository
+from src.domain.receipt_image_store import ReceiptImageStore
 from src.domain.recorded_expenses import RecordedExpenseService
 from src.export.plan_exporter import PlanExporter
 from src.integrations.exchange_rate_fetcher import configure_dev_mode
@@ -290,11 +291,13 @@ def bootstrap_view_models(
     expense_category_repo = SqliteExpenseCategoryRepository(db_conn)
     expense_place_repo = SqliteExpensePlaceRepository(db_conn)
     recorded_expense_repo = SqliteRecordedExpenseRepository(db_conn)
+    receipt_image_store = ReceiptImageStore(app_data_directory())
     recorded_expense_service = RecordedExpenseService(
         recorded_expense_repo,
         expense_name_repo,
         expense_category_repo,
         expense_place_repo,
+        receipt_image_store=receipt_image_store,
     )
 
     plan_vm = PlanViewModel(

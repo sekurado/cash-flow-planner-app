@@ -54,7 +54,7 @@ def blank_memory_connection() -> Generator[Connection, None, None]:
 def test_alembic_history_has_four_revisions_in_order() -> None:
     script = ScriptDirectory.from_config(Config(str(ALEMBIC_INI)))
     revisions = [revision.revision for revision in script.walk_revisions()]
-    assert revisions == ["0008", "0007", "0006", "0005", "0003", "0002", "0001"]
+    assert revisions == ["0009", "0008", "0007", "0006", "0005", "0003", "0002", "0001"]
 
 
 @pytest.mark.integration

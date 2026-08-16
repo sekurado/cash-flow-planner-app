@@ -84,6 +84,7 @@ class FakeRecordedExpenseRepository:
             category_id=dto.category_id,
             place_id=dto.place_id,
             note=dto.note,
+            receipt_image_path=dto.receipt_image_path,
             created_at=now,
             updated_at=now,
         )
@@ -101,7 +102,23 @@ class FakeRecordedExpenseRepository:
                 "category_id": dto.category_id,
                 "place_id": dto.place_id,
                 "note": dto.note,
+                "receipt_image_path": dto.receipt_image_path,
                 "updated_at": "2026-08-01T01:00:00+00:00",
+            }
+        )
+        self._expenses[expense_id] = updated
+        return updated
+
+    def update_receipt_image_path(
+        self,
+        expense_id: str,
+        receipt_image_path: str | None,
+    ) -> RecordedExpense:
+        existing = self._expenses[expense_id]
+        updated = existing.model_copy(
+            update={
+                "receipt_image_path": receipt_image_path,
+                "updated_at": "2026-08-01T02:00:00+00:00",
             }
         )
         self._expenses[expense_id] = updated
