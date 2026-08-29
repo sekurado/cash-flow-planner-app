@@ -32,6 +32,10 @@ dev = [
     "watchdog",
     "poethepoet",
 ]
+ocr-macos = [
+    "pyobjc-framework-Vision",
+    "pyobjc-framework-Cocoa",
+]
 
 [tool.poe.tasks.i18n-update]
 help = "Extract translatable strings from QML into .ts files"

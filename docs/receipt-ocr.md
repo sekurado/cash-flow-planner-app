@@ -94,8 +94,8 @@ class ReceiptOcrProvider(Protocol):
 - `provider_id: str` — e.g. `vision-macos`, `winrt-ocr`, `tesseract`, `cloud-document-ai`.
 - `overall_confidence: float` — aggregate score for the review UI (mean of line confidences unless the provider supplies a better signal).
 
-Implementations live under `src/integrations/receipt_ocr/` (added in later tasks). The domain
-protocol stays stable so unit tests can mock OCR without loading native libraries.
+Implementations live under `src/integrations/receipt_ocr/`. The domain protocol stays stable so
+unit tests can mock OCR without loading native libraries.
 
 **Errors:** `ReceiptOcrUnavailableError` (platform unsupported), `ReceiptOcrError` (bad file /
 processing failure).
@@ -136,9 +136,24 @@ Task 33_3 may add anonymized fixture images and parser-only tests (text blobs, n
 |------|-------------|
 | **33_1** (this doc) | `docs/receipt-ocr.md` + `ReceiptOcrProvider` protocol |
 | 33_2 | Receipt file storage + schema column |
-| 33_3 | macOS Vision provider + `ReceiptFieldParser` |
+| 33_3 | macOS Vision provider + `ReceiptFieldParser` + `ReceiptOcrWorker` |
 | 33_4 | Review UI + `QRunnable` wiring |
 | 33_5 | Tests, i18n, DESIGN.md **FR-27**, BUILD.md native deps |
+
+### Task 33_3 implementation notes
+
+- **Parser:** `src/domain/receipt_field_parser.py` (`ReceiptFieldParser`) maps OCR lines to
+  amount / date / merchant hints with per-field confidence. Unit tests use fixture text blobs
+  (`tests/unit/test_receipt_field_parser.py`) — no images in CI.
+- **macOS:** `MacosVisionOcrProvider` lazy-imports PyObjC Vision. Install extra `ocr-macos` for
+  source runs. Missing PyObjC raises `ReceiptOcrUnavailableError`.
+- **Windows / Linux:** `UnsupportedReceiptOcrProvider` raises `ReceiptOcrUnavailableError` with a
+  clear manual-entry message. WinRT OCR was evaluated and **stubbed for v1** (packaging + CI cost;
+  revisit in a later story).
+- **Worker:** `src/app/workers/receipt_ocr_worker.py` runs `extract_text` + `parse` on a
+  `QRunnable` and emits a JSON-ready dict. ViewModel / QML wiring is Task 33_4.
+- **Factory:** `create_receipt_ocr_provider()` / `receipt_ocr_is_available()` in
+  `src/integrations/receipt_ocr/`.
 
 ---
 
@@ -146,4 +161,5 @@ Task 33_3 may add anonymized fixture images and parser-only tests (text blobs, n
 
 - **Camera capture** vs file picker only in v1 (file picker first).
 - **PyObjC** vs small Swift/ObjC helper binary for Vision.
-- **Windows/Linux stubs:** disable “Scan receipt” button vs show dialog explaining limited support.
+- **Windows/Linux stubs:** disable “Scan receipt” button vs show dialog explaining limited support
+  (provider already raises `ReceiptOcrUnavailableError`; 33_4 chooses the UI).
