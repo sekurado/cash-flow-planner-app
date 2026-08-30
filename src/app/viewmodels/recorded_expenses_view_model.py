@@ -1,14 +1,17 @@
 from __future__ import annotations
 
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from datetime import date, timedelta
+from pathlib import Path
+from typing import Any
 
-from PySide6.QtCore import Property, QObject, QTimer, Signal, Slot
+from PySide6.QtCore import Property, QObject, QThreadPool, QTimer, Signal, Slot
 
 from src.app.models.label_suggestion_model import LabelSuggestion, LabelSuggestionModel
 from src.app.models.recorded_expense_list_model import RecordedExpenseListModel
 from src.app.qml_variant import coerce_mapping
 from src.app.viewmodels.error_support import ErrorSupport
+from src.app.workers.receipt_ocr_worker import ReceiptOcrWorker
 from src.data.repositories.expense_dictionary_repo import (
     SqliteExpenseCategoryRepository,
     SqliteExpenseNameRepository,
@@ -18,6 +21,8 @@ from src.data.repositories.recorded_expense_repo import (
     RecordedExpenseListFilters,
     SqliteRecordedExpenseRepository,
 )
+from src.domain.receipt_field_parser import ReceiptFieldParser
+from src.domain.receipt_ocr import ReceiptOcrProvider
 from src.domain.recorded_expenses import (
     ExpenseCategory,
     ExpenseName,
@@ -25,6 +30,7 @@ from src.domain.recorded_expenses import (
     RecordedExpenseCreate,
     RecordedExpenseService,
 )
+from src.integrations.receipt_ocr import create_receipt_ocr_provider, receipt_ocr_is_available
 
 _DEFAULT_LIST_LIMIT = 200
 _DEFAULT_SEARCH_LIMIT = 12
@@ -56,6 +62,8 @@ class RecordedExpensesViewModel(QObject):
     searchTextChanged = Signal()
     filterDateRangeChanged = Signal()
     filtersChanged = Signal()
+    isOcrRunningChanged = Signal()
+    receiptOcrChanged = Signal()
 
     def __init__(
         self,
@@ -67,6 +75,9 @@ class RecordedExpensesViewModel(QObject):
         *,
         list_limit: int = _DEFAULT_LIST_LIMIT,
         search_limit: int = _DEFAULT_SEARCH_LIMIT,
+        ocr_provider: ReceiptOcrProvider | None = None,
+        field_parser: ReceiptFieldParser | None = None,
+        ocr_available: bool | None = None,
         parent: QObject | None = None,
     ) -> None:
         super().__init__(parent)
@@ -77,6 +88,21 @@ class RecordedExpensesViewModel(QObject):
         self._place_repo = place_repo
         self._list_limit = list_limit
         self._search_limit = search_limit
+        self._ocr_provider = (
+            ocr_provider if ocr_provider is not None else create_receipt_ocr_provider()
+        )
+        self._field_parser = field_parser if field_parser is not None else ReceiptFieldParser()
+        self._ocr_available = receipt_ocr_is_available() if ocr_available is None else ocr_available
+        self._ocr_worker: ReceiptOcrWorker | None = None
+        self._is_ocr_running = False
+        self._pending_receipt_path = ""
+        self._suggested_amount = ""
+        self._suggested_occurred_on = ""
+        self._suggested_merchant = ""
+        self._amount_is_low_confidence = False
+        self._date_is_low_confidence = False
+        self._merchant_is_low_confidence = False
+        self._has_receipt_suggestions = False
         self._list_model = RecordedExpenseListModel(parent=self)
         self._name_suggestions = LabelSuggestionModel(parent=self)
         self._category_suggestions = LabelSuggestionModel(parent=self)
@@ -134,6 +160,46 @@ class RecordedExpensesViewModel(QObject):
     @Property(bool, notify=filtersChanged)
     def hasActiveFilters(self) -> bool:
         return self._has_list_filters()
+
+    @Property(bool, constant=True)
+    def receiptOcrAvailable(self) -> bool:
+        return self._ocr_available
+
+    @Property(bool, notify=isOcrRunningChanged)
+    def isOcrRunning(self) -> bool:
+        return self._is_ocr_running
+
+    @Property(str, notify=receiptOcrChanged)
+    def pendingReceiptPath(self) -> str:
+        return self._pending_receipt_path
+
+    @Property(str, notify=receiptOcrChanged)
+    def suggestedAmount(self) -> str:
+        return self._suggested_amount
+
+    @Property(str, notify=receiptOcrChanged)
+    def suggestedOccurredOn(self) -> str:
+        return self._suggested_occurred_on
+
+    @Property(str, notify=receiptOcrChanged)
+    def suggestedMerchant(self) -> str:
+        return self._suggested_merchant
+
+    @Property(bool, notify=receiptOcrChanged)
+    def amountIsLowConfidence(self) -> bool:
+        return self._amount_is_low_confidence
+
+    @Property(bool, notify=receiptOcrChanged)
+    def dateIsLowConfidence(self) -> bool:
+        return self._date_is_low_confidence
+
+    @Property(bool, notify=receiptOcrChanged)
+    def merchantIsLowConfidence(self) -> bool:
+        return self._merchant_is_low_confidence
+
+    @Property(bool, notify=receiptOcrChanged)
+    def hasReceiptSuggestions(self) -> bool:
+        return self._has_receipt_suggestions
 
     @Slot()
     @Slot(int)
@@ -225,8 +291,52 @@ class RecordedExpensesViewModel(QObject):
                 coerce_mapping(dto, label="Recorded expense create data")
             )
             created = self._service.create(create_dto)
+            pending_path = self._pending_receipt_path
+            if pending_path:
+                try:
+                    self._service.attach_receipt_image(created.id, Path(pending_path))
+                except Exception as attach_exc:
+                    self._clear_receipt_ocr_state()
+                    self._reload_list()
+                    self.expenseCreated.emit(created.id)
+                    self._set_error(attach_exc)
+                    return
+            self._clear_receipt_ocr_state()
             self._reload_list()
             self.expenseCreated.emit(created.id)
+        except Exception as exc:
+            self._set_error(exc)
+
+    @Slot(str)
+    def startReceiptOcr(self, image_path: str) -> None:
+        try:
+            self._clear_error()
+            if self._is_ocr_running:
+                return
+            path = Path(image_path).expanduser()
+            if not path.is_file():
+                msg = f"Receipt image not found: {path}"
+                raise ValueError(msg)
+            self._pending_receipt_path = str(path.resolve())
+            self._reset_suggestions()
+            self._is_ocr_running = True
+            self.isOcrRunningChanged.emit()
+            self.receiptOcrChanged.emit()
+            worker = ReceiptOcrWorker(self._ocr_provider, self._field_parser, path)
+            worker.signals.finished.connect(self._on_ocr_finished)
+            worker.signals.error.connect(self._on_ocr_error)
+            self._ocr_worker = worker
+            QThreadPool.globalInstance().start(worker)
+        except Exception as exc:
+            self._is_ocr_running = False
+            self.isOcrRunningChanged.emit()
+            self._set_error(exc)
+
+    @Slot()
+    def clearReceiptOcr(self) -> None:
+        try:
+            self._clear_error()
+            self._clear_receipt_ocr_state()
         except Exception as exc:
             self._set_error(exc)
 
@@ -349,6 +459,60 @@ class RecordedExpensesViewModel(QObject):
         self._list_model.reset(items)
         self.expensesChanged.emit()
 
+    def _on_ocr_finished(self, payload: object) -> None:
+        if not self._is_ocr_running:
+            return
+        self._ocr_worker = None
+        self._is_ocr_running = False
+        fields = _ocr_fields(payload)
+        self._suggested_amount = _format_suggested_amount(fields.get("amount"))
+        occurred_on = fields.get("occurred_on")
+        self._suggested_occurred_on = occurred_on if isinstance(occurred_on, str) else ""
+        merchant = fields.get("merchant")
+        self._suggested_merchant = merchant.strip() if isinstance(merchant, str) else ""
+        self._amount_is_low_confidence = bool(fields.get("amount_is_low_confidence", True))
+        self._date_is_low_confidence = bool(fields.get("date_is_low_confidence", True))
+        self._merchant_is_low_confidence = bool(fields.get("merchant_is_low_confidence", True))
+        self._has_receipt_suggestions = True
+        self.isOcrRunningChanged.emit()
+        self.receiptOcrChanged.emit()
+
+    def _on_ocr_error(self, message: str) -> None:
+        if not self._is_ocr_running:
+            return
+        self._ocr_worker = None
+        self._is_ocr_running = False
+        self._reset_suggestions()
+        self.isOcrRunningChanged.emit()
+        self.receiptOcrChanged.emit()
+        self._set_error(message)
+
+    def _clear_receipt_ocr_state(self) -> None:
+        was_running = self._is_ocr_running
+        had_state = (
+            was_running
+            or self._pending_receipt_path != ""
+            or self._has_receipt_suggestions
+            or self._ocr_worker is not None
+        )
+        self._ocr_worker = None
+        self._is_ocr_running = False
+        self._pending_receipt_path = ""
+        self._reset_suggestions()
+        if was_running:
+            self.isOcrRunningChanged.emit()
+        if had_state:
+            self.receiptOcrChanged.emit()
+
+    def _reset_suggestions(self) -> None:
+        self._suggested_amount = ""
+        self._suggested_occurred_on = ""
+        self._suggested_merchant = ""
+        self._amount_is_low_confidence = False
+        self._date_is_low_confidence = False
+        self._merchant_is_low_confidence = False
+        self._has_receipt_suggestions = False
+
     def _set_error(self, exc: BaseException | str) -> None:
         if isinstance(exc, BaseException):
             self._errors.set_from_exception(exc)
@@ -359,3 +523,18 @@ class RecordedExpensesViewModel(QObject):
         if not self._errors.clear():
             return
         self.errorChanged.emit()
+
+
+def _ocr_fields(payload: object) -> Mapping[str, Any]:
+    if not isinstance(payload, Mapping):
+        return {}
+    fields = payload.get("fields")
+    if not isinstance(fields, Mapping):
+        return {}
+    return fields
+
+
+def _format_suggested_amount(value: object) -> str:
+    if isinstance(value, bool) or not isinstance(value, int | float):
+        return ""
+    return f"{float(value):.2f}"

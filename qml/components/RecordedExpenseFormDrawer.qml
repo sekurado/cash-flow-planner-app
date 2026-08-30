@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Controls.Material
+import QtQuick.Dialogs
 import QtQuick.Layouts
 
 import ThemeTokens 1.0
@@ -43,8 +44,34 @@ Drawer {
         }
     }
 
+    function localFilePath(fileUrl) {
+        var path = fileUrl.toString()
+        if (!path.startsWith("file://")) {
+            return path
+        }
+        path = decodeURIComponent(path.slice(7))
+        if (Qt.platform.os === "windows" && path.length > 0 && path.charAt(0) === "/") {
+            path = path.slice(1)
+        }
+        return path
+    }
+
+    function receiptImageUrl(path) {
+        if (!path || path === "") {
+            return ""
+        }
+        if (path.startsWith("file:")) {
+            return path
+        }
+        if (Qt.platform.os === "windows") {
+            return "file:///" + path.replace(/\\/g, "/")
+        }
+        return "file://" + path
+    }
+
     function openForCreate() {
         recordedExpensesViewModel.clearError()
+        recordedExpensesViewModel.clearReceiptOcr()
         root.expenseId = ""
         expenseForm.resetForm()
         open()
@@ -52,6 +79,7 @@ Drawer {
 
     function openForEdit(expense) {
         recordedExpensesViewModel.clearError()
+        recordedExpensesViewModel.clearReceiptOcr()
         root.expenseId = expense.expenseId || expense.id || ""
         expenseForm.loadExpense(expense)
         open()
@@ -97,6 +125,15 @@ Drawer {
                 font.pixelSize: ThemeTokens.fontLg
                 font.weight: ThemeTokens.weightBold
                 elide: Text.ElideRight
+            }
+
+            ToolButton {
+                visible: root.expenseId === ""
+                text: qsTr("Scan")
+                font.pixelSize: ThemeTokens.fontSm
+                enabled: !recordedExpensesViewModel.isOcrRunning
+                Accessible.name: qsTr("Scan receipt")
+                onClicked: receiptFileDialog.open()
             }
 
             ToolButton {
@@ -162,7 +199,7 @@ Drawer {
                 }
 
                 function save() {
-                    if (!canSave) {
+                    if (!canSave || recordedExpensesViewModel.isOcrRunning) {
                         return
                     }
 
@@ -186,6 +223,91 @@ Drawer {
                     }
                 }
 
+                function applyReceiptSuggestions() {
+                    if (root.expenseId !== "" || !recordedExpensesViewModel.hasReceiptSuggestions) {
+                        return
+                    }
+                    _syncing = true
+                    if (recordedExpensesViewModel.suggestedAmount !== "") {
+                        amountField.text = recordedExpensesViewModel.suggestedAmount
+                    }
+                    if (recordedExpensesViewModel.suggestedOccurredOn !== "") {
+                        var parsedDate = root.parseIsoDate(recordedExpensesViewModel.suggestedOccurredOn)
+                        datePicker.year = parsedDate.year
+                        datePicker.month = parsedDate.month
+                        datePicker.day = parsedDate.day
+                    }
+                    if (recordedExpensesViewModel.suggestedMerchant !== "") {
+                        nameField.setTextSilently(recordedExpensesViewModel.suggestedMerchant)
+                    }
+                    _syncing = false
+                }
+
+                RowLayout {
+                    visible: root.expenseId === ""
+                             && (recordedExpensesViewModel.isOcrRunning
+                                 || recordedExpensesViewModel.pendingReceiptPath !== "")
+                    Layout.fillWidth: true
+                    spacing: ThemeTokens.spaceSm
+
+                    Rectangle {
+                        Layout.preferredWidth: 64
+                        Layout.preferredHeight: 64
+                        radius: ThemeTokens.radiusSm
+                        color: root.isDark ? "#1E293B" : "#E2E8F0"
+                        clip: true
+
+                        Image {
+                            anchors.fill: parent
+                            visible: recordedExpensesViewModel.pendingReceiptPath !== ""
+                            source: root.receiptImageUrl(recordedExpensesViewModel.pendingReceiptPath)
+                            fillMode: Image.PreserveAspectCrop
+                            asynchronous: true
+                        }
+
+                        BusyIndicator {
+                            anchors.centerIn: parent
+                            width: 28
+                            height: 28
+                            running: recordedExpensesViewModel.isOcrRunning
+                            visible: recordedExpensesViewModel.isOcrRunning
+                        }
+                    }
+
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        Layout.minimumWidth: 0
+                        spacing: 2
+
+                        Label {
+                            Layout.fillWidth: true
+                            text: recordedExpensesViewModel.isOcrRunning
+                                    ? qsTr("Reading receipt…")
+                                    : qsTr("Review suggested fields, then save.")
+                            font.pixelSize: ThemeTokens.fontSm
+                            wrapMode: Text.WordWrap
+                        }
+
+                        Label {
+                            Layout.fillWidth: true
+                            visible: !recordedExpensesViewModel.isOcrRunning
+                            text: qsTr("You can edit any field or enter the expense manually.")
+                            font.pixelSize: ThemeTokens.fontXs
+                            color: Material.secondaryTextColor
+                            wrapMode: Text.WordWrap
+                        }
+                    }
+
+                    Button {
+                        flat: true
+                        text: qsTr("Enter manually")
+                        enabled: !recordedExpensesViewModel.isOcrRunning
+                        Material.foreground: ThemeTokens.primary
+                        Accessible.name: qsTr("Enter manually")
+                        onClicked: recordedExpensesViewModel.clearReceiptOcr()
+                    }
+                }
+
                 RowLayout {
                     Layout.fillWidth: true
                     Layout.minimumWidth: 0
@@ -196,12 +318,34 @@ Drawer {
                         Layout.minimumWidth: 0
                         spacing: ThemeTokens.spaceXs
 
-                        Label {
+                        RowLayout {
                             Layout.fillWidth: true
-                            text: qsTr("Amount")
-                            font.pixelSize: ThemeTokens.fontSm
-                            font.weight: ThemeTokens.weightMedium
-                            color: ThemeTokens.primary
+                            spacing: ThemeTokens.spaceSm
+
+                            Label {
+                                Layout.fillWidth: true
+                                text: qsTr("Amount")
+                                font.pixelSize: ThemeTokens.fontSm
+                                font.weight: ThemeTokens.weightMedium
+                                color: ThemeTokens.primary
+                            }
+
+                            Rectangle {
+                                visible: recordedExpensesViewModel.hasReceiptSuggestions
+                                         && recordedExpensesViewModel.amountIsLowConfidence
+                                implicitHeight: amountConfidenceLabel.implicitHeight + 4
+                                implicitWidth: amountConfidenceLabel.implicitWidth + 10
+                                radius: ThemeTokens.radiusFull
+                                color: root.isDark ? ThemeTokens.deficitAmberBgDark : ThemeTokens.deficitAmberBg
+
+                                Label {
+                                    id: amountConfidenceLabel
+                                    anchors.centerIn: parent
+                                    text: qsTr("Low confidence")
+                                    font.pixelSize: ThemeTokens.fontXs
+                                    color: root.isDark ? ThemeTokens.accentDark : "#92400E"
+                                }
+                            }
                         }
 
                         TextField {
@@ -241,11 +385,34 @@ Drawer {
                     Layout.fillWidth: true
                     spacing: ThemeTokens.spaceXs
 
-                    Label {
-                        text: qsTr("Date")
-                        font.pixelSize: ThemeTokens.fontSm
-                        font.weight: ThemeTokens.weightMedium
-                        color: ThemeTokens.primary
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: ThemeTokens.spaceSm
+
+                        Label {
+                            Layout.fillWidth: true
+                            text: qsTr("Date")
+                            font.pixelSize: ThemeTokens.fontSm
+                            font.weight: ThemeTokens.weightMedium
+                            color: ThemeTokens.primary
+                        }
+
+                        Rectangle {
+                            visible: recordedExpensesViewModel.hasReceiptSuggestions
+                                     && recordedExpensesViewModel.dateIsLowConfidence
+                            implicitHeight: dateConfidenceLabel.implicitHeight + 4
+                            implicitWidth: dateConfidenceLabel.implicitWidth + 10
+                            radius: ThemeTokens.radiusFull
+                            color: root.isDark ? ThemeTokens.deficitAmberBgDark : ThemeTokens.deficitAmberBg
+
+                            Label {
+                                id: dateConfidenceLabel
+                                anchors.centerIn: parent
+                                text: qsTr("Low confidence")
+                                font.pixelSize: ThemeTokens.fontXs
+                                color: root.isDark ? ThemeTokens.accentDark : "#92400E"
+                            }
+                        }
                     }
 
                     DatePicker {
@@ -261,6 +428,8 @@ Drawer {
                     caption: qsTr("Name")
                     placeholderText: qsTr("e.g. Groceries")
                     required: true
+                    lowConfidence: recordedExpensesViewModel.hasReceiptSuggestions
+                                   && recordedExpensesViewModel.merchantIsLowConfidence
                     suggestionModel: recordedExpensesViewModel.nameSuggestionModel
                     onSearchRequested: function (prefix) {
                         recordedExpensesViewModel.searchExpenseNames(prefix)
@@ -313,7 +482,7 @@ Drawer {
             Layout.fillWidth: true
             Layout.margins: ThemeTokens.spaceMd
             text: qsTr("Save")
-            enabled: expenseForm.canSave
+            enabled: expenseForm.canSave && !recordedExpensesViewModel.isOcrRunning
             Material.background: ThemeTokens.primary
             Material.foreground: "white"
             Accessible.name: qsTr("Save recorded expense")
@@ -325,6 +494,13 @@ Drawer {
 
             onClicked: expenseForm.save()
         }
+    }
+
+    FileDialog {
+        id: receiptFileDialog
+        title: qsTr("Choose a receipt image")
+        nameFilters: [qsTr("Images (*.jpg *.jpeg *.png *.webp *.heic)")]
+        onAccepted: recordedExpensesViewModel.startReceiptOcr(root.localFilePath(selectedFile))
     }
 
     Connections {
@@ -340,6 +516,16 @@ Drawer {
             if (root.visible && updatedId === root.expenseId) {
                 root.close()
             }
+        }
+
+        function onReceiptOcrChanged() {
+            expenseForm.applyReceiptSuggestions()
+        }
+    }
+
+    onClosed: {
+        if (root.expenseId === "") {
+            recordedExpensesViewModel.clearReceiptOcr()
         }
     }
 }

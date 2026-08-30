@@ -350,6 +350,38 @@ Page {
                 Layout.minimumWidth: 0
                 Layout.leftMargin: ThemeTokens.spaceMd
                 Layout.rightMargin: ThemeTokens.spaceMd
+                spacing: ThemeTokens.spaceSm
+
+                SettingsSectionTitle {
+                    titleText: qsTr("Receipts")
+                }
+
+                SettingsCard {
+                    SettingsRow {
+                        label: qsTr("Cloud receipt scanning")
+                        sublabel: qsTr(
+                            "Optional future cloud OCR. Off by default. Receipt photos stay "
+                            + "on this device until a cloud provider is added.")
+                        showDivider: false
+
+                        Switch {
+                            Layout.alignment: Qt.AlignVCenter
+                            Layout.rightMargin: ThemeTokens.spaceMd
+                            Layout.topMargin: ThemeTokens.spaceMd
+                            Layout.bottomMargin: ThemeTokens.spaceMd
+                            checked: settingsViewModel.cloudReceiptOcrEnabled
+                            onToggled: settingsViewModel.setCloudReceiptOcrEnabled(checked)
+                            Accessible.name: qsTr("Cloud receipt scanning")
+                        }
+                    }
+                }
+            }
+
+            ColumnLayout {
+                Layout.fillWidth: true
+                Layout.minimumWidth: 0
+                Layout.leftMargin: ThemeTokens.spaceMd
+                Layout.rightMargin: ThemeTokens.spaceMd
                 Layout.bottomMargin: ThemeTokens.spaceLg
                 spacing: ThemeTokens.spaceSm
 

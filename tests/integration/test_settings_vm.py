@@ -22,6 +22,7 @@ from src.integrations.exchange_rate_fetcher import (
 _DARK_MODE_KEY = "darkMode"
 _LANGUAGE_KEY = "language"
 _LIVE_RATES_ENABLED_KEY = "exchange_rate_api_enabled"
+_CLOUD_RECEIPT_OCR_KEY = "receipt_ocr_cloud_enabled"
 
 
 @pytest.fixture
@@ -33,6 +34,7 @@ def settings_vm(qt_app: object) -> SettingsViewModel:
     settings.remove(_DARK_MODE_KEY)
     settings.remove(_LANGUAGE_KEY)
     settings.remove(_LIVE_RATES_ENABLED_KEY)
+    settings.remove(_CLOUD_RECEIPT_OCR_KEY)
     settings.remove(_LAST_FETCH_AT_KEY)
     settings.remove(_DAILY_FETCH_DATE_KEY)
     settings.remove(_DAILY_FETCH_COUNT_KEY)
@@ -84,6 +86,24 @@ def test_set_dark_mode_persists_to_qsettings(settings_vm: SettingsViewModel) -> 
 @pytest.mark.integration
 def test_live_rates_defaults_to_false(settings_vm: SettingsViewModel) -> None:
     assert settings_vm.liveRatesEnabled is False
+
+
+@pytest.mark.integration
+def test_cloud_receipt_ocr_defaults_to_false(settings_vm: SettingsViewModel) -> None:
+    assert settings_vm.cloudReceiptOcrEnabled is False
+
+
+@pytest.mark.integration
+def test_set_cloud_receipt_ocr_enabled_persists_to_qsettings(
+    settings_vm: SettingsViewModel,
+) -> None:
+    settings_vm.setCloudReceiptOcrEnabled(True)
+
+    assert settings_vm.cloudReceiptOcrEnabled is True
+    assert QSettings().value(_CLOUD_RECEIPT_OCR_KEY) is True
+
+    reloaded = SettingsViewModel()
+    assert reloaded.cloudReceiptOcrEnabled is True
 
 
 @pytest.mark.integration

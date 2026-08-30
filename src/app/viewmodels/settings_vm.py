@@ -16,6 +16,7 @@ from src.integrations.exchange_rate_fetcher import (
 _DARK_MODE_KEY = "darkMode"
 _LANGUAGE_KEY = "language"
 _LIVE_RATES_ENABLED_KEY = "exchange_rate_api_enabled"
+_CLOUD_RECEIPT_OCR_KEY = "receipt_ocr_cloud_enabled"
 
 
 def _settings_bool(value: object, *, default: bool) -> bool:
@@ -34,6 +35,7 @@ class SettingsViewModel(QObject):
     darkModeChanged = Signal()
     languageChanged = Signal()
     liveRatesEnabledChanged = Signal()
+    cloudReceiptOcrEnabledChanged = Signal()
     liveRatesFetchAvailableChanged = Signal()
     secondsUntilLiveRatesFetchChanged = Signal()
     liveRatesDailyLimitReachedChanged = Signal()
@@ -49,6 +51,10 @@ class SettingsViewModel(QObject):
         self._language = language if isinstance(language, str) and language else "en"
         self._live_rates_enabled = _settings_bool(
             settings.value(_LIVE_RATES_ENABLED_KEY),
+            default=False,
+        )
+        self._cloud_receipt_ocr_enabled = _settings_bool(
+            settings.value(_CLOUD_RECEIPT_OCR_KEY),
             default=False,
         )
         self._live_rates_fetch_available = can_fetch_live_rates()
@@ -67,6 +73,10 @@ class SettingsViewModel(QObject):
     @Property(bool, notify=liveRatesEnabledChanged)
     def liveRatesEnabled(self) -> bool:
         return self._live_rates_enabled
+
+    @Property(bool, notify=cloudReceiptOcrEnabledChanged)
+    def cloudReceiptOcrEnabled(self) -> bool:
+        return self._cloud_receipt_ocr_enabled
 
     @Property(bool, notify=liveRatesFetchAvailableChanged)
     def liveRatesFetchAvailable(self) -> bool:
@@ -142,6 +152,14 @@ class SettingsViewModel(QObject):
         self._live_rates_enabled = enabled
         QSettings().setValue(_LIVE_RATES_ENABLED_KEY, enabled)
         self.liveRatesEnabledChanged.emit()
+
+    @Slot(bool)
+    def setCloudReceiptOcrEnabled(self, enabled: bool) -> None:
+        if self._cloud_receipt_ocr_enabled == enabled:
+            return
+        self._cloud_receipt_ocr_enabled = enabled
+        QSettings().setValue(_CLOUD_RECEIPT_OCR_KEY, enabled)
+        self.cloudReceiptOcrEnabledChanged.emit()
 
     @Slot(bool)
     def setUseMockExchangeRates(self, enabled: bool) -> None:

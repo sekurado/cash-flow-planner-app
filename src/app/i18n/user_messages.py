@@ -59,6 +59,14 @@ _STATIC_ERRORS: dict[str, str] = {
     ),
     "User manual is not available.": "User manual is not available.",
     "Could not open the user manual.": "Could not open the user manual.",
+    "Receipt image storage is not configured": "Receipt image storage is not configured",
+    (
+        "Receipt OCR on macOS requires PyObjC Vision bindings. "
+        "Install the 'ocr-macos' extra or enter the expense manually."
+    ): (
+        "Receipt OCR on macOS requires PyObjC Vision bindings. "
+        "Install the 'ocr-macos' extra or enter the expense manually."
+    ),
 }
 
 _ERROR_PATTERNS: list[tuple[Pattern[str], str]] = [
@@ -102,6 +110,21 @@ _ERROR_PATTERNS: list[tuple[Pattern[str], str]] = [
     (
         re.compile(r"^Please wait (\d+) minute\(s\) before fetching live rates again\.$"),
         "Please wait %1 minute(s) before fetching live rates again.",
+    ),
+    (
+        re.compile(
+            r"^Receipt scanning is not available on this platform \((.+)\)\. "
+            r"Enter the expense manually\.$"
+        ),
+        "Receipt scanning is not available on this platform (%1). Enter the expense manually.",
+    ),
+    (
+        re.compile(r"^Receipt image not found: (.+)$"),
+        "Receipt image not found: %1",
+    ),
+    (
+        re.compile(r"^Could not read text from receipt image: (.+)$"),
+        "Could not read text from receipt image: %1",
     ),
 ]
 
@@ -262,6 +285,18 @@ def _register_i18n_catalog() -> None:
     )
     QCoreApplication.translate("AppErrors", "User manual is not available.")
     QCoreApplication.translate("AppErrors", "Could not open the user manual.")
+    QCoreApplication.translate("AppErrors", "Receipt image storage is not configured")
+    QCoreApplication.translate(
+        "AppErrors",
+        "Receipt OCR on macOS requires PyObjC Vision bindings. "
+        "Install the 'ocr-macos' extra or enter the expense manually.",
+    )
+    QCoreApplication.translate(
+        "AppErrors",
+        "Receipt scanning is not available on this platform (%1). Enter the expense manually.",
+    )
+    QCoreApplication.translate("AppErrors", "Receipt image not found: %1")
+    QCoreApplication.translate("AppErrors", "Could not read text from receipt image: %1")
     QCoreApplication.translate("EntriesViewModel", "Every day")
     QCoreApplication.translate("EntriesViewModel", "Monthly on the %1")
     QCoreApplication.translate("EntriesViewModel", "Yearly on %1 %2")

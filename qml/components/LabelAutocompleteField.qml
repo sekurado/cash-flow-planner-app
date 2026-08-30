@@ -13,6 +13,7 @@ ColumnLayout {
     property string placeholderText: ""
     property string text: ""
     property bool required: false
+    property bool lowConfidence: false
     property var suggestionModel: null
 
     signal searchRequested(string prefix)
@@ -48,13 +49,35 @@ ColumnLayout {
         _syncing = false
     }
 
-    Label {
+    RowLayout {
         Layout.fillWidth: true
-        Layout.minimumWidth: 0
-        text: root.caption + (root.required ? "" : " (" + qsTr("optional") + ")")
-        font.pixelSize: ThemeTokens.fontSm
-        font.weight: ThemeTokens.weightMedium
-        color: ThemeTokens.primary
+        spacing: ThemeTokens.spaceSm
+
+        Label {
+            Layout.fillWidth: true
+            Layout.minimumWidth: 0
+            text: root.caption + (root.required ? "" : " (" + qsTr("optional") + ")")
+            font.pixelSize: ThemeTokens.fontSm
+            font.weight: ThemeTokens.weightMedium
+            color: ThemeTokens.primary
+            elide: Text.ElideRight
+        }
+
+        Rectangle {
+            visible: root.lowConfidence
+            implicitHeight: confidenceLabel.implicitHeight + 4
+            implicitWidth: confidenceLabel.implicitWidth + 10
+            radius: ThemeTokens.radiusFull
+            color: root.isDark ? ThemeTokens.deficitAmberBgDark : ThemeTokens.deficitAmberBg
+
+            Label {
+                id: confidenceLabel
+                anchors.centerIn: parent
+                text: qsTr("Low confidence")
+                font.pixelSize: ThemeTokens.fontXs
+                color: root.isDark ? ThemeTokens.accentDark : "#92400E"
+            }
+        }
     }
 
     TextField {

@@ -38,7 +38,11 @@ class ReceiptOcrWorker(QRunnable):
 
 
 def _payload(ocr_result: ReceiptOcrResult, hints: ReceiptFieldHints) -> dict[str, object]:
+    fields: dict[str, object] = hints.model_dump(mode="json")
+    fields["amount_is_low_confidence"] = hints.amount_is_low_confidence
+    fields["date_is_low_confidence"] = hints.date_is_low_confidence
+    fields["merchant_is_low_confidence"] = hints.merchant_is_low_confidence
     return {
         "ocr": ocr_result.model_dump(mode="json"),
-        "fields": hints.model_dump(mode="json"),
+        "fields": fields,
     }

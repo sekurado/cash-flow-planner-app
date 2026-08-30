@@ -36,6 +36,9 @@ def test_worker_emits_parsed_fields(qtbot: object, tmp_path: Path) -> None:
     assert payload["fields"]["amount"] == pytest.approx(12.50)
     assert payload["fields"]["occurred_on"] == "2026-01-15"
     assert payload["fields"]["merchant"] == "Cafe Nero"
+    assert payload["fields"]["amount_is_low_confidence"] is False
+    assert payload["fields"]["date_is_low_confidence"] is False
+    assert payload["fields"]["merchant_is_low_confidence"] is True
 
 
 @pytest.mark.integration
