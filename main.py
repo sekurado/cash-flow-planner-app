@@ -418,10 +418,14 @@ def main(argv: list[str] | None = None) -> int:
             recorded_expenses_vm,
             expense_analytics_vm,
             methodology_vm,
+            settings_vm,
         ):
             vm.retranslate()
 
     settings_vm.languageChanged.connect(on_language_changed)
+    settings_vm.receiptOcrAvailableChanged.connect(
+        recorded_expenses_vm.refreshReceiptOcrAvailability
+    )
 
     for vm in (
         app_vm,

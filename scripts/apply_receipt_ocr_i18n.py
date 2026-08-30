@@ -15,7 +15,7 @@ _PRIVACY = (
 )
 _MACOS_PYOBJC = (
     "Receipt OCR on macOS requires PyObjC Vision bindings. "
-    "Install the 'ocr-macos' extra or enter the expense manually."
+    "Install on-device scanning from Settings, or enter the expense manually."
 )
 _PLATFORM_UNAVAILABLE = (
     "Receipt scanning is not available on this platform (%1). Enter the expense manually."
@@ -67,7 +67,8 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         ),
         _MACOS_PYOBJC: (
             "La reconnaissance de tickets sur macOS nécessite les liaisons PyObjC Vision. "
-            "Installez l'extra 'ocr-macos' ou saisissez la dépense manuellement."
+            "Installez la numérisation sur l'appareil depuis Réglages, "
+            "ou saisissez la dépense manuellement."
         ),
         _PLATFORM_UNAVAILABLE: (
             "La numérisation de tickets n'est pas disponible sur cette plateforme (%1). "
@@ -101,7 +102,8 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "Receipt image storage is not configured": "Хранилище изображений чеков не настроено",
         _MACOS_PYOBJC: (
             "Распознавание чеков на macOS требует привязок PyObjC Vision. "
-            "Установите extra 'ocr-macos' или введите расход вручную."
+            "Установите распознавание на устройстве в Настройках "
+            "или введите расход вручную."
         ),
         _PLATFORM_UNAVAILABLE: (
             "Сканирование чеков недоступно на этой платформе (%1). Введите расход вручную."
@@ -134,7 +136,8 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         ),
         _MACOS_PYOBJC: (
             "El OCR de recibos en macOS requiere los enlaces PyObjC de Vision. "
-            "Instale el extra 'ocr-macos' o introduzca el gasto manualmente."
+            "Instale el escaneo en el dispositivo desde Ajustes, "
+            "o introduzca el gasto manualmente."
         ),
         _PLATFORM_UNAVAILABLE: (
             "El escaneo de recibos no está disponible en esta plataforma (%1). "
@@ -166,7 +169,8 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "Receipt image storage is not configured": "Belegbildspeicher ist nicht konfiguriert",
         _MACOS_PYOBJC: (
             "Beleg-OCR unter macOS benötigt PyObjC-Vision-Bindungen. "
-            "Installieren Sie das Extra 'ocr-macos' oder geben Sie die Ausgabe manuell ein."
+            "Installieren Sie die Erkennung auf dem Gerät unter Einstellungen, "
+            "oder geben Sie die Ausgabe manuell ein."
         ),
         _PLATFORM_UNAVAILABLE: (
             "Belegscan ist auf dieser Plattform nicht verfügbar (%1). "
@@ -175,6 +179,195 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "Receipt image not found: %1": "Belegbild nicht gefunden: %1",
         "Could not read text from receipt image: %1": (
             "Text konnte nicht aus dem Belegbild gelesen werden: %1"
+        ),
+    },
+}
+
+_INSTALL_STRINGS: dict[str, dict[str, str]] = {
+    "en": {
+        "On-device receipt scanning": "On-device receipt scanning",
+        "Ready. Uses Apple Vision on this Mac. Photos stay on this device.": (
+            "Ready. Uses Apple Vision on this Mac. Photos stay on this device."
+        ),
+        "Required for Scan. Installs Apple Vision bindings for this app. Network access is required.": (
+            "Required for Scan. Installs Apple Vision bindings for this app. "
+            "Network access is required."
+        ),
+        "This app build does not include on-device scanning.": (
+            "This app build does not include on-device scanning."
+        ),
+        "Install": "Install",
+        "Installing…": "Installing…",
+        "Install on-device receipt scanning": "Install on-device receipt scanning",
+        "On-device receipt scanning can only be installed on macOS.": (
+            "On-device receipt scanning can only be installed on macOS."
+        ),
+        "On-device receipt scanning cannot be installed in this app build.": (
+            "On-device receipt scanning cannot be installed in this app build."
+        ),
+        "Could not install on-device receipt scanning. Check your network connection and try again.": (
+            "Could not install on-device receipt scanning. "
+            "Check your network connection and try again."
+        ),
+        "Installing on-device receipt scanning timed out. Check your network and try again.": (
+            "Installing on-device receipt scanning timed out. Check your network and try again."
+        ),
+        "Installed OCR packages but Vision is still unavailable. Restart the app and try Scan again.": (
+            "Installed OCR packages but Vision is still unavailable. "
+            "Restart the app and try Scan again."
+        ),
+        "Could not install on-device receipt scanning: %1": (
+            "Could not install on-device receipt scanning: %1"
+        ),
+    },
+    "fr": {
+        "On-device receipt scanning": "Numérisation de tickets sur l'appareil",
+        "Ready. Uses Apple Vision on this Mac. Photos stay on this device.": (
+            "Prêt. Utilise Apple Vision sur ce Mac. Les photos restent sur cet appareil."
+        ),
+        "Required for Scan. Installs Apple Vision bindings for this app. Network access is required.": (
+            "Requis pour Numériser. Installe les liaisons Apple Vision pour cette application. "
+            "Une connexion réseau est nécessaire."
+        ),
+        "This app build does not include on-device scanning.": (
+            "Cette version de l'application n'inclut pas la numérisation sur l'appareil."
+        ),
+        "Install": "Installer",
+        "Installing…": "Installation…",
+        "Install on-device receipt scanning": "Installer la numérisation de tickets sur l'appareil",
+        "On-device receipt scanning can only be installed on macOS.": (
+            "La numérisation de tickets sur l'appareil ne peut être installée que sous macOS."
+        ),
+        "On-device receipt scanning cannot be installed in this app build.": (
+            "La numérisation de tickets sur l'appareil ne peut pas être installée "
+            "dans cette version de l'application."
+        ),
+        "Could not install on-device receipt scanning. Check your network connection and try again.": (
+            "Impossible d'installer la numérisation de tickets sur l'appareil. "
+            "Vérifiez votre connexion réseau et réessayez."
+        ),
+        "Installing on-device receipt scanning timed out. Check your network and try again.": (
+            "L'installation de la numérisation de tickets sur l'appareil a expiré. "
+            "Vérifiez votre réseau et réessayez."
+        ),
+        "Installed OCR packages but Vision is still unavailable. Restart the app and try Scan again.": (
+            "Les paquets OCR sont installés, mais Vision est toujours indisponible. "
+            "Redémarrez l'application et réessayez Numériser."
+        ),
+        "Could not install on-device receipt scanning: %1": (
+            "Impossible d'installer la numérisation de tickets sur l'appareil : %1"
+        ),
+    },
+    "ru": {
+        "On-device receipt scanning": "Распознавание чеков на устройстве",
+        "Ready. Uses Apple Vision on this Mac. Photos stay on this device.": (
+            "Готово. Используется Apple Vision на этом Mac. Фото остаются на этом устройстве."
+        ),
+        "Required for Scan. Installs Apple Vision bindings for this app. Network access is required.": (
+            "Нужно для сканирования. Устанавливает привязки Apple Vision для этого приложения. "
+            "Требуется доступ к сети."
+        ),
+        "This app build does not include on-device scanning.": (
+            "Эта сборка приложения не включает распознавание на устройстве."
+        ),
+        "Install": "Установить",
+        "Installing…": "Установка…",
+        "Install on-device receipt scanning": "Установить распознавание чеков на устройстве",
+        "On-device receipt scanning can only be installed on macOS.": (
+            "Распознавание чеков на устройстве можно установить только на macOS."
+        ),
+        "On-device receipt scanning cannot be installed in this app build.": (
+            "Распознавание чеков на устройстве нельзя установить в этой сборке приложения."
+        ),
+        "Could not install on-device receipt scanning. Check your network connection and try again.": (
+            "Не удалось установить распознавание чеков на устройстве. "
+            "Проверьте подключение к сети и повторите попытку."
+        ),
+        "Installing on-device receipt scanning timed out. Check your network and try again.": (
+            "Установка распознавания чеков на устройстве превысила время ожидания. "
+            "Проверьте сеть и повторите попытку."
+        ),
+        "Installed OCR packages but Vision is still unavailable. Restart the app and try Scan again.": (
+            "Пакеты OCR установлены, но Vision по-прежнему недоступен. "
+            "Перезапустите приложение и снова нажмите «Сканировать»."
+        ),
+        "Could not install on-device receipt scanning: %1": (
+            "Не удалось установить распознавание чеков на устройстве: %1"
+        ),
+    },
+    "es": {
+        "On-device receipt scanning": "Escaneo de recibos en el dispositivo",
+        "Ready. Uses Apple Vision on this Mac. Photos stay on this device.": (
+            "Listo. Usa Apple Vision en este Mac. Las fotos permanecen en este dispositivo."
+        ),
+        "Required for Scan. Installs Apple Vision bindings for this app. Network access is required.": (
+            "Obligatorio para Escanear. Instala los enlaces de Apple Vision para esta aplicación. "
+            "Se requiere acceso a la red."
+        ),
+        "This app build does not include on-device scanning.": (
+            "Esta versión de la aplicación no incluye el escaneo en el dispositivo."
+        ),
+        "Install": "Instalar",
+        "Installing…": "Instalando…",
+        "Install on-device receipt scanning": "Instalar el escaneo de recibos en el dispositivo",
+        "On-device receipt scanning can only be installed on macOS.": (
+            "El escaneo de recibos en el dispositivo solo se puede instalar en macOS."
+        ),
+        "On-device receipt scanning cannot be installed in this app build.": (
+            "El escaneo de recibos en el dispositivo no se puede instalar "
+            "en esta versión de la aplicación."
+        ),
+        "Could not install on-device receipt scanning. Check your network connection and try again.": (
+            "No se pudo instalar el escaneo de recibos en el dispositivo. "
+            "Compruebe la conexión de red e inténtelo de nuevo."
+        ),
+        "Installing on-device receipt scanning timed out. Check your network and try again.": (
+            "La instalación del escaneo de recibos en el dispositivo agotó el tiempo de espera. "
+            "Compruebe la red e inténtelo de nuevo."
+        ),
+        "Installed OCR packages but Vision is still unavailable. Restart the app and try Scan again.": (
+            "Se instalaron los paquetes de OCR, pero Vision sigue no disponible. "
+            "Reinicie la aplicación e intente Escanear de nuevo."
+        ),
+        "Could not install on-device receipt scanning: %1": (
+            "No se pudo instalar el escaneo de recibos en el dispositivo: %1"
+        ),
+    },
+    "de": {
+        "On-device receipt scanning": "Belegerkennung auf dem Gerät",
+        "Ready. Uses Apple Vision on this Mac. Photos stay on this device.": (
+            "Bereit. Verwendet Apple Vision auf diesem Mac. Fotos bleiben auf diesem Gerät."
+        ),
+        "Required for Scan. Installs Apple Vision bindings for this app. Network access is required.": (
+            "Erforderlich für Scannen. Installiert Apple-Vision-Bindungen für diese App. "
+            "Netzwerkzugriff ist erforderlich."
+        ),
+        "This app build does not include on-device scanning.": (
+            "Diese App-Version enthält keine Belegerkennung auf dem Gerät."
+        ),
+        "Install": "Installieren",
+        "Installing…": "Wird installiert…",
+        "Install on-device receipt scanning": "Belegerkennung auf dem Gerät installieren",
+        "On-device receipt scanning can only be installed on macOS.": (
+            "Die Belegerkennung auf dem Gerät kann nur unter macOS installiert werden."
+        ),
+        "On-device receipt scanning cannot be installed in this app build.": (
+            "Die Belegerkennung auf dem Gerät kann in dieser App-Version nicht installiert werden."
+        ),
+        "Could not install on-device receipt scanning. Check your network connection and try again.": (
+            "Die Belegerkennung auf dem Gerät konnte nicht installiert werden. "
+            "Prüfen Sie die Netzwerkverbindung und versuchen Sie es erneut."
+        ),
+        "Installing on-device receipt scanning timed out. Check your network and try again.": (
+            "Die Installation der Belegerkennung auf dem Gerät ist abgelaufen. "
+            "Prüfen Sie das Netzwerk und versuchen Sie es erneut."
+        ),
+        "Installed OCR packages but Vision is still unavailable. Restart the app and try Scan again.": (
+            "OCR-Pakete wurden installiert, aber Vision ist weiterhin nicht verfügbar. "
+            "Starten Sie die App neu und versuchen Sie Scannen erneut."
+        ),
+        "Could not install on-device receipt scanning: %1": (
+            "Die Belegerkennung auf dem Gerät konnte nicht installiert werden: %1"
         ),
     },
 }
@@ -193,7 +386,7 @@ def _escape_xml(text: str) -> str:
 def apply_translations(locale: str) -> None:
     path = I18N_DIR / f"app_{locale}.ts"
     content = path.read_text(encoding="utf-8")
-    mapping = TRANSLATIONS[locale]
+    mapping = {**TRANSLATIONS[locale], **_INSTALL_STRINGS[locale]}
 
     for source, translation in mapping.items():
         escaped_source = re.escape(_escape_xml(source))

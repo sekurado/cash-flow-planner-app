@@ -851,7 +851,7 @@ Receipt-assisted entry is **assistive**, not silent auto-import. `ReceiptOcrProv
 
 `ReceiptFieldParser` (`src/domain/receipt_field_parser.py`) is pure Python: it scores TOTAL / AMOUNT DUE style totals, locale-aware dates, and a weak first-line merchant guess, then sets `*_is_low_confidence` when combined confidence is below the review threshold. `ReceiptImageStore` copies the chosen file under `AppDataLocation/receipts/` and deletes it when the expense is deleted.
 
-`ReceiptOcrWorker` runs extract + parse off the UI thread. `RecordedExpensesViewModel` exposes pending path, suggestions, and confidence flags; `createExpense` attaches the pending image after a successful insert. Cloud OCR is a Settings stub only (NFR-01: core remains offline).
+`ReceiptOcrWorker` runs extract + parse off the UI thread. `RecordedExpensesViewModel` exposes pending path, suggestions, and confidence flags; `createExpense` attaches the pending image after a successful insert. On macOS source runs, Settings can install PyObjC Vision bindings (`ocr-macos`) in the background when they are missing; packaged builds must include the extra at freeze time. Cloud OCR is a Settings stub only (NFR-01: core remains offline).
 
 ---
 

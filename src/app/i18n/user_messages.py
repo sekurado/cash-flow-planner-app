@@ -62,10 +62,31 @@ _STATIC_ERRORS: dict[str, str] = {
     "Receipt image storage is not configured": "Receipt image storage is not configured",
     (
         "Receipt OCR on macOS requires PyObjC Vision bindings. "
-        "Install the 'ocr-macos' extra or enter the expense manually."
+        "Install on-device scanning from Settings, or enter the expense manually."
     ): (
         "Receipt OCR on macOS requires PyObjC Vision bindings. "
-        "Install the 'ocr-macos' extra or enter the expense manually."
+        "Install on-device scanning from Settings, or enter the expense manually."
+    ),
+    "On-device receipt scanning can only be installed on macOS.": (
+        "On-device receipt scanning can only be installed on macOS."
+    ),
+    "On-device receipt scanning cannot be installed in this app build.": (
+        "On-device receipt scanning cannot be installed in this app build."
+    ),
+    (
+        "Could not install on-device receipt scanning. Check your network connection and try again."
+    ): (
+        "Could not install on-device receipt scanning. Check your network connection and try again."
+    ),
+    "Installing on-device receipt scanning timed out. Check your network and try again.": (
+        "Installing on-device receipt scanning timed out. Check your network and try again."
+    ),
+    (
+        "Installed OCR packages but Vision is still unavailable. "
+        "Restart the app and try Scan again."
+    ): (
+        "Installed OCR packages but Vision is still unavailable. "
+        "Restart the app and try Scan again."
     ),
 }
 
@@ -125,6 +146,10 @@ _ERROR_PATTERNS: list[tuple[Pattern[str], str]] = [
     (
         re.compile(r"^Could not read text from receipt image: (.+)$"),
         "Could not read text from receipt image: %1",
+    ),
+    (
+        re.compile(r"^Could not install on-device receipt scanning: (.+)$"),
+        "Could not install on-device receipt scanning: %1",
     ),
 ]
 
@@ -289,8 +314,31 @@ def _register_i18n_catalog() -> None:
     QCoreApplication.translate(
         "AppErrors",
         "Receipt OCR on macOS requires PyObjC Vision bindings. "
-        "Install the 'ocr-macos' extra or enter the expense manually.",
+        "Install on-device scanning from Settings, or enter the expense manually.",
     )
+    QCoreApplication.translate(
+        "AppErrors",
+        "On-device receipt scanning can only be installed on macOS.",
+    )
+    QCoreApplication.translate(
+        "AppErrors",
+        "On-device receipt scanning cannot be installed in this app build.",
+    )
+    QCoreApplication.translate(
+        "AppErrors",
+        "Could not install on-device receipt scanning. "
+        "Check your network connection and try again.",
+    )
+    QCoreApplication.translate(
+        "AppErrors",
+        "Installing on-device receipt scanning timed out. Check your network and try again.",
+    )
+    QCoreApplication.translate(
+        "AppErrors",
+        "Installed OCR packages but Vision is still unavailable. "
+        "Restart the app and try Scan again.",
+    )
+    QCoreApplication.translate("AppErrors", "Could not install on-device receipt scanning: %1")
     QCoreApplication.translate(
         "AppErrors",
         "Receipt scanning is not available on this platform (%1). Enter the expense manually.",

@@ -308,3 +308,36 @@ def test_missing_receipt_image_sets_error(
     assert vm.isOcrRunning is False
     assert vm.error != ""
     assert "not found" in vm.error.lower()
+
+
+@pytest.mark.integration
+def test_refresh_receipt_ocr_availability_updates_flag(
+    recorded_expense_repository: SqliteRecordedExpenseRepository,
+    expense_name_repository: SqliteExpenseNameRepository,
+    expense_category_repository: SqliteExpenseCategoryRepository,
+    expense_place_repository: SqliteExpensePlaceRepository,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    provider = _FakeOcrProvider()
+    vm, _image, _store = _make_vm(
+        recorded_expense_repository,
+        expense_name_repository,
+        expense_category_repository,
+        expense_place_repository,
+        tmp_path=tmp_path,
+        provider=provider,
+    )
+    vm._ocr_available = False  # noqa: SLF001
+    monkeypatch.setattr(
+        "src.app.viewmodels.recorded_expenses_view_model.receipt_ocr_is_available",
+        lambda: True,
+    )
+    monkeypatch.setattr(
+        "src.app.viewmodels.recorded_expenses_view_model.create_receipt_ocr_provider",
+        lambda: provider,
+    )
+
+    vm.refreshReceiptOcrAvailability()
+
+    assert vm.receiptOcrAvailable is True

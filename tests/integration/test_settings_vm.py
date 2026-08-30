@@ -174,6 +174,99 @@ def test_set_use_mock_exchange_rates_ignored_without_dev_mode(
 
 
 @pytest.mark.integration
+def test_install_macos_ocr_enables_scanning(qt_app: object, qtbot: object) -> None:
+    _ = qt_app
+    QCoreApplication.setOrganizationName(ORGANIZATION_NAME)
+    QCoreApplication.setApplicationName("CashFlowPlannerDesktopTest")
+    available = {"value": False}
+
+    def is_available() -> bool:
+        return available["value"]
+
+    def installer() -> None:
+        available["value"] = True
+
+    vm = SettingsViewModel(
+        is_macos=True,
+        receipt_ocr_available=is_available,
+        can_install_macos_ocr_fn=lambda: not available["value"],
+        macos_ocr_installer=installer,
+    )
+    assert vm.canInstallMacosOcr is True
+    assert vm.receiptOcrAvailable is False
+
+    with qtbot.waitSignal(vm.receiptOcrAvailableChanged, timeout=2000):  # type: ignore[attr-defined]
+        vm.installMacosOcr()
+
+    assert vm.receiptOcrAvailable is True
+    assert vm.canInstallMacosOcr is False
+    assert vm.macosOcrInstallBusy is False
+    assert vm.error == ""
+
+
+@pytest.mark.integration
+def test_install_macos_ocr_sets_error_on_failure(qt_app: object, qtbot: object) -> None:
+    _ = qt_app
+    QCoreApplication.setOrganizationName(ORGANIZATION_NAME)
+    QCoreApplication.setApplicationName("CashFlowPlannerDesktopTest")
+
+    def installer() -> None:
+        raise OSError(
+            "Could not install on-device receipt scanning. "
+            "Check your network connection and try again."
+        )
+
+    vm = SettingsViewModel(
+        is_macos=True,
+        receipt_ocr_available=lambda: False,
+        can_install_macos_ocr_fn=lambda: True,
+        macos_ocr_installer=installer,
+    )
+
+    with qtbot.waitSignal(vm.errorChanged, timeout=2000):  # type: ignore[attr-defined]
+        vm.installMacosOcr()
+
+    assert vm.macosOcrInstallBusy is False
+    assert vm.canInstallMacosOcr is True
+    assert "network" in vm.error.lower()
+
+
+@pytest.mark.integration
+def test_install_macos_ocr_rejected_off_macos(settings_vm: SettingsViewModel) -> None:
+    vm = SettingsViewModel(
+        is_macos=False,
+        receipt_ocr_available=lambda: False,
+        can_install_macos_ocr_fn=lambda: False,
+        macos_ocr_installer=lambda: None,
+    )
+    _ = settings_vm
+    assert vm.isMacos is False
+    assert vm.canInstallMacosOcr is False
+
+    vm.installMacosOcr()
+
+    assert vm.error == "On-device receipt scanning can only be installed on macOS."
+
+
+@pytest.mark.integration
+def test_install_macos_ocr_rejected_for_frozen_build(qt_app: object) -> None:
+    _ = qt_app
+    QCoreApplication.setOrganizationName(ORGANIZATION_NAME)
+    QCoreApplication.setApplicationName("CashFlowPlannerDesktopTest")
+    vm = SettingsViewModel(
+        is_macos=True,
+        receipt_ocr_available=lambda: False,
+        can_install_macos_ocr_fn=lambda: False,
+        macos_ocr_installer=lambda: None,
+    )
+    assert vm.canInstallMacosOcr is False
+
+    vm.installMacosOcr()
+
+    assert vm.error == "On-device receipt scanning cannot be installed in this app build."
+
+
+@pytest.mark.integration
 def test_open_user_manual_sets_error_when_resource_missing(
     settings_vm: SettingsViewModel,
 ) -> None:

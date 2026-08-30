@@ -145,8 +145,9 @@ Task 33_3 may add anonymized fixture images and parser-only tests (text blobs, n
 - **Parser:** `src/domain/receipt_field_parser.py` (`ReceiptFieldParser`) maps OCR lines to
   amount / date / merchant hints with per-field confidence. Unit tests use fixture text blobs
   (`tests/unit/test_receipt_field_parser.py`) — no images in CI.
-- **macOS:** `MacosVisionOcrProvider` lazy-imports PyObjC Vision. Install extra `ocr-macos` for
-  source runs. Missing PyObjC raises `ReceiptOcrUnavailableError`.
+- **macOS:** `MacosVisionOcrProvider` lazy-imports PyObjC Vision. Source runs can install
+  the `ocr-macos` extra from Settings → Receipts, or with `pip install -e ".[ocr-macos]"`.
+  Missing PyObjC raises `ReceiptOcrUnavailableError`.
 - **Windows / Linux:** `UnsupportedReceiptOcrProvider` raises `ReceiptOcrUnavailableError` with a
   clear manual-entry message. WinRT OCR was evaluated and **stubbed for v1** (packaging + CI cost;
   revisit in a later story).

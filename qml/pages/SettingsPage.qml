@@ -112,6 +112,8 @@ Page {
 
         width: parent ? parent.width : implicitWidth
         implicitHeight: rowLayout.implicitHeight + (settingsRow.showDivider ? 1 : 0)
+        height: visible ? implicitHeight : 0
+        clip: true
 
         Column {
             width: parent.width
@@ -357,6 +359,41 @@ Page {
                 }
 
                 SettingsCard {
+                    SettingsRow {
+                        visible: settingsViewModel.isMacos
+                        label: qsTr("On-device receipt scanning")
+                        sublabel: settingsViewModel.receiptOcrAvailable
+                            ? qsTr("Ready. Uses Apple Vision on this Mac. Photos stay on this device.")
+                            : (settingsViewModel.canInstallMacosOcr
+                                ? qsTr("Required for Scan. Installs Apple Vision bindings for this app. Network access is required.")
+                                : qsTr("This app build does not include on-device scanning."))
+                        showDivider: true
+
+                        BusyIndicator {
+                            visible: settingsViewModel.macosOcrInstallBusy
+                            running: visible
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+
+                        Button {
+                            visible: settingsViewModel.canInstallMacosOcr
+                            enabled: !settingsViewModel.macosOcrInstallBusy
+                            Layout.alignment: Qt.AlignVCenter
+                            Layout.rightMargin: ThemeTokens.spaceMd
+                            Layout.topMargin: ThemeTokens.spaceMd
+                            Layout.bottomMargin: ThemeTokens.spaceMd
+                            flat: true
+                            text: settingsViewModel.macosOcrInstallBusy
+                                ? qsTr("Installing…")
+                                : qsTr("Install")
+                            Material.foreground: ThemeTokens.primary
+                            Accessible.name: qsTr("Install on-device receipt scanning")
+                            onClicked: settingsViewModel.installMacosOcr()
+                        }
+                    }
+
                     SettingsRow {
                         label: qsTr("Cloud receipt scanning")
                         sublabel: qsTr(

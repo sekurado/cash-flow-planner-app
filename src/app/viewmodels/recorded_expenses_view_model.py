@@ -64,6 +64,7 @@ class RecordedExpensesViewModel(QObject):
     filtersChanged = Signal()
     isOcrRunningChanged = Signal()
     receiptOcrChanged = Signal()
+    receiptOcrAvailableChanged = Signal()
 
     def __init__(
         self,
@@ -161,7 +162,7 @@ class RecordedExpensesViewModel(QObject):
     def hasActiveFilters(self) -> bool:
         return self._has_list_filters()
 
-    @Property(bool, constant=True)
+    @Property(bool, notify=receiptOcrAvailableChanged)
     def receiptOcrAvailable(self) -> bool:
         return self._ocr_available
 
@@ -330,6 +331,19 @@ class RecordedExpensesViewModel(QObject):
         except Exception as exc:
             self._is_ocr_running = False
             self.isOcrRunningChanged.emit()
+            self._set_error(exc)
+
+    @Slot()
+    def refreshReceiptOcrAvailability(self) -> None:
+        try:
+            available = receipt_ocr_is_available()
+            if available == self._ocr_available:
+                return
+            self._ocr_available = available
+            if available:
+                self._ocr_provider = create_receipt_ocr_provider()
+            self.receiptOcrAvailableChanged.emit()
+        except Exception as exc:
             self._set_error(exc)
 
     @Slot()

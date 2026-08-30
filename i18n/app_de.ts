@@ -4,17 +4,17 @@
 <context>
     <name>AppErrors</name>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="238"/>
+        <location filename="../src/app/i18n/user_messages.py" line="263"/>
         <source>Invalid data. Please check your input.</source>
         <translation>Ungültige Daten. Bitte überprüfen Sie Ihre Eingabe.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="239"/>
+        <location filename="../src/app/i18n/user_messages.py" line="264"/>
         <source>Live exchange-rate fetching is not enabled.</source>
         <translation>Das Abrufen aktueller Wechselkurse ist nicht aktiviert.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="240"/>
+        <location filename="../src/app/i18n/user_messages.py" line="265"/>
         <source>Base currency is required to fetch live exchange rates.</source>
         <translation>Für das Abrufen aktueller Wechselkurse ist eine Basiswährung erforderlich.</translation>
     </message>
@@ -23,52 +23,52 @@
         <translation type="vanished">Kein Simulationsergebnis zum Exportieren vorhanden.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="244"/>
+        <location filename="../src/app/i18n/user_messages.py" line="269"/>
         <source>Name is required</source>
         <translation>Name ist erforderlich</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="245"/>
+        <location filename="../src/app/i18n/user_messages.py" line="270"/>
         <source>Currency is required</source>
         <translation>Währung ist erforderlich</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="246"/>
+        <location filename="../src/app/i18n/user_messages.py" line="271"/>
         <source>Exchange rate API returned invalid JSON</source>
         <translation>Die Wechselkurs-API hat ungültiges JSON zurückgegeben</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="247"/>
+        <location filename="../src/app/i18n/user_messages.py" line="272"/>
         <source>Exchange rate API response is missing conversion rates</source>
         <translation>Die Antwort der Wechselkurs-API enthält keine Umrechnungskurse</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="250"/>
+        <location filename="../src/app/i18n/user_messages.py" line="275"/>
         <source>Exchange rate API returned a zero rate</source>
         <translation>Die Wechselkurs-API hat einen Nullkurs zurückgegeben</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="251"/>
+        <location filename="../src/app/i18n/user_messages.py" line="276"/>
         <source>Simulation params must include a numeric initial_balance</source>
         <translation>Simulationsparameter müssen ein numerisches Anfangsguthaben enthalten</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="254"/>
+        <location filename="../src/app/i18n/user_messages.py" line="279"/>
         <source>Simulation params must include a non-empty base_currency</source>
         <translation>Simulationsparameter müssen eine nicht leere Basiswährung enthalten</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="257"/>
+        <location filename="../src/app/i18n/user_messages.py" line="282"/>
         <source>Simulation params must include ISO start_date and end_date</source>
         <translation>Simulationsparameter müssen ISO-Start- und Enddaten enthalten</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="260"/>
+        <location filename="../src/app/i18n/user_messages.py" line="285"/>
         <source>Exchange rates must target USD, got GBP</source>
         <translation>Wechselkurse müssen auf USD abzielen, erhalten: GBP</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="261"/>
+        <location filename="../src/app/i18n/user_messages.py" line="286"/>
         <source>Exchange rates cannot use USD as the source currency</source>
         <translation>USD kann nicht als Quellwährung für Wechselkurse verwendet werden</translation>
     </message>
@@ -81,112 +81,146 @@
         <translation type="vanished">Eintrag nicht gefunden: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="243"/>
+        <location filename="../src/app/i18n/user_messages.py" line="268"/>
         <source>No projection result to export.</source>
         <translation>Kein Projektergebnis zum Exportieren.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="262"/>
+        <location filename="../src/app/i18n/user_messages.py" line="287"/>
         <source>Forecast not found: %1</source>
         <translation>Prognose nicht gefunden: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="263"/>
+        <location filename="../src/app/i18n/user_messages.py" line="288"/>
         <source>A forecast named &quot;%1&quot; already exists</source>
         <translation>Eine Prognose mit dem Namen „%1“ existiert bereits</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="264"/>
+        <location filename="../src/app/i18n/user_messages.py" line="289"/>
         <source>Cash flow not found: %1</source>
         <translation>Cashflow nicht gefunden: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="265"/>
+        <location filename="../src/app/i18n/user_messages.py" line="290"/>
         <source>Invalid date pattern: %1</source>
         <translation>Ungültiges Datumsformat: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="266"/>
+        <location filename="../src/app/i18n/user_messages.py" line="291"/>
         <source>Unsupported file type: %1</source>
         <translation>Nicht unterstützter Dateityp: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="267"/>
+        <location filename="../src/app/i18n/user_messages.py" line="292"/>
         <source>No exchange rate found for %1 → %2</source>
         <translation>Kein Wechselkurs gefunden für %1 → %2</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="268"/>
+        <location filename="../src/app/i18n/user_messages.py" line="293"/>
         <source>Simulation range of %1 days exceeds the %2-day (10-year) limit</source>
         <translation>Der Simulationszeitraum von %1 Tagen überschreitet das Limit von %2 Tagen (10 Jahre)</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="271"/>
+        <location filename="../src/app/i18n/user_messages.py" line="296"/>
         <source>Exchange rate API returned HTTP %1</source>
         <translation>Die Wechselkurs-API hat HTTP %1 zurückgegeben</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="272"/>
+        <location filename="../src/app/i18n/user_messages.py" line="297"/>
         <source>Mock exchange rates are not defined for base currency %1</source>
         <translation>Mock-Wechselkurse sind für die Basiswährung %1 nicht definiert</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="275"/>
+        <location filename="../src/app/i18n/user_messages.py" line="300"/>
         <source>Mock exchange rates are missing symbols: %1</source>
         <translation>Bei Mock-Wechselkursen fehlen Symbole: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="276"/>
+        <location filename="../src/app/i18n/user_messages.py" line="301"/>
         <source>%1 must be a mapping</source>
         <translation>%1 muss ein Objekt sein</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="277"/>
+        <location filename="../src/app/i18n/user_messages.py" line="302"/>
         <source>Daily live rate fetch limit reached (10 per day). Try again tomorrow.</source>
         <translation>Tägliches Abruflimit erreicht (10 pro Tag). Versuchen Sie es morgen erneut.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="280"/>
+        <location filename="../src/app/i18n/user_messages.py" line="305"/>
         <source>Please wait %1 second(s) before fetching live rates again.</source>
         <translation>Bitte warten Sie %1 Sekunde(n), bevor Sie Live-Kurse erneut abrufen.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="283"/>
+        <location filename="../src/app/i18n/user_messages.py" line="308"/>
         <source>Please wait %1 minute(s) before fetching live rates again.</source>
         <translation>Bitte warten Sie %1 Minute(n), bevor Sie Live-Kurse erneut abrufen.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="286"/>
+        <location filename="../src/app/i18n/user_messages.py" line="311"/>
         <source>User manual is not available.</source>
         <translation>Das Benutzerhandbuch ist nicht verfügbar.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="287"/>
+        <location filename="../src/app/i18n/user_messages.py" line="312"/>
         <source>Could not open the user manual.</source>
         <translation>Das Benutzerhandbuch konnte nicht geöffnet werden.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="288"/>
+        <location filename="../src/app/i18n/user_messages.py" line="313"/>
         <source>Receipt image storage is not configured</source>
         <translation>Belegbildspeicher ist nicht konfiguriert</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="289"/>
-        <source>Receipt OCR on macOS requires PyObjC Vision bindings. Install the &apos;ocr-macos&apos; extra or enter the expense manually.</source>
-        <translation>Beleg-OCR unter macOS benötigt PyObjC-Vision-Bindungen. Installieren Sie das Extra &apos;ocr-macos&apos; oder geben Sie die Ausgabe manuell ein.</translation>
+        <location filename="../src/app/i18n/user_messages.py" line="314"/>
+        <source>Receipt OCR on macOS requires PyObjC Vision bindings. Install on-device scanning from Settings, or enter the expense manually.</source>
+        <translation>Beleg-OCR unter macOS benötigt PyObjC-Vision-Bindungen. Installieren Sie die Erkennung auf dem Gerät unter Einstellungen, oder geben Sie die Ausgabe manuell ein.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="294"/>
+        <location filename="../src/app/i18n/user_messages.py" line="319"/>
+        <source>On-device receipt scanning can only be installed on macOS.</source>
+        <translation>Die Belegerkennung auf dem Gerät kann nur unter macOS installiert werden.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="323"/>
+        <source>On-device receipt scanning cannot be installed in this app build.</source>
+        <translation>Die Belegerkennung auf dem Gerät kann in dieser App-Version nicht installiert werden.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="327"/>
+        <source>Could not install on-device receipt scanning. Check your network connection and try again.</source>
+        <translation>Die Belegerkennung auf dem Gerät konnte nicht installiert werden. Prüfen Sie die Netzwerkverbindung und versuchen Sie es erneut.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="332"/>
+        <source>Installing on-device receipt scanning timed out. Check your network and try again.</source>
+        <translation>Die Installation der Belegerkennung auf dem Gerät ist abgelaufen. Prüfen Sie das Netzwerk und versuchen Sie es erneut.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="336"/>
+        <source>Installed OCR packages but Vision is still unavailable. Restart the app and try Scan again.</source>
+        <translation>OCR-Pakete wurden installiert, aber Vision ist weiterhin nicht verfügbar. Starten Sie die App neu und versuchen Sie Scannen erneut.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="341"/>
+        <source>Could not install on-device receipt scanning: %1</source>
+        <translation>Die Belegerkennung auf dem Gerät konnte nicht installiert werden: %1</translation>
+    </message>
+    <message>
+        <source>Receipt OCR on macOS requires PyObjC Vision bindings. Install the &apos;ocr-macos&apos; extra or enter the expense manually.</source>
+        <translation type="vanished">Beleg-OCR unter macOS benötigt PyObjC-Vision-Bindungen. Installieren Sie das Extra &apos;ocr-macos&apos; oder geben Sie die Ausgabe manuell ein.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="342"/>
         <source>Receipt scanning is not available on this platform (%1). Enter the expense manually.</source>
         <translation>Belegscan ist auf dieser Plattform nicht verfügbar (%1). Geben Sie die Ausgabe manuell ein.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="298"/>
+        <location filename="../src/app/i18n/user_messages.py" line="346"/>
         <source>Receipt image not found: %1</source>
         <translation>Belegbild nicht gefunden: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="299"/>
+        <location filename="../src/app/i18n/user_messages.py" line="347"/>
         <source>Could not read text from receipt image: %1</source>
         <translation>Text konnte nicht aus dem Belegbild gelesen werden: %1</translation>
     </message>
@@ -832,22 +866,22 @@
 <context>
     <name>EntriesViewModel</name>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="300"/>
+        <location filename="../src/app/i18n/user_messages.py" line="348"/>
         <source>Every day</source>
         <translation>Jeden Tag</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="301"/>
+        <location filename="../src/app/i18n/user_messages.py" line="349"/>
         <source>Monthly on the %1</source>
         <translation>Monatlich am %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="302"/>
+        <location filename="../src/app/i18n/user_messages.py" line="350"/>
         <source>Yearly on %1 %2</source>
         <translation>Jährlich am %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="303"/>
+        <location filename="../src/app/i18n/user_messages.py" line="351"/>
         <source>Once on %1 %2 %3</source>
         <translation>Einmalig am %1 %2 %3</translation>
     </message>
@@ -1100,32 +1134,32 @@
 <context>
     <name>ForecastTemplates</name>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="304"/>
+        <location filename="../src/app/i18n/user_messages.py" line="352"/>
         <source>SaaS startup</source>
         <translation>SaaS-Startup</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="305"/>
+        <location filename="../src/app/i18n/user_messages.py" line="353"/>
         <source>Monthly recurring revenue, cloud costs, and payroll for an early-stage SaaS company.</source>
         <translation>Monatlich wiederkehrende Umsätze, Cloud-Kosten und Gehaltskosten für ein SaaS-Unternehmen in der Frühphase.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="309"/>
+        <location filename="../src/app/i18n/user_messages.py" line="357"/>
         <source>Consulting firm</source>
         <translation>Beratungsunternehmen</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="310"/>
+        <location filename="../src/app/i18n/user_messages.py" line="358"/>
         <source>Client retainers, contractor costs, and operating expenses for a small professional services firm.</source>
         <translation>Kundenpauschalen, Auftragnehmerkosten und Betriebsausgaben für ein kleines Dienstleistungsunternehmen.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="315"/>
+        <location filename="../src/app/i18n/user_messages.py" line="363"/>
         <source>Retail shop</source>
         <translation>Einzelhandelsgeschäft</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="316"/>
+        <location filename="../src/app/i18n/user_messages.py" line="364"/>
         <source>Point-of-sale revenue, rent, inventory COGS, and seasonal patterns for a brick-and-mortar retail store.</source>
         <translation>Kassenerlöse, Miete, Wareneinsatz und saisonale Muster für ein stationäres Einzelhandelsgeschäft.</translation>
     </message>
@@ -2469,24 +2503,24 @@ Der Endsaldo des Vortags wird zum Ausgangspunkt des nächsten Tages und ergibt e
         <translation>Zurück</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="190"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="192"/>
         <source>Appearance</source>
         <translation>Erscheinungsbild</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="195"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="205"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="197"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="207"/>
         <source>Dark mode</source>
         <translation>Dunkelmodus</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="196"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="198"/>
         <source>Restart not required</source>
         <translation>Neustart nicht erforderlich</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="210"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="234"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="212"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="236"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
@@ -2495,130 +2529,165 @@ Der Endsaldo des Vortags wird zum Ausgangspunkt des nächsten Tages und ergibt e
         <translation type="vanished">Englisch</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="248"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="250"/>
         <source>Data &amp; Currency</source>
         <translation>Daten &amp; Währung</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="253"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="255"/>
         <source>Exchange rates</source>
         <translation>Wechselkurse</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="261"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="263"/>
         <source>Hide</source>
         <translation>Ausblenden</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="261"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="263"/>
         <source>Manage ▶</source>
         <translation>Verwalten ▶</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="263"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="265"/>
         <source>Manage exchange rates</source>
         <translation>Wechselkurse verwalten</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="269"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="285"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="271"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="287"/>
         <source>Fetch live exchange rates</source>
         <translation>Live-Wechselkurse abrufen</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="271"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="273"/>
         <source>When enabled, exchange rates are loaded from a built-in mock provider instead of the live API.</source>
         <translation>Wenn aktiviert, werden Wechselkurse von einem integrierten Mock-Anbieter statt der Live-API geladen.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="274"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="276"/>
         <source>When enabled, the app may contact an external service to download current exchange rates. Network access is required.</source>
         <translation>Wenn aktiviert, kann die App einen externen Dienst kontaktieren, um aktuelle Wechselkurse herunterzuladen. Netzwerkzugriff erforderlich.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="291"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="304"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="293"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="306"/>
         <source>Use mock exchange rates</source>
         <translation>Mock-Wechselkurse verwenden</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="292"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="294"/>
         <source>Developer option: returns prepared rates without contacting the external API. Start the app with --dev to show this toggle.</source>
         <translation>Entwickleroption: liefert vorbereitete Kurse ohne externe API. Starten Sie die App mit --dev, um diese Option anzuzeigen.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="317"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="319"/>
         <source>Rates by</source>
         <translation>Kurse von</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="323"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="325"/>
         <source>Exchange Rate API</source>
         <translation>Exchange Rate API</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="332"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="334"/>
         <source>Exchange Rate API provider website</source>
         <translation>Website des Anbieters Exchange Rate API</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="356"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="358"/>
         <source>Receipts</source>
         <translation>Belege</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="361"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="374"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="364"/>
+        <source>On-device receipt scanning</source>
+        <translation>Belegerkennung auf dem Gerät</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="366"/>
+        <source>Ready. Uses Apple Vision on this Mac. Photos stay on this device.</source>
+        <translation>Bereit. Verwendet Apple Vision auf diesem Mac. Fotos bleiben auf diesem Gerät.</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="368"/>
+        <source>Required for Scan. Installs Apple Vision bindings for this app. Network access is required.</source>
+        <translation>Erforderlich für Scannen. Installiert Apple-Vision-Bindungen für diese App. Netzwerkzugriff ist erforderlich.</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="369"/>
+        <source>This app build does not include on-device scanning.</source>
+        <translation>Diese App-Version enthält keine Belegerkennung auf dem Gerät.</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="389"/>
+        <source>Installing…</source>
+        <translation>Wird installiert…</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="390"/>
+        <source>Install</source>
+        <translation>Installieren</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="392"/>
+        <source>Install on-device receipt scanning</source>
+        <translation>Belegerkennung auf dem Gerät installieren</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="398"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="411"/>
         <source>Cloud receipt scanning</source>
         <translation>Cloud-Belegerkennung</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="362"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="399"/>
         <source>Off by default. Receipt photos stay on this device. Enabling this does not upload images; a cloud provider is not connected yet.</source>
         <translation>Standardmäßig aus. Belegfotos bleiben auf diesem Gerät. Das Aktivieren lädt keine Bilder hoch; ein Cloud-Anbieter ist noch nicht verbunden.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="389"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="426"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="394"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="431"/>
         <source>User manual</source>
         <translation>Benutzerhandbuch</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="395"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="432"/>
         <source>Open the bundled PDF guide in your system&apos;s default viewer</source>
         <translation>Öffnen Sie das gebündelte PDF-Handbuch im Standard-PDF-Viewer des Systems</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="404"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="441"/>
         <source>Open ▶</source>
         <translation>Öffnen ▶</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="406"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="443"/>
         <source>Open user manual</source>
         <translation>Benutzerhandbuch öffnen</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="412"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="449"/>
         <source>Methodology</source>
         <translation>Methodik</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="413"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="450"/>
         <source>How cash shortfalls, date patterns, currencies, and scenarios are calculated</source>
         <translation>Wie Liquiditätsengpässe, Datumsmuster, Währungen und Szenarien berechnet werden</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="424"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="461"/>
         <source>View ▶</source>
         <translation>Anzeigen ▶</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="426"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="463"/>
         <source>View methodology</source>
         <translation>Methodik anzeigen</translation>
     </message>

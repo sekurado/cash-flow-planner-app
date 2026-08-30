@@ -71,6 +71,9 @@ without it. Core spending entry stays fully offline (NFR-01).
 
 **Source runs on macOS**
 
+Missing Vision bindings: Settings → Receipts → **Install** (downloads PyObjC from PyPI into the
+running interpreter; network required). Equivalent CLI:
+
 ```bash
 pip install -e ".[dev,ocr-macos]"
 ```

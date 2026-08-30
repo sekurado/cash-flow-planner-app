@@ -94,7 +94,7 @@ def _import_macos_vision() -> tuple[Any, Any]:
     except ImportError as exc:
         msg = (
             "Receipt OCR on macOS requires PyObjC Vision bindings. "
-            "Install the 'ocr-macos' extra or enter the expense manually."
+            "Install on-device scanning from Settings, or enter the expense manually."
         )
         raise ReceiptOcrUnavailableError(msg) from exc
     return Vision, NSURL
