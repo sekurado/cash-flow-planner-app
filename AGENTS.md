@@ -183,7 +183,7 @@ Do **not** create files under `tasks/` — that legacy folder was removed. Put s
 When starting a story (first task on that story), move the **Story** issue **Status** → **In Progress** on the project board too.
 When committing completed task work, **wait for explicit user approval** after implementation is ready for review. Then use subject line `<task_number>: <short description>`, add `Closes #N` in the commit body (no trailing period), move the task's project **Status** to **Done** in the **same session** via GraphQL/`gh`, and confirm the issue closed after push. **Never commit without user review.** Never leave project **Status** at In Progress or Todo after the implementation commit.
 
-Never add `Co-authored-by` (or any other commit-message trailer) unless the user explicitly requests it.
+Never add `Co-authored-by` (or any other commit-message trailer) unless the user explicitly requests it. Cursor `beforeShellExecution` hooks deny `git commit` when the command contains that trailer (rule: `scripts/harness/rules/no_coauthored_by.py`). Do not bypass hooks with `--no-verify`.
 
 ---
 

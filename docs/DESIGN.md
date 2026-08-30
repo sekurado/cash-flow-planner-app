@@ -1,7 +1,7 @@
 # Cash Flow Planner Desktop — System Design Document
 
-**Version:** 1.5  
-**Date:** July 11, 2026  
+**Version:** 1.6  
+**Date:** August 30, 2026  
 **Status:** Draft  
 
 ---
@@ -25,6 +25,7 @@
 15. [Testing Strategy](#15-testing-strategy)
 16. [Build and Release Pipeline](#16-build-and-release-pipeline)
 17. [Non-Functional Requirements](#17-non-functional-requirements)
+18. [Agent quality harness](#18-agent-quality-harness)
 
 ---
 
@@ -335,7 +336,7 @@ cash-flow-planner-app/
 │       ├── ImportDialog.qml       # CSV/Excel file picker + column-mapping step
 │       ├── PlanImportDialog.qml   # .ftplan import preview + rate-conflict resolution
 │       └── TemplatePickerDialog.qml  # Bundled template picker for new forecasts
-└── tests/
+├── tests/
     ├── unit/                      # pytest unit tests (pure Python, no Qt)
     │   ├── test_date_pattern.py
     │   ├── test_simulation_engine.py
@@ -347,6 +348,14 @@ cash-flow-planner-app/
     └── e2e/                       # pytest-qt full app tests (offscreen)
         ├── test_simulation_e2e.py
         └── test_multi_currency.py
+├── .cursor/                       # Cursor project hooks + always-on rules
+│   ├── hooks.json                 # Agent quality harness (git commit + stop)
+│   └── hooks/review-gate.sh       # Forwards hook JSON to scripts/harness/review_gate.py
+└── scripts/harness/
+    ├── review_gate.py             # Hook runner: load rules, combine results, emit JSON
+    ├── rule.py                    # GateContext, Violation, Rule
+    └── rules/                     # One file per review comment
+        └── no_coauthored_by.py
 ```
 
 ---
@@ -1785,6 +1794,23 @@ The app ships with five languages: **English** (default), **French**, **Russian*
 - Live language switching is supported: `SettingsViewModel.setLanguage()` swaps the active translator and calls `engine.retranslate()`, which re-evaluates all `qsTr()` bindings in the live QML tree — no app restart required.
 
 Number and date formatting uses Qt's `QLocale` for locale-aware display (decimal separators, date order, etc.).
+
+---
+
+## 18. Agent quality harness
+
+Cursor project hooks (`.cursor/hooks.json`) run a **grader**. `scripts/harness/review_gate.py` is only the combiner: it loads every check under `scripts/harness/rules/`, runs those whose `hooks` match, and emits Cursor hook JSON. Each review comment lives in its own rule file (`id`, `hooks`, `check`, `message`). The agent (worker) does not grade itself.
+
+| Hook | When | Current rule |
+|------|------|----------------|
+| `beforeShellExecution` | Agent is about to run `git commit` | `no_coauthored_by.py` — **deny** if the command contains a `Co-authored-by` trailer (`failClosed: true`). |
+| `stop` | Agent ends a turn with `status: completed` | File-based rules return `followup_message` (cap `loop_limit: 2`). None yet — the hook is wired and silent. |
+
+To add a check: create `scripts/harness/rules/<name>.py` that exports `RULE`. Do not put check logic in `review_gate.py`.
+
+Hooks do not replace CI. They fail earlier, in the session. Do not use `git commit --no-verify` to skip them.
+
+Wrapper: `.cursor/hooks/review-gate.sh` (forwards stdin JSON to the grader). Cloud agents load these project hooks; user-level `~/.cursor/hooks.json` is not used.
 
 ---
 

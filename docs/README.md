@@ -21,6 +21,6 @@ This folder contains all design and architectural documentation for **Cash Flow 
 
 ## How Docs Are Maintained
 
-- **DESIGN.md** is the authoritative system design (current version: 1.5). Update it whenever a significant architectural decision is made, a new layer or module is introduced, or an existing design decision is reversed.
+- **DESIGN.md** is the authoritative system design (current version: 1.6). Update it whenever a significant architectural decision is made, a new layer or module is introduced, or an existing design decision is reversed.
 - Supplementary docs (to be added here as the project grows) describe **how specific subsystems work** in more operational detail — e.g., the simulation pipeline, the date pattern parser, QML component conventions, or database migration runbook.
 - After every feature or story is completed, review whether any doc is stale and update it as part of the task's definition of done.

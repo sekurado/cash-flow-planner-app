@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": ".cursor/hooks/review-gate.sh git",
+        "matcher": "git\\s+commit",
+        "failClosed": true,
+        "timeout": 15
+      }
+    ],
+    "stop": [
+      {
+        "command": ".cursor/hooks/review-gate.sh stop",
+        "loop_limit": 2,
+        "timeout": 15
+      }
+    ]
+  }
+}
