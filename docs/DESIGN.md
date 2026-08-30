@@ -68,6 +68,7 @@ The application is self-contained, stores all data locally on the user's machine
 | FR-24 | After a baseline projection completes, users receive **actionable cash-flow suggestions** — ways to avoid a cash shortfall, reduce spending, increase income, or save more — from deterministic analysis of their forecast. Suggestions can pre-fill scenario overrides for preview. |
 | FR-25 | Users can record **actual spending** as discrete transactions in an app-wide **spending journal** (name, amount, currency, optional date, category, place). Dictionary tables back autocomplete; the ledger is not tied to a single forecast plan. |
 | FR-26 | Users can **analyze recorded spending** on the Spending tab: date-filtered roll-up charts (top categories, places, and names) plus a searchable, filterable transaction list. Search narrows the list only; charts reflect the selected date range. |
+| FR-27 | Users can attach a **receipt photo** when adding a recorded expense. On-device OCR (macOS Vision) suggests amount, date, and name; the user always reviews and confirms before save. Failed OCR leaves suggestions empty and manual entry still works. An optional cloud OCR Settings toggle is off by default and does not upload images until a provider is added. |
 
 **FR-23 acceptance:**
 
@@ -92,6 +93,7 @@ The application is self-contained, stores all data locally on the user's machine
 - Top-level **Spending** tab (`RecordedExpensesPage.qml`) lists recent transactions; `RecordedExpenseFormDrawer.qml` supports add/edit with autocomplete.
 - UI copy uses **Spending** / **recorded expense** (not "budget"); see `docs/TERMINOLOGY.md`.
 - Analytics charts and filtered list are covered by **FR-26** (Story 32).
+- Receipt-assisted entry is covered by **FR-27** (Story 33).
 
 **FR-26 acceptance:**
 
@@ -103,6 +105,15 @@ The application is self-contained, stores all data locally on the user's machine
 - `RecordedExpensesPage.qml` combines `ExpenseFilterBar`, `ExpenseAnalyticsPanel` (three `ExpenseBucketBarChart` instances), and the expense list in a single scrollable view.
 - Unit tests cover `ExpenseAnalyticsEngine` aggregation math and `group_top_n`; integration tests cover `ExpenseAnalyticsViewModel` rollups and repository filter queries.
 - All new Spending analytics QML strings are extracted via `pyside6-lupdate` and translated in `i18n/app_*.ts`.
+
+**FR-27 acceptance:**
+
+- Create-expense drawer offers **Scan**; a file dialog picks a JPEG/PNG/WebP/HEIC image. OCR runs on `ReceiptOcrWorker` (`QRunnable` / `QThreadPool`) and never blocks the UI thread.
+- `ReceiptOcrProvider` (domain protocol) plus `MacosVisionOcrProvider` (PyObjC Vision) extract lines; `ReceiptFieldParser` maps lines to amount / date / merchant hints with per-field low-confidence flags. Windows and Linux use `UnsupportedReceiptOcrProvider` with a manual-entry error.
+- Review UI shows a thumbnail, suggested fields, **Low confidence** badges, and **Enter manually**. Confirm uses the existing Story 31 `createExpense` path; a pending image is copied into `AppDataLocation/receipts/` via `ReceiptImageStore`.
+- Settings **Cloud receipt scanning** is a stub (`QSettings` key `receipt_ocr_cloud_enabled`, default off) with privacy copy: receipt photos stay on this device; enabling the toggle does not upload images.
+- Unit tests cover `ReceiptFieldParser` with fixture OCR text; integration tests mock the provider and assert suggestions, low-confidence flags, receipt attach-on-save, and manual entry after OCR failure.
+- Receipt OCR QML strings and `AppErrors` messages are extracted via `pyside6-lupdate` and translated in `i18n/app_*.ts`. Native packaging notes live in `docs/BUILD.md`.
 
 ### 2.2 Non-Functional Requirements
 
@@ -834,6 +845,14 @@ Suggestions are read-only analysis — they never mutate the database. Applying 
 
 Pure-Python rollups in `src/domain/expense_analytics.py` take recorded expenses, a date range, a display currency, and exchange rates. The engine filters expenses to the inclusive range, normalizes each amount to the display currency, and produces sorted `ExpenseAnalyticsBucket` tuples for **by_name**, **by_category**, and **by_place**. Uncategorized expenses and expenses without a place use stable default labels. The `group_top_n` helper merges buckets beyond the chart limit into an **Other** row for QML bar charts.
 
+### 8.8 Receipt OCR (FR-27)
+
+Receipt-assisted entry is **assistive**, not silent auto-import. `ReceiptOcrProvider` in `src/domain/receipt_ocr.py` is a structural protocol (`extract_text` → `ReceiptOcrResult` lines + confidence). Implementations live under `src/integrations/receipt_ocr/` so domain tests never load native frameworks.
+
+`ReceiptFieldParser` (`src/domain/receipt_field_parser.py`) is pure Python: it scores TOTAL / AMOUNT DUE style totals, locale-aware dates, and a weak first-line merchant guess, then sets `*_is_low_confidence` when combined confidence is below the review threshold. `ReceiptImageStore` copies the chosen file under `AppDataLocation/receipts/` and deletes it when the expense is deleted.
+
+`ReceiptOcrWorker` runs extract + parse off the UI thread. `RecordedExpensesViewModel` exposes pending path, suggestions, and confidence flags; `createExpense` attaches the pending image after a successful insert. Cloud OCR is a Settings stub only (NFR-01: core remains offline).
+
 ---
 
 ## 9. Application Layer
@@ -1081,18 +1100,18 @@ flowchart LR
 | `SimulationControls.qml` | Date range pickers (`CalendarView`), initial balance `TextField`, and a `Button` that calls `simulationViewModel.runSimulation`. The end-date picker clamps to today + 10 years. Disabled when `simulationViewModel.isRunning`. |
 | `WhatIfPanel.qml` | Collapsible side panel listing all entries with inline override controls (amount field, active toggle). A "Run what-if" button calls `simulationViewModel.runWhatIf(planId, params, overrides)`. A "Clear overrides" action resets all fields without touching saved data. |
 | `ImportDialog.qml` | File picker (CSV / XLSX) → column-mapping step → preview table → "Import" button calls `importViewModel.importFile(path, mapping)`. |
-| `RecordedExpenseFormDrawer.qml` | Slide-in drawer for creating/editing a recorded expense. Three `LabelAutocompleteField` delegates call debounced `searchExpenseNames` / `searchCategories` / `searchPlaces` slots. |
+| `RecordedExpenseFormDrawer.qml` | Slide-in drawer for creating/editing a recorded expense. Three `LabelAutocompleteField` delegates call debounced `searchExpenseNames` / `searchCategories` / `searchPlaces` slots. Create flow includes **Scan** (file picker → `startReceiptOcr`), a receipt thumbnail/review strip, low-confidence badges, and **Enter manually**. |
 | `ExpenseFilterBar.qml` | Search box, date-range presets (this month, last 30 days, YTD, custom), and clear-filters action. Syncs date range to `ExpenseAnalyticsViewModel` and `RecordedExpensesViewModel`. |
 | `ExpenseAnalyticsPanel.qml` | Overview section with three horizontal bar charts bound to `expenseAnalyticsViewModel` series properties. |
 | `ExpenseBucketBarChart.qml` | Reusable Qt Charts horizontal bar chart for a single analytics dimension; handles empty state and dynamic axis margins. |
-| `LabelAutocompleteField.qml` | Reusable typeahead `TextField` with suggestion popup bound to a `LabelSuggestionModel`. |
+| `LabelAutocompleteField.qml` | Reusable typeahead `TextField` with suggestion popup bound to a `LabelSuggestionModel`. Optional `lowConfidence` badge for OCR review. |
 
 ### 10.3 UI/UX Principles
 
 - **Live pattern preview** — as the user types in `DatePatternInput`, the ViewModel's `@Slot` `describe_pattern(text)` is called synchronously (no async needed — pure Python logic) and the result is shown as a hint label.
 - **Thread-safe simulation** — the "Run" button disables via `enabled: !simulationViewModel.isRunning` binding while the worker thread computes. A `BusyIndicator` spins. No UI freezing.
 - **Persistent state** — active plan ID is saved to `QSettings` (OS-native: `NSUserDefaults` on macOS, registry on Windows) so the user returns to the same plan after restart.
-- **App-wide Settings** — a gear `ToolButton` in the persistent toolbar opens `SettingsPage` as a top-level stack entry. Settings (dark mode, language, exchange rates) are not scoped to any plan; they apply to the entire application.
+- **App-wide Settings** — a gear `ToolButton` in the persistent toolbar opens `SettingsPage` as a top-level stack entry. Settings (dark mode, language, exchange rates, optional cloud receipt scanning stub) are not scoped to any plan; they apply to the entire application.
 - **Dark mode** — implemented via Qt's `Material` style palette. A `Switch` in `SettingsPage` toggles `Material.Dark / Material.Light` globally. Preference stored in `QSettings`.
 - **Language switching** — a `ComboBox` in `SettingsPage` calls `settingsViewModel.setLanguage(code)`. The ViewModel swaps the active `QTranslator` and calls `engine.retranslate()` so the entire QML tree re-evaluates `qsTr()` bindings immediately — no app restart required. Selected language persisted in `QSettings`.
 - **Top-level Spending tab** — a footer `TabBar` in `main.qml` switches between **Forecasts** (`StackView` with plan list and drill-down) and **Spending** (`RecordedExpensesPage`). Settings remains reachable from the toolbar on either tab (switching to Forecasts first when opened from Spending).
@@ -1380,6 +1399,41 @@ sequenceDiagram
     EAVM->>EAVM: group_top_n → chart series
 ```
 
+### 11.10 Receipt-Assisted Entry Flow (FR-27)
+
+The create-expense drawer stays the Story 31 form. Scan copies no bytes until save: OCR reads the picked path, the ViewModel holds it as `pendingReceiptPath`, and `createExpense` asks `RecordedExpenseService.attach_receipt_image` after insert. The user can dismiss OCR and type the expense by hand.
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant QML as RecordedExpenseFormDrawer.qml
+    participant VM as RecordedExpensesViewModel
+    participant W as ReceiptOcrWorker
+    participant P as ReceiptOcrProvider
+    participant FP as ReceiptFieldParser
+    participant S as RecordedExpenseService
+
+    U->>QML: Scan → pick image
+    QML->>VM: startReceiptOcr(path)
+    VM->>W: QThreadPool.start(worker)
+    W->>P: extract_text(path)
+    P-->>W: ReceiptOcrResult
+    W->>FP: parse(result)
+    FP-->>W: ReceiptFieldHints
+    W->>VM: finished(payload)
+    VM->>QML: receiptOcrChanged (suggestions + confidence)
+    alt Confirm
+        U->>QML: edit fields if needed, Save
+        QML->>VM: createExpense(dto)
+        VM->>S: create then attach_receipt_image
+    else Dismiss OCR
+        U->>QML: Enter manually
+        QML->>VM: clearReceiptOcr
+        U->>QML: fill form, Save
+        QML->>VM: createExpense(dto)
+    end
+```
+
 ---
 
 ## 12. UML Diagrams
@@ -1603,6 +1657,7 @@ def fetch_rates(base: str, symbols: list[str]) -> dict[str, float]:
 | `DatabaseError` | Repositories (SQLAlchemy) | ViewModel catches it, sets `error` property; QML `InfoBar` shows a retry button. |
 | `SimulationOverflowError` | `SimulationEngine` | Raised if simulation range exceeds **10 years** (hard limit). Worker surfaces it via the error signal. |
 | `ValidationError` (Pydantic) | ViewModels before repo calls | Fields highlighted red in the form; validation message shown inline. |
+| `ReceiptOcrUnavailableError` / `ReceiptOcrError` | OCR provider / worker | ViewModel sets `error`; create drawer keeps the form open for manual entry. Suggestions stay empty. |
 
 ### 14.2 Strategy
 
@@ -1635,6 +1690,7 @@ def fetch_rates(base: str, symbols: list[str]) -> dict[str, float]:
 | `event_expander` (in `date_pattern.py`) | 100% | Boundary dates, empty windows, month-end edge cases |
 | `simulation_engine.py` | 95% | Zero events, all income, first deficit, exact zero balance |
 | `currency_normalizer.py` | 95% | Direct rate, missing rate error, multiple effective dates |
+| `receipt_field_parser.py` | High | Heuristic totals, dates, merchant, low-confidence flags; fixture OCR text (no images in CI) |
 
 ### 15.3 Integration Test Scenarios
 
@@ -1645,6 +1701,7 @@ Integration tests use `pytest-qt` and an **in-memory SQLite** database (`:memory
 3. `SimulationViewModel.run_simulation()` — mock `SimulationEngine`, verify `isRunning` transitions and `result` property is set.
 4. `PlanExporter.export()` → `PlanImportService.import_bundle()` round-trip preserves plan metadata and entry fields with a new plan ID.
 5. `PlanViewModel.exportPlan()` and `PlanImportViewModel.importFile()` emit `exportSucceeded` / `importCompleted` on background worker completion.
+6. `RecordedExpensesViewModel.startReceiptOcr()` with a mocked `ReceiptOcrProvider` fills suggestions; `createExpense` attaches the pending receipt image.
 
 ### 15.4 E2E Test Scenarios
 
@@ -1815,3 +1872,4 @@ Number and date formatting uses Qt's `QLocale` for locale-aware display (decimal
 | 8 | Should the app support multiple UI languages? If yes, should language switching require a restart? | **Yes, five languages; no restart required.** English, French, Russian, Spanish, and German are shipped. Switching is live: `SettingsViewModel.setLanguage()` swaps the `QTranslator` and calls `QQmlEngine.retranslate()`. The selected language is persisted in `QSettings`. See FR-16, Section 17.4, and Tasks 13_3–13_4. |
 | 9 | How should the exchange-rate fetcher be tested without network access or a real API key? | **In-process mock provider gated behind `--dev`.** `configure_dev_mode(enabled=True)` (called in `main.py` when `--dev` is passed) unlocks a `useMockExchangeRates` toggle in `SettingsPage`. When active, `fetch_rates()` returns hardcoded values from `_MOCK_USD_RATES` with no HTTP call and no live fetch limits (`can_fetch_live_rates()` always permits fetch; `record_successful_fetch()` is skipped). The mock is invisible and inert in production. Integration tests call `configure_dev_mode(enabled=True)` + `set_use_mock_rates(True)` in fixtures and restore the defaults in teardown. See Section 13.4 and `src/integrations/exchange_rate_fetcher.py`. |
 | 10 | Should users be able to move a complete plan between devices? | **Yes, via `.ftplan` export/import (FR-17).** Export bundles plan metadata, all entries, and referenced `foreign → plan.base_currency` rates. Import creates a new plan; rate conflicts require explicit user choice. See Section 11.3, `src/export/plan_exporter.py`, and `src/integrations/plan_import_service.py`. |
+| 11 | How should receipt photos become expense fields without sending images to the cloud? | **On-device OCR + review UI (FR-27).** macOS uses Vision via PyObjC (`ocr-macos` extra); Windows/Linux stub with a manual-entry message. A pure-Python heuristic parser maps OCR lines to amount/date/merchant. The user always edits and confirms. Cloud OCR is a Settings stub, off by default, and does not upload images. See Section 8.8 and `docs/receipt-ocr.md`. |

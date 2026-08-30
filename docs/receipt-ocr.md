@@ -106,7 +106,7 @@ processing failure).
 
 | Component | Bundle impact | Mitigation |
 |-----------|---------------|------------|
-| **macOS Vision** | PyObjC + Vision frameworks linked at runtime | Document in `docs/BUILD.md` (Task 33_5); gate import so dev runs without PyObjC on other OSes |
+| **macOS Vision** | PyObjC + Vision frameworks linked at runtime | Documented in `docs/BUILD.md`; lazy import so Linux/Windows CI does not pull PyObjC |
 | **Windows WinRT OCR** | WinRT bindings; Windows-only | Optional extra in `pyproject.toml` extras; exclude from macOS/Linux CI |
 | **Tesseract (Linux)** | **Do not bundle** Tesseract in the app | Require system `tesseract` package or disable OCR with explanatory UI |
 | **Cloud OCR (Tier B)** | `httpx` already used for exchange rates | No new binary deps; API keys via Settings / env, never committed |

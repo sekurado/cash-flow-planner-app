@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import importlib.util
 import os
 import subprocess
 import sys
@@ -60,6 +61,11 @@ _hiddenimports = [
     # Alembic env.py imports logging.config; PyInstaller only traces logging from main.py.
     "logging.config",
 ]
+
+# Receipt OCR: Vision is lazy-imported. Collect PyObjC only on macOS when the
+# optional ocr-macos extra is installed at freeze time.
+if sys.platform == "darwin" and importlib.util.find_spec("Vision") is not None:
+    _hiddenimports.extend(["Vision", "Foundation", "objc"])
 
 a = Analysis(
     ["main.py"],

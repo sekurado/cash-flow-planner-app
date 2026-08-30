@@ -360,8 +360,8 @@ Page {
                     SettingsRow {
                         label: qsTr("Cloud receipt scanning")
                         sublabel: qsTr(
-                            "Optional future cloud OCR. Off by default. Receipt photos stay "
-                            + "on this device until a cloud provider is added.")
+                            "Off by default. Receipt photos stay on this device. Enabling this "
+                            + "does not upload images; a cloud provider is not connected yet.")
                         showDivider: false
 
                         Switch {

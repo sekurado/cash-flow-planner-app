@@ -11,7 +11,7 @@ This folder contains all design and architectural documentation for **Cash Flow 
 | Document | Description |
 |----------|-------------|
 | [DESIGN.md](./DESIGN.md) | System design document — full architecture, domain model, tech stack decisions, data flow diagrams, and non-functional requirements. The primary reference for the system. |
-| [BUILD.md](./BUILD.md) | Local build guide — prerequisites, one-command installer builds for macOS, Windows, and Linux, and notes for sharing unsigned builds. |
+| [BUILD.md](./BUILD.md) | Local build guide — prerequisites, one-command installer builds for macOS, Windows, and Linux, unsigned-build notes, and optional macOS Vision OCR packaging. |
 | [pitch/README.md](./pitch/README.md) | Positioning one-pager — problem, solution, audience, and differentiators for stakeholders and future marketing use. |
 | [TERMINOLOGY.md](./TERMINOLOGY.md) | UI vs internal naming glossary — professional user-facing terms (`Forecast`, `Cash flow`, `Cash shortfall`) mapped to unchanged code identifiers (`Plan`, `Entry`, `plan_id`). |
 | [receipt-ocr.md](./receipt-ocr.md) | Story 33 spike — receipt OCR platform matrix, Tier A/B strategy, PyInstaller notes, and `ReceiptOcrProvider` contract. |

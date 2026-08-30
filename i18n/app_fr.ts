@@ -4,17 +4,17 @@
 <context>
     <name>AppErrors</name>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="215"/>
+        <location filename="../src/app/i18n/user_messages.py" line="238"/>
         <source>Invalid data. Please check your input.</source>
         <translation>Données invalides. Veuillez vérifier votre saisie.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="216"/>
+        <location filename="../src/app/i18n/user_messages.py" line="239"/>
         <source>Live exchange-rate fetching is not enabled.</source>
         <translation>La récupération des taux de change en direct n&apos;est pas activée.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="217"/>
+        <location filename="../src/app/i18n/user_messages.py" line="240"/>
         <source>Base currency is required to fetch live exchange rates.</source>
         <translation>La devise de base est requise pour récupérer les taux de change en direct.</translation>
     </message>
@@ -23,52 +23,52 @@
         <translation type="vanished">Aucun résultat de simulation à exporter.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="221"/>
+        <location filename="../src/app/i18n/user_messages.py" line="244"/>
         <source>Name is required</source>
         <translation>Le nom est requis</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="222"/>
+        <location filename="../src/app/i18n/user_messages.py" line="245"/>
         <source>Currency is required</source>
         <translation>La devise est requise</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="223"/>
+        <location filename="../src/app/i18n/user_messages.py" line="246"/>
         <source>Exchange rate API returned invalid JSON</source>
         <translation>L&apos;API des taux de change a renvoyé un JSON invalide</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="224"/>
+        <location filename="../src/app/i18n/user_messages.py" line="247"/>
         <source>Exchange rate API response is missing conversion rates</source>
         <translation>La réponse de l&apos;API des taux de change ne contient pas de taux de conversion</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="227"/>
+        <location filename="../src/app/i18n/user_messages.py" line="250"/>
         <source>Exchange rate API returned a zero rate</source>
         <translation>L&apos;API des taux de change a renvoyé un taux nul</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="228"/>
+        <location filename="../src/app/i18n/user_messages.py" line="251"/>
         <source>Simulation params must include a numeric initial_balance</source>
         <translation>Les paramètres de simulation doivent inclure un solde initial numérique</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="231"/>
+        <location filename="../src/app/i18n/user_messages.py" line="254"/>
         <source>Simulation params must include a non-empty base_currency</source>
         <translation>Les paramètres de simulation doivent inclure une devise de base non vide</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="234"/>
+        <location filename="../src/app/i18n/user_messages.py" line="257"/>
         <source>Simulation params must include ISO start_date and end_date</source>
         <translation>Les paramètres de simulation doivent inclure des dates de début et de fin au format ISO</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="237"/>
+        <location filename="../src/app/i18n/user_messages.py" line="260"/>
         <source>Exchange rates must target USD, got GBP</source>
         <translation>Les taux de change doivent cibler l&apos;USD, pas le GBP</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="238"/>
+        <location filename="../src/app/i18n/user_messages.py" line="261"/>
         <source>Exchange rates cannot use USD as the source currency</source>
         <translation>Les taux de change ne peuvent pas utiliser l&apos;USD comme devise source</translation>
     </message>
@@ -81,89 +81,114 @@
         <translation type="vanished">Entrée introuvable : %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="220"/>
+        <location filename="../src/app/i18n/user_messages.py" line="243"/>
         <source>No projection result to export.</source>
         <translation>Aucun résultat de projection à exporter.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="239"/>
+        <location filename="../src/app/i18n/user_messages.py" line="262"/>
         <source>Forecast not found: %1</source>
         <translation>Prévision introuvable : %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="240"/>
+        <location filename="../src/app/i18n/user_messages.py" line="263"/>
         <source>A forecast named &quot;%1&quot; already exists</source>
         <translation>Une prévision nommée « %1 » existe déjà</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="241"/>
+        <location filename="../src/app/i18n/user_messages.py" line="264"/>
         <source>Cash flow not found: %1</source>
         <translation>Flux de trésorerie introuvable : %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="242"/>
+        <location filename="../src/app/i18n/user_messages.py" line="265"/>
         <source>Invalid date pattern: %1</source>
         <translation>Modèle de date invalide : %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="243"/>
+        <location filename="../src/app/i18n/user_messages.py" line="266"/>
         <source>Unsupported file type: %1</source>
         <translation>Type de fichier non pris en charge : %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="244"/>
+        <location filename="../src/app/i18n/user_messages.py" line="267"/>
         <source>No exchange rate found for %1 → %2</source>
         <translation>Aucun taux de change trouvé pour %1 → %2</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="245"/>
+        <location filename="../src/app/i18n/user_messages.py" line="268"/>
         <source>Simulation range of %1 days exceeds the %2-day (10-year) limit</source>
         <translation>La plage de simulation de %1 jours dépasse la limite de %2 jours (10 ans)</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="248"/>
+        <location filename="../src/app/i18n/user_messages.py" line="271"/>
         <source>Exchange rate API returned HTTP %1</source>
         <translation>L&apos;API des taux de change a renvoyé HTTP %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="249"/>
+        <location filename="../src/app/i18n/user_messages.py" line="272"/>
         <source>Mock exchange rates are not defined for base currency %1</source>
         <translation>Les taux de change simulés ne sont pas définis pour la devise de base %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="252"/>
+        <location filename="../src/app/i18n/user_messages.py" line="275"/>
         <source>Mock exchange rates are missing symbols: %1</source>
         <translation>Les taux de change simulés manquent de symboles : %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="253"/>
+        <location filename="../src/app/i18n/user_messages.py" line="276"/>
         <source>%1 must be a mapping</source>
         <translation>%1 doit être un objet</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="254"/>
+        <location filename="../src/app/i18n/user_messages.py" line="277"/>
         <source>Daily live rate fetch limit reached (10 per day). Try again tomorrow.</source>
         <translation>Limite quotidienne de récupération des taux atteinte (10 par jour). Réessayez demain.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="257"/>
+        <location filename="../src/app/i18n/user_messages.py" line="280"/>
         <source>Please wait %1 second(s) before fetching live rates again.</source>
         <translation>Veuillez patienter %1 seconde(s) avant de récupérer à nouveau les taux en direct.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="260"/>
+        <location filename="../src/app/i18n/user_messages.py" line="283"/>
         <source>Please wait %1 minute(s) before fetching live rates again.</source>
         <translation>Veuillez patienter %1 minute(s) avant de récupérer à nouveau les taux en direct.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="263"/>
+        <location filename="../src/app/i18n/user_messages.py" line="286"/>
         <source>User manual is not available.</source>
         <translation>Le manuel utilisateur n&apos;est pas disponible.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="264"/>
+        <location filename="../src/app/i18n/user_messages.py" line="287"/>
         <source>Could not open the user manual.</source>
         <translation>Impossible d&apos;ouvrir le manuel utilisateur.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="288"/>
+        <source>Receipt image storage is not configured</source>
+        <translation>Le stockage des images de tickets n&apos;est pas configuré</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="289"/>
+        <source>Receipt OCR on macOS requires PyObjC Vision bindings. Install the &apos;ocr-macos&apos; extra or enter the expense manually.</source>
+        <translation>La reconnaissance de tickets sur macOS nécessite les liaisons PyObjC Vision. Installez l&apos;extra &apos;ocr-macos&apos; ou saisissez la dépense manuellement.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="294"/>
+        <source>Receipt scanning is not available on this platform (%1). Enter the expense manually.</source>
+        <translation>La numérisation de tickets n&apos;est pas disponible sur cette plateforme (%1). Saisissez la dépense manuellement.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="298"/>
+        <source>Receipt image not found: %1</source>
+        <translation>Image de ticket introuvable : %1</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="299"/>
+        <source>Could not read text from receipt image: %1</source>
+        <translation>Impossible de lire le texte de l&apos;image du ticket : %1</translation>
     </message>
     <message>
         <source>Live rates were already fetched today. Try again in %1 hour(s).</source>
@@ -807,22 +832,22 @@
 <context>
     <name>EntriesViewModel</name>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="265"/>
+        <location filename="../src/app/i18n/user_messages.py" line="300"/>
         <source>Every day</source>
         <translation>Tous les jours</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="266"/>
+        <location filename="../src/app/i18n/user_messages.py" line="301"/>
         <source>Monthly on the %1</source>
         <translation>Mensuel le %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="267"/>
+        <location filename="../src/app/i18n/user_messages.py" line="302"/>
         <source>Yearly on %1 %2</source>
         <translation>Annuel le %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="268"/>
+        <location filename="../src/app/i18n/user_messages.py" line="303"/>
         <source>Once on %1 %2 %3</source>
         <translation>Une fois le %1 %2 %3</translation>
     </message>
@@ -1044,7 +1069,7 @@
     <message>
         <location filename="../qml/components/ExpenseFilterBar.qml" line="113"/>
         <source>Year to date</source>
-        <translation>Depuis le début de l'année</translation>
+        <translation>Depuis le début de l&apos;année</translation>
     </message>
     <message>
         <location filename="../qml/components/ExpenseFilterBar.qml" line="114"/>
@@ -1075,32 +1100,32 @@
 <context>
     <name>ForecastTemplates</name>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="269"/>
+        <location filename="../src/app/i18n/user_messages.py" line="304"/>
         <source>SaaS startup</source>
         <translation>Startup SaaS</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="270"/>
+        <location filename="../src/app/i18n/user_messages.py" line="305"/>
         <source>Monthly recurring revenue, cloud costs, and payroll for an early-stage SaaS company.</source>
         <translation>Revenus récurrents mensuels, coûts cloud et masse salariale pour une entreprise SaaS en phase initiale.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="274"/>
+        <location filename="../src/app/i18n/user_messages.py" line="309"/>
         <source>Consulting firm</source>
         <translation>Cabinet de conseil</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="275"/>
+        <location filename="../src/app/i18n/user_messages.py" line="310"/>
         <source>Client retainers, contractor costs, and operating expenses for a small professional services firm.</source>
         <translation>Honoraires clients, coûts des prestataires et charges d&apos;exploitation pour un petit cabinet de services professionnels.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="280"/>
+        <location filename="../src/app/i18n/user_messages.py" line="315"/>
         <source>Retail shop</source>
         <translation>Commerce de détail</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="281"/>
+        <location filename="../src/app/i18n/user_messages.py" line="316"/>
         <source>Point-of-sale revenue, rent, inventory COGS, and seasonal patterns for a brick-and-mortar retail store.</source>
         <translation>Chiffre d&apos;affaires en caisse, loyer, coût des stocks et variations saisonnières pour un magasin physique.</translation>
     </message>
@@ -1260,9 +1285,14 @@
 <context>
     <name>LabelAutocompleteField</name>
     <message>
-        <location filename="../qml/components/LabelAutocompleteField.qml" line="54"/>
+        <location filename="../qml/components/LabelAutocompleteField.qml" line="59"/>
         <source>optional</source>
         <translation>facultatif</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/LabelAutocompleteField.qml" line="76"/>
+        <source>Low confidence</source>
+        <translation>Confiance faible</translation>
     </message>
 </context>
 <context>
@@ -2215,97 +2245,144 @@ Le solde de clôture du jour précédent devient le point de départ du jour sui
 <context>
     <name>RecordedExpenseFormDrawer</name>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="95"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="123"/>
         <source>Add recorded expense</source>
         <translation>Ajouter une dépense enregistrée</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="96"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="124"/>
         <source>Edit recorded expense</source>
         <translation>Modifier la dépense enregistrée</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="105"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="132"/>
+        <source>Scan</source>
+        <translation>Numériser</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="135"/>
+        <source>Scan receipt</source>
+        <translation>Numériser un ticket</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="142"/>
         <source>Close</source>
         <translation type="unfinished">Fermer</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="201"/>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="212"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="285"/>
+        <source>Reading receipt…</source>
+        <translation>Lecture du ticket…</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="286"/>
+        <source>Review suggested fields, then save.</source>
+        <translation>Vérifiez les champs proposés, puis enregistrez.</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="294"/>
+        <source>You can edit any field or enter the expense manually.</source>
+        <translation>Vous pouvez modifier chaque champ ou saisir la dépense manuellement.</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="303"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="306"/>
+        <source>Enter manually</source>
+        <translation>Saisie manuelle</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="327"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="356"/>
         <source>Amount</source>
         <translation type="unfinished">Montant</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="210"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="344"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="411"/>
+        <source>Low confidence</source>
+        <translation>Confiance faible</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="354"/>
         <source>0.00</source>
         <translation type="unfinished">0.00</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="225"/>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="235"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="369"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="379"/>
         <source>Currency</source>
         <translation type="unfinished">Devise</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="245"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="394"/>
         <source>Date</source>
         <translation type="unfinished">Date</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="261"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="428"/>
         <source>Name</source>
         <translation type="unfinished">Nom</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="262"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="429"/>
         <source>e.g. Groceries</source>
         <translation>ex. Courses</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="272"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="441"/>
         <source>Category</source>
         <translation type="unfinished">Catégorie</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="273"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="442"/>
         <source>e.g. Food</source>
         <translation>ex. Alimentation</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="282"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="451"/>
         <source>Place</source>
         <translation>Lieu</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="283"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="452"/>
         <source>e.g. Whole Foods</source>
         <translation>ex. Whole Foods</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="295"/>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="305"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="464"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="474"/>
         <source>Note</source>
         <translation>Note</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="295"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="464"/>
         <source>optional</source>
         <translation>facultatif</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="304"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="473"/>
         <source>Add a note</source>
         <translation>Ajouter une note</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="315"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="484"/>
         <source>Save</source>
         <translation type="unfinished">Enregistrer</translation>
     </message>
     <message>
-        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="319"/>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="488"/>
         <source>Save recorded expense</source>
         <translation>Enregistrer la dépense</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="501"/>
+        <source>Choose a receipt image</source>
+        <translation>Choisir une image de ticket</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/RecordedExpenseFormDrawer.qml" line="502"/>
+        <source>Images (*.jpg *.jpeg *.png *.webp *.heic)</source>
+        <translation>Images (*.jpg *.jpeg *.png *.webp *.heic)</translation>
     </message>
 </context>
 <context>
@@ -2485,47 +2562,63 @@ Le solde de clôture du jour précédent devient le point de départ du jour sui
         <translation>Site web du fournisseur Exchange Rate API</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="357"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="356"/>
+        <source>Receipts</source>
+        <translation>Tickets</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="361"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="374"/>
+        <source>Cloud receipt scanning</source>
+        <translation>Numérisation cloud des tickets</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="362"/>
+        <source>Off by default. Receipt photos stay on this device. Enabling this does not upload images; a cloud provider is not connected yet.</source>
+        <translation>Désactivé par défaut. Les photos de tickets restent sur cet appareil. Activer cette option n&apos;envoie aucune image ; aucun fournisseur cloud n&apos;est encore connecté.</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="389"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="362"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="394"/>
         <source>User manual</source>
         <translation>Manuel utilisateur</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="363"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="395"/>
         <source>Open the bundled PDF guide in your system&apos;s default viewer</source>
         <translation>Ouvrez le guide PDF intégré dans votre visionneuse système par défaut</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="372"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="404"/>
         <source>Open ▶</source>
         <translation>Ouvrir ▶</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="374"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="406"/>
         <source>Open user manual</source>
         <translation>Ouvrir le manuel utilisateur</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="380"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="412"/>
         <source>Methodology</source>
         <translation>Méthodologie</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="381"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="413"/>
         <source>How cash shortfalls, date patterns, currencies, and scenarios are calculated</source>
         <translation>Comment les manques de trésorerie, les modèles de dates, les devises et les scénarios sont calculés</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="392"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="424"/>
         <source>View ▶</source>
         <translation>Voir ▶</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="394"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="426"/>
         <source>View methodology</source>
         <translation>Voir la méthodologie</translation>
     </message>

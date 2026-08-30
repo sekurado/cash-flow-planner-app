@@ -57,6 +57,40 @@ sudo apt-get install -y \
 `appimagetool` is downloaded automatically by `build.sh` into `build/tools/` when
 not already on your `PATH`.
 
+### Optional receipt OCR (macOS Vision)
+
+On-device receipt scanning uses the **macOS Vision** framework (`VNRecognizeTextRequest`)
+through PyObjC. It is **not** a core dependency: Linux, Windows, and CI stay installable
+without it. Core spending entry stays fully offline (NFR-01).
+
+| Platform | Native OCR in v1 | What to install |
+|----------|------------------|-----------------|
+| macOS | Vision via `MacosVisionOcrProvider` | `pip install -e ".[ocr-macos]"` (needs Xcode Command Line Tools) |
+| Windows | Stub — Scan shows a manual-entry error | Nothing extra |
+| Linux | Stub — do **not** bundle Tesseract | Nothing extra |
+
+**Source runs on macOS**
+
+```bash
+pip install -e ".[dev,ocr-macos]"
+```
+
+If PyObjC is missing, Scan still opens the form: the ViewModel surfaces
+`ReceiptOcrUnavailableError` and the user can type the expense.
+
+**PyInstaller / installer builds**
+
+- `MacosVisionOcrProvider` **lazy-imports** `Vision` and `Foundation`, so Linux/Windows
+  freezes never pull macOS-only frameworks.
+- `cash_flow_planner.spec` adds `Vision`, `Foundation`, and `objc` to `hiddenimports`
+  **only on macOS** and only when those modules are importable at freeze time.
+- `./scripts/build.sh` installs the `ocr-macos` extra on Darwin so a local macOS DMG
+  can ship working Scan. Windows (`build.ps1`) and Linux do not install that extra.
+- Cloud document APIs are a Settings stub (`receipt_ocr_cloud_enabled`, default off).
+  They add no freeze-time binaries and do not upload receipt photos.
+
+See [receipt-ocr.md](./receipt-ocr.md) for the provider contract and accuracy notes.
+
 ---
 
 ## One-command build

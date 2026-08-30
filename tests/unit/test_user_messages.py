@@ -66,6 +66,39 @@ def test_translate_no_projection_result(qt_app: QApplication) -> None:
 
 
 @pytest.mark.unit
+def test_translate_receipt_ocr_errors(qt_app: QApplication) -> None:
+    _ = qt_app
+    assert (
+        translate_user_message("Receipt image not found: /tmp/missing.jpg")
+        == "Receipt image not found: /tmp/missing.jpg"
+    )
+    assert translate_user_message(
+        "Receipt scanning is not available on this platform (linux). Enter the expense manually."
+    ) == ("Receipt scanning is not available on this platform (linux). Enter the expense manually.")
+    assert (
+        translate_user_message("Could not read text from receipt image: Vision request failed")
+        == "Could not read text from receipt image: Vision request failed"
+    )
+
+
+@pytest.mark.unit
+def test_translate_receipt_ocr_error_french(qt_app: QApplication) -> None:
+    import src.app.resources_rc  # noqa: F401
+
+    translator = QTranslator()
+    assert translator.load(":/i18n/app_fr.qm")
+    qt_app.installTranslator(translator)
+
+    try:
+        assert (
+            translate_user_message("Receipt image not found: /tmp/missing.jpg")
+            == "Image de ticket introuvable : /tmp/missing.jpg"
+        )
+    finally:
+        qt_app.removeTranslator(translator)
+
+
+@pytest.mark.unit
 def test_validation_error_message_uses_translation(qt_app: QApplication) -> None:
     import src.app.resources_rc  # noqa: F401
 
