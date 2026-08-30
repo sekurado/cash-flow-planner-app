@@ -16,7 +16,12 @@ from src.integrations.receipt_ocr.macos_vision import (
     _import_macos_vision,
     _recognize_with_vision,
 )
+from src.integrations.receipt_ocr.tesseract_ocr import (
+    TesseractOcrProvider,
+    _lines_from_tesseract_data,
+)
 from src.integrations.receipt_ocr.unsupported import UnsupportedReceiptOcrProvider
+from src.integrations.receipt_ocr.windows_ocr import WindowsOcrProvider
 
 
 @pytest.mark.unit
@@ -79,8 +84,26 @@ def test_factory_returns_macos_provider_on_darwin(monkeypatch: pytest.MonkeyPatc
 
 
 @pytest.mark.unit
-def test_factory_returns_unsupported_on_other_os(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_factory_returns_windows_provider_on_win32(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr("src.integrations.receipt_ocr.sys.platform", "win32")
+
+    provider = create_receipt_ocr_provider()
+
+    assert isinstance(provider, WindowsOcrProvider)
+
+
+@pytest.mark.unit
+def test_factory_returns_tesseract_provider_on_linux(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr("src.integrations.receipt_ocr.sys.platform", "linux")
+
+    provider = create_receipt_ocr_provider()
+
+    assert isinstance(provider, TesseractOcrProvider)
+
+
+@pytest.mark.unit
+def test_factory_returns_unsupported_on_other_os(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr("src.integrations.receipt_ocr.sys.platform", "aix")
 
     provider = create_receipt_ocr_provider()
 
@@ -88,10 +111,63 @@ def test_factory_returns_unsupported_on_other_os(monkeypatch: pytest.MonkeyPatch
 
 
 @pytest.mark.unit
-def test_receipt_ocr_is_available_false_off_macos(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_receipt_ocr_is_available_false_without_bindings(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     monkeypatch.setattr("src.integrations.receipt_ocr.sys.platform", "linux")
+    monkeypatch.setattr(
+        "src.integrations.receipt_ocr.tesseract_ocr_is_available",
+        lambda: False,
+    )
 
     assert receipt_ocr_is_available() is False
+
+
+@pytest.mark.unit
+def test_windows_provider_uses_injected_recognizer(tmp_path: Path) -> None:
+    image = tmp_path / "receipt.png"
+    image.write_bytes(b"fake")
+
+    def recognize(path: Path) -> Sequence[tuple[str, float]]:
+        assert path == image
+        return (("Cafe Nero", 0.9), ("TOTAL 12.50", 0.8))
+
+    provider = WindowsOcrProvider(recognize=recognize)
+    result = provider.extract_text(image)
+
+    assert result.provider_id == "winrt-ocr"
+    assert result.lines[0].text == "Cafe Nero"
+    assert result.overall_confidence == pytest.approx(0.85)
+
+
+@pytest.mark.unit
+def test_tesseract_provider_uses_injected_recognizer(tmp_path: Path) -> None:
+    image = tmp_path / "receipt.png"
+    image.write_bytes(b"fake")
+    provider = TesseractOcrProvider(recognize=lambda path: (("TOTAL 4.00", 0.7),))
+
+    result = provider.extract_text(image)
+
+    assert result.provider_id == "tesseract"
+    assert result.lines[0].text == "TOTAL 4.00"
+
+
+@pytest.mark.unit
+def test_tesseract_groups_words_into_lines() -> None:
+    data = {
+        "text": ("Cafe", "Nero", "", "TOTAL", "12.50"),
+        "conf": (90.0, 80.0, -1.0, 70.0, 60.0),
+        "block_num": (1, 1, 1, 1, 1),
+        "par_num": (1, 1, 1, 1, 1),
+        "line_num": (1, 1, 1, 2, 2),
+    }
+
+    lines = _lines_from_tesseract_data(data)
+
+    assert lines[0][0] == "Cafe Nero"
+    assert lines[1][0] == "TOTAL 12.50"
+    assert lines[0][1] == pytest.approx(0.85)
+    assert lines[1][1] == pytest.approx(0.65)
 
 
 class _FakeCandidate:

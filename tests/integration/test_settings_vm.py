@@ -174,7 +174,7 @@ def test_set_use_mock_exchange_rates_ignored_without_dev_mode(
 
 
 @pytest.mark.integration
-def test_install_macos_ocr_enables_scanning(qt_app: object, qtbot: object) -> None:
+def test_install_on_device_ocr_enables_scanning(qt_app: object, qtbot: object) -> None:
     _ = qt_app
     QCoreApplication.setOrganizationName(ORGANIZATION_NAME)
     QCoreApplication.setApplicationName("CashFlowPlannerDesktopTest")
@@ -187,25 +187,26 @@ def test_install_macos_ocr_enables_scanning(qt_app: object, qtbot: object) -> No
         available["value"] = True
 
     vm = SettingsViewModel(
-        is_macos=True,
+        ocr_platform="linux",
         receipt_ocr_available=is_available,
-        can_install_macos_ocr_fn=lambda: not available["value"],
-        macos_ocr_installer=installer,
+        can_install_ocr_fn=lambda: not available["value"],
+        ocr_installer=installer,
     )
-    assert vm.canInstallMacosOcr is True
+    assert vm.canInstallOnDeviceOcr is True
     assert vm.receiptOcrAvailable is False
+    assert vm.ocrPlatform == "linux"
 
     with qtbot.waitSignal(vm.receiptOcrAvailableChanged, timeout=2000):  # type: ignore[attr-defined]
-        vm.installMacosOcr()
+        vm.installOnDeviceOcr()
 
     assert vm.receiptOcrAvailable is True
-    assert vm.canInstallMacosOcr is False
-    assert vm.macosOcrInstallBusy is False
+    assert vm.canInstallOnDeviceOcr is False
+    assert vm.onDeviceOcrInstallBusy is False
     assert vm.error == ""
 
 
 @pytest.mark.integration
-def test_install_macos_ocr_sets_error_on_failure(qt_app: object, qtbot: object) -> None:
+def test_install_on_device_ocr_sets_error_on_failure(qt_app: object, qtbot: object) -> None:
     _ = qt_app
     QCoreApplication.setOrganizationName(ORGANIZATION_NAME)
     QCoreApplication.setApplicationName("CashFlowPlannerDesktopTest")
@@ -217,51 +218,53 @@ def test_install_macos_ocr_sets_error_on_failure(qt_app: object, qtbot: object) 
         )
 
     vm = SettingsViewModel(
-        is_macos=True,
+        ocr_platform="windows",
         receipt_ocr_available=lambda: False,
-        can_install_macos_ocr_fn=lambda: True,
-        macos_ocr_installer=installer,
+        can_install_ocr_fn=lambda: True,
+        ocr_installer=installer,
     )
 
     with qtbot.waitSignal(vm.errorChanged, timeout=2000):  # type: ignore[attr-defined]
-        vm.installMacosOcr()
+        vm.installOnDeviceOcr()
 
-    assert vm.macosOcrInstallBusy is False
-    assert vm.canInstallMacosOcr is True
+    assert vm.onDeviceOcrInstallBusy is False
+    assert vm.canInstallOnDeviceOcr is True
     assert "network" in vm.error.lower()
 
 
 @pytest.mark.integration
-def test_install_macos_ocr_rejected_off_macos(settings_vm: SettingsViewModel) -> None:
+def test_install_on_device_ocr_rejected_on_unsupported_platform(
+    settings_vm: SettingsViewModel,
+) -> None:
     vm = SettingsViewModel(
-        is_macos=False,
+        ocr_platform="other",
         receipt_ocr_available=lambda: False,
-        can_install_macos_ocr_fn=lambda: False,
-        macos_ocr_installer=lambda: None,
+        can_install_ocr_fn=lambda: False,
+        ocr_installer=lambda: None,
     )
     _ = settings_vm
-    assert vm.isMacos is False
-    assert vm.canInstallMacosOcr is False
+    assert vm.ocrPlatform == "other"
+    assert vm.canInstallOnDeviceOcr is False
 
-    vm.installMacosOcr()
+    vm.installOnDeviceOcr()
 
-    assert vm.error == "On-device receipt scanning can only be installed on macOS."
+    assert vm.error == "On-device receipt scanning is not available on this platform."
 
 
 @pytest.mark.integration
-def test_install_macos_ocr_rejected_for_frozen_build(qt_app: object) -> None:
+def test_install_on_device_ocr_rejected_for_frozen_build(qt_app: object) -> None:
     _ = qt_app
     QCoreApplication.setOrganizationName(ORGANIZATION_NAME)
     QCoreApplication.setApplicationName("CashFlowPlannerDesktopTest")
     vm = SettingsViewModel(
-        is_macos=True,
+        ocr_platform="windows",
         receipt_ocr_available=lambda: False,
-        can_install_macos_ocr_fn=lambda: False,
-        macos_ocr_installer=lambda: None,
+        can_install_ocr_fn=lambda: False,
+        ocr_installer=lambda: None,
     )
-    assert vm.canInstallMacosOcr is False
+    assert vm.canInstallOnDeviceOcr is False
 
-    vm.installMacosOcr()
+    vm.installOnDeviceOcr()
 
     assert vm.error == "On-device receipt scanning cannot be installed in this app build."
 

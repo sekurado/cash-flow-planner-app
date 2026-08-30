@@ -148,9 +148,10 @@ Task 33_3 may add anonymized fixture images and parser-only tests (text blobs, n
 - **macOS:** `MacosVisionOcrProvider` lazy-imports PyObjC Vision. Source runs can install
   the `ocr-macos` extra from Settings → Receipts, or with `pip install -e ".[ocr-macos]"`.
   Missing PyObjC raises `ReceiptOcrUnavailableError`.
-- **Windows / Linux:** `UnsupportedReceiptOcrProvider` raises `ReceiptOcrUnavailableError` with a
-  clear manual-entry message. WinRT OCR was evaluated and **stubbed for v1** (packaging + CI cost;
-  revisit in a later story).
+- **Windows:** `WindowsOcrProvider` lazy-imports WinRT `Windows.Media.Ocr`. Install
+  `ocr-windows` from Settings or `pip install -e ".[ocr-windows]"`.
+- **Linux:** `TesseractOcrProvider` lazy-imports `pytesseract`. Install `ocr-linux` from
+  Settings and a system `tesseract` package. Do **not** bundle Tesseract.
 - **Worker:** `src/app/workers/receipt_ocr_worker.py` runs `extract_text` + `parse` on a
   `QRunnable` and emits a JSON-ready dict. ViewModel / QML wiring is Task 33_4.
 - **Factory:** `create_receipt_ocr_provider()` / `receipt_ocr_is_available()` in
@@ -162,5 +163,3 @@ Task 33_3 may add anonymized fixture images and parser-only tests (text blobs, n
 
 - **Camera capture** vs file picker only in v1 (file picker first).
 - **PyObjC** vs small Swift/ObjC helper binary for Vision.
-- **Windows/Linux stubs:** disable “Scan receipt” button vs show dialog explaining limited support
-  (provider already raises `ReceiptOcrUnavailableError`; 33_4 chooses the UI).

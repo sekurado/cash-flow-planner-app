@@ -4,17 +4,17 @@
 <context>
     <name>AppErrors</name>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="263"/>
+        <location filename="../src/app/i18n/user_messages.py" line="302"/>
         <source>Invalid data. Please check your input.</source>
         <translation>Données invalides. Veuillez vérifier votre saisie.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="264"/>
+        <location filename="../src/app/i18n/user_messages.py" line="303"/>
         <source>Live exchange-rate fetching is not enabled.</source>
         <translation>La récupération des taux de change en direct n&apos;est pas activée.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="265"/>
+        <location filename="../src/app/i18n/user_messages.py" line="304"/>
         <source>Base currency is required to fetch live exchange rates.</source>
         <translation>La devise de base est requise pour récupérer les taux de change en direct.</translation>
     </message>
@@ -23,52 +23,52 @@
         <translation type="vanished">Aucun résultat de simulation à exporter.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="269"/>
+        <location filename="../src/app/i18n/user_messages.py" line="308"/>
         <source>Name is required</source>
         <translation>Le nom est requis</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="270"/>
+        <location filename="../src/app/i18n/user_messages.py" line="309"/>
         <source>Currency is required</source>
         <translation>La devise est requise</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="271"/>
+        <location filename="../src/app/i18n/user_messages.py" line="310"/>
         <source>Exchange rate API returned invalid JSON</source>
         <translation>L&apos;API des taux de change a renvoyé un JSON invalide</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="272"/>
+        <location filename="../src/app/i18n/user_messages.py" line="311"/>
         <source>Exchange rate API response is missing conversion rates</source>
         <translation>La réponse de l&apos;API des taux de change ne contient pas de taux de conversion</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="275"/>
+        <location filename="../src/app/i18n/user_messages.py" line="314"/>
         <source>Exchange rate API returned a zero rate</source>
         <translation>L&apos;API des taux de change a renvoyé un taux nul</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="276"/>
+        <location filename="../src/app/i18n/user_messages.py" line="315"/>
         <source>Simulation params must include a numeric initial_balance</source>
         <translation>Les paramètres de simulation doivent inclure un solde initial numérique</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="279"/>
+        <location filename="../src/app/i18n/user_messages.py" line="318"/>
         <source>Simulation params must include a non-empty base_currency</source>
         <translation>Les paramètres de simulation doivent inclure une devise de base non vide</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="282"/>
+        <location filename="../src/app/i18n/user_messages.py" line="321"/>
         <source>Simulation params must include ISO start_date and end_date</source>
         <translation>Les paramètres de simulation doivent inclure des dates de début et de fin au format ISO</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="285"/>
+        <location filename="../src/app/i18n/user_messages.py" line="324"/>
         <source>Exchange rates must target USD, got GBP</source>
         <translation>Les taux de change doivent cibler l&apos;USD, pas le GBP</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="286"/>
+        <location filename="../src/app/i18n/user_messages.py" line="325"/>
         <source>Exchange rates cannot use USD as the source currency</source>
         <translation>Les taux de change ne peuvent pas utiliser l&apos;USD comme devise source</translation>
     </message>
@@ -81,127 +81,160 @@
         <translation type="vanished">Entrée introuvable : %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="268"/>
+        <location filename="../src/app/i18n/user_messages.py" line="307"/>
         <source>No projection result to export.</source>
         <translation>Aucun résultat de projection à exporter.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="287"/>
+        <location filename="../src/app/i18n/user_messages.py" line="326"/>
         <source>Forecast not found: %1</source>
         <translation>Prévision introuvable : %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="288"/>
+        <location filename="../src/app/i18n/user_messages.py" line="327"/>
         <source>A forecast named &quot;%1&quot; already exists</source>
         <translation>Une prévision nommée « %1 » existe déjà</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="289"/>
+        <location filename="../src/app/i18n/user_messages.py" line="328"/>
         <source>Cash flow not found: %1</source>
         <translation>Flux de trésorerie introuvable : %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="290"/>
+        <location filename="../src/app/i18n/user_messages.py" line="329"/>
         <source>Invalid date pattern: %1</source>
         <translation>Modèle de date invalide : %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="291"/>
+        <location filename="../src/app/i18n/user_messages.py" line="330"/>
         <source>Unsupported file type: %1</source>
         <translation>Type de fichier non pris en charge : %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="292"/>
+        <location filename="../src/app/i18n/user_messages.py" line="331"/>
         <source>No exchange rate found for %1 → %2</source>
         <translation>Aucun taux de change trouvé pour %1 → %2</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="293"/>
+        <location filename="../src/app/i18n/user_messages.py" line="332"/>
         <source>Simulation range of %1 days exceeds the %2-day (10-year) limit</source>
         <translation>La plage de simulation de %1 jours dépasse la limite de %2 jours (10 ans)</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="296"/>
+        <location filename="../src/app/i18n/user_messages.py" line="335"/>
         <source>Exchange rate API returned HTTP %1</source>
         <translation>L&apos;API des taux de change a renvoyé HTTP %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="297"/>
+        <location filename="../src/app/i18n/user_messages.py" line="336"/>
         <source>Mock exchange rates are not defined for base currency %1</source>
         <translation>Les taux de change simulés ne sont pas définis pour la devise de base %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="300"/>
+        <location filename="../src/app/i18n/user_messages.py" line="339"/>
         <source>Mock exchange rates are missing symbols: %1</source>
         <translation>Les taux de change simulés manquent de symboles : %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="301"/>
+        <location filename="../src/app/i18n/user_messages.py" line="340"/>
         <source>%1 must be a mapping</source>
         <translation>%1 doit être un objet</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="302"/>
+        <location filename="../src/app/i18n/user_messages.py" line="341"/>
         <source>Daily live rate fetch limit reached (10 per day). Try again tomorrow.</source>
         <translation>Limite quotidienne de récupération des taux atteinte (10 par jour). Réessayez demain.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="305"/>
+        <location filename="../src/app/i18n/user_messages.py" line="344"/>
         <source>Please wait %1 second(s) before fetching live rates again.</source>
         <translation>Veuillez patienter %1 seconde(s) avant de récupérer à nouveau les taux en direct.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="308"/>
+        <location filename="../src/app/i18n/user_messages.py" line="347"/>
         <source>Please wait %1 minute(s) before fetching live rates again.</source>
         <translation>Veuillez patienter %1 minute(s) avant de récupérer à nouveau les taux en direct.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="311"/>
+        <location filename="../src/app/i18n/user_messages.py" line="350"/>
         <source>User manual is not available.</source>
         <translation>Le manuel utilisateur n&apos;est pas disponible.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="312"/>
+        <location filename="../src/app/i18n/user_messages.py" line="351"/>
         <source>Could not open the user manual.</source>
         <translation>Impossible d&apos;ouvrir le manuel utilisateur.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="313"/>
+        <location filename="../src/app/i18n/user_messages.py" line="352"/>
         <source>Receipt image storage is not configured</source>
         <translation>Le stockage des images de tickets n&apos;est pas configuré</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="314"/>
+        <location filename="../src/app/i18n/user_messages.py" line="353"/>
         <source>Receipt OCR on macOS requires PyObjC Vision bindings. Install on-device scanning from Settings, or enter the expense manually.</source>
         <translation>La reconnaissance de tickets sur macOS nécessite les liaisons PyObjC Vision. Installez la numérisation sur l&apos;appareil depuis Réglages, ou saisissez la dépense manuellement.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="319"/>
-        <source>On-device receipt scanning can only be installed on macOS.</source>
-        <translation>La numérisation de tickets sur l&apos;appareil ne peut être installée que sous macOS.</translation>
+        <location filename="../src/app/i18n/user_messages.py" line="358"/>
+        <source>Receipt OCR on Windows requires WinRT OCR bindings. Install on-device scanning from Settings, or enter the expense manually.</source>
+        <translation>La reconnaissance de tickets sous Windows nécessite les liaisons WinRT OCR. Installez la numérisation sur l&apos;appareil depuis Réglages, ou saisissez la dépense manuellement.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="323"/>
+        <location filename="../src/app/i18n/user_messages.py" line="363"/>
+        <source>Receipt OCR on Linux requires Tesseract Python bindings. Install on-device scanning from Settings, or enter the expense manually.</source>
+        <translation>La reconnaissance de tickets sous Linux nécessite les liaisons Python Tesseract. Installez la numérisation sur l&apos;appareil depuis Réglages, ou saisissez la dépense manuellement.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="368"/>
+        <source>Windows OCR is not available. Install an OCR language pack in Windows Settings and try again, or enter the expense manually.</source>
+        <translation>La reconnaissance Windows n&apos;est pas disponible. Installez un pack de langue OCR dans les paramètres Windows et réessayez, ou saisissez la dépense manuellement.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="373"/>
+        <source>The Tesseract OCR engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try again, or enter the expense manually.</source>
+        <translation>Le moteur Tesseract est introuvable. Installez-le avec votre gestionnaire de paquets (par exemple : apt install tesseract-ocr) et réessayez, ou saisissez la dépense manuellement.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="379"/>
+        <source>On-device receipt scanning is not available on this platform.</source>
+        <translation>La numérisation de tickets sur l&apos;appareil n&apos;est pas disponible sur cette plateforme.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="396"/>
+        <source>Installed OCR packages but scanning is still unavailable. Restart the app and try Scan again.</source>
+        <translation>Les paquets OCR sont installés, mais la numérisation est toujours indisponible. Redémarrez l&apos;application et réessayez Numériser.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="401"/>
+        <source>Python Tesseract bindings are installed, but the Tesseract engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try Scan again.</source>
+        <translation>Les liaisons Python Tesseract sont installées, mais le moteur Tesseract est introuvable. Installez-le avec votre gestionnaire de paquets (par exemple : apt install tesseract-ocr) et réessayez Numériser.</translation>
+    </message>
+    <message>
+        <source>On-device receipt scanning can only be installed on macOS.</source>
+        <translation type="vanished">La numérisation de tickets sur l&apos;appareil ne peut être installée que sous macOS.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="383"/>
         <source>On-device receipt scanning cannot be installed in this app build.</source>
         <translation>La numérisation de tickets sur l&apos;appareil ne peut pas être installée dans cette version de l&apos;application.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="327"/>
+        <location filename="../src/app/i18n/user_messages.py" line="387"/>
         <source>Could not install on-device receipt scanning. Check your network connection and try again.</source>
         <translation>Impossible d&apos;installer la numérisation de tickets sur l&apos;appareil. Vérifiez votre connexion réseau et réessayez.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="332"/>
+        <location filename="../src/app/i18n/user_messages.py" line="392"/>
         <source>Installing on-device receipt scanning timed out. Check your network and try again.</source>
         <translation>L&apos;installation de la numérisation de tickets sur l&apos;appareil a expiré. Vérifiez votre réseau et réessayez.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="336"/>
         <source>Installed OCR packages but Vision is still unavailable. Restart the app and try Scan again.</source>
-        <translation>Les paquets OCR sont installés, mais Vision est toujours indisponible. Redémarrez l&apos;application et réessayez Numériser.</translation>
+        <translation type="vanished">Les paquets OCR sont installés, mais Vision est toujours indisponible. Redémarrez l&apos;application et réessayez Numériser.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="341"/>
+        <location filename="../src/app/i18n/user_messages.py" line="407"/>
         <source>Could not install on-device receipt scanning: %1</source>
         <translation>Impossible d&apos;installer la numérisation de tickets sur l&apos;appareil : %1</translation>
     </message>
@@ -210,17 +243,17 @@
         <translation type="vanished">La reconnaissance de tickets sur macOS nécessite les liaisons PyObjC Vision. Installez l&apos;extra &apos;ocr-macos&apos; ou saisissez la dépense manuellement.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="342"/>
+        <location filename="../src/app/i18n/user_messages.py" line="408"/>
         <source>Receipt scanning is not available on this platform (%1). Enter the expense manually.</source>
         <translation>La numérisation de tickets n&apos;est pas disponible sur cette plateforme (%1). Saisissez la dépense manuellement.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="346"/>
+        <location filename="../src/app/i18n/user_messages.py" line="412"/>
         <source>Receipt image not found: %1</source>
         <translation>Image de ticket introuvable : %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="347"/>
+        <location filename="../src/app/i18n/user_messages.py" line="413"/>
         <source>Could not read text from receipt image: %1</source>
         <translation>Impossible de lire le texte de l&apos;image du ticket : %1</translation>
     </message>
@@ -866,22 +899,22 @@
 <context>
     <name>EntriesViewModel</name>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="348"/>
+        <location filename="../src/app/i18n/user_messages.py" line="414"/>
         <source>Every day</source>
         <translation>Tous les jours</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="349"/>
+        <location filename="../src/app/i18n/user_messages.py" line="415"/>
         <source>Monthly on the %1</source>
         <translation>Mensuel le %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="350"/>
+        <location filename="../src/app/i18n/user_messages.py" line="416"/>
         <source>Yearly on %1 %2</source>
         <translation>Annuel le %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="351"/>
+        <location filename="../src/app/i18n/user_messages.py" line="417"/>
         <source>Once on %1 %2 %3</source>
         <translation>Une fois le %1 %2 %3</translation>
     </message>
@@ -1134,32 +1167,32 @@
 <context>
     <name>ForecastTemplates</name>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="352"/>
+        <location filename="../src/app/i18n/user_messages.py" line="418"/>
         <source>SaaS startup</source>
         <translation>Startup SaaS</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="353"/>
+        <location filename="../src/app/i18n/user_messages.py" line="419"/>
         <source>Monthly recurring revenue, cloud costs, and payroll for an early-stage SaaS company.</source>
         <translation>Revenus récurrents mensuels, coûts cloud et masse salariale pour une entreprise SaaS en phase initiale.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="357"/>
+        <location filename="../src/app/i18n/user_messages.py" line="423"/>
         <source>Consulting firm</source>
         <translation>Cabinet de conseil</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="358"/>
+        <location filename="../src/app/i18n/user_messages.py" line="424"/>
         <source>Client retainers, contractor costs, and operating expenses for a small professional services firm.</source>
         <translation>Honoraires clients, coûts des prestataires et charges d&apos;exploitation pour un petit cabinet de services professionnels.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="363"/>
+        <location filename="../src/app/i18n/user_messages.py" line="429"/>
         <source>Retail shop</source>
         <translation>Commerce de détail</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="364"/>
+        <location filename="../src/app/i18n/user_messages.py" line="430"/>
         <source>Point-of-sale revenue, rent, inventory COGS, and seasonal patterns for a brick-and-mortar retail store.</source>
         <translation>Chiffre d&apos;affaires en caisse, loyer, coût des stocks et variations saisonnières pour un magasin physique.</translation>
     </message>
@@ -2601,93 +2634,106 @@ Le solde de clôture du jour précédent devient le point de départ du jour sui
         <translation>Tickets</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="364"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="363"/>
         <source>On-device receipt scanning</source>
         <translation>Numérisation de tickets sur l&apos;appareil</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="366"/>
-        <source>Ready. Uses Apple Vision on this Mac. Photos stay on this device.</source>
-        <translation>Prêt. Utilise Apple Vision sur ce Mac. Les photos restent sur cet appareil.</translation>
+        <location filename="../qml/pages/SettingsPage.qml" line="365"/>
+        <source>Ready. On-device OCR is available. Photos stay on this device.</source>
+        <translation>Prêt. La reconnaissance sur l&apos;appareil est disponible. Les photos restent sur cet appareil.</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="368"/>
-        <source>Required for Scan. Installs Apple Vision bindings for this app. Network access is required.</source>
-        <translation>Requis pour Numériser. Installe les liaisons Apple Vision pour cette application. Une connexion réseau est nécessaire.</translation>
+        <source>Required for Scan. Installs Tesseract bindings. Also install the Tesseract engine (for example: apt install tesseract-ocr). Network access is required.</source>
+        <translation>Requis pour Numériser. Installe les liaisons Tesseract. Installez aussi le moteur Tesseract (par exemple : apt install tesseract-ocr). Une connexion réseau est nécessaire.</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="369"/>
+        <source>Required for Scan. Installs on-device OCR for this app. Network access is required.</source>
+        <translation>Requis pour Numériser. Installe la reconnaissance sur l&apos;appareil pour cette application. Une connexion réseau est nécessaire.</translation>
+    </message>
+    <message>
+        <source>Ready. Uses Apple Vision on this Mac. Photos stay on this device.</source>
+        <translation type="vanished">Prêt. Utilise Apple Vision sur ce Mac. Les photos restent sur cet appareil.</translation>
+    </message>
+    <message>
+        <source>Required for Scan. Installs Apple Vision bindings for this app. Network access is required.</source>
+        <translation type="vanished">Requis pour Numériser. Installe les liaisons Apple Vision pour cette application. Une connexion réseau est nécessaire.</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="370"/>
         <source>This app build does not include on-device scanning.</source>
         <translation>Cette version de l&apos;application n&apos;inclut pas la numérisation sur l&apos;appareil.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="389"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="390"/>
         <source>Installing…</source>
         <translation>Installation…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="390"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="391"/>
         <source>Install</source>
         <translation>Installer</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="392"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="393"/>
         <source>Install on-device receipt scanning</source>
         <translation>Installer la numérisation de tickets sur l&apos;appareil</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="398"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="411"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="399"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="412"/>
         <source>Cloud receipt scanning</source>
         <translation>Numérisation cloud des tickets</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="399"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="400"/>
         <source>Off by default. Receipt photos stay on this device. Enabling this does not upload images; a cloud provider is not connected yet.</source>
         <translation>Désactivé par défaut. Les photos de tickets restent sur cet appareil. Activer cette option n&apos;envoie aucune image ; aucun fournisseur cloud n&apos;est encore connecté.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="426"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="427"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="431"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="432"/>
         <source>User manual</source>
         <translation>Manuel utilisateur</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="432"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="433"/>
         <source>Open the bundled PDF guide in your system&apos;s default viewer</source>
         <translation>Ouvrez le guide PDF intégré dans votre visionneuse système par défaut</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="441"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="442"/>
         <source>Open ▶</source>
         <translation>Ouvrir ▶</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="443"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="444"/>
         <source>Open user manual</source>
         <translation>Ouvrir le manuel utilisateur</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="449"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="450"/>
         <source>Methodology</source>
         <translation>Méthodologie</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="450"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="451"/>
         <source>How cash shortfalls, date patterns, currencies, and scenarios are calculated</source>
         <translation>Comment les manques de trésorerie, les modèles de dates, les devises et les scénarios sont calculés</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="461"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="462"/>
         <source>View ▶</source>
         <translation>Voir ▶</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="463"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="464"/>
         <source>View methodology</source>
         <translation>Voir la méthodologie</translation>
     </message>

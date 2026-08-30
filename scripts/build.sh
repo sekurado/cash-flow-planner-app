@@ -78,9 +78,14 @@ install_python_deps() {
   python3 -m pip install --upgrade pip
   python3 -m pip install -r requirements.txt
   python3 -m pip install -e .
-  if [[ "$(uname -s)" == "Darwin" ]]; then
-    python3 -m pip install -e ".[ocr-macos]"
-  fi
+  case "$(uname -s)" in
+    Darwin)
+      python3 -m pip install -e ".[ocr-macos]"
+      ;;
+    Linux)
+      python3 -m pip install -e ".[ocr-linux]"
+      ;;
+  esac
   python3 -m pip install pyinstaller pyinstaller-hooks-contrib
 }
 

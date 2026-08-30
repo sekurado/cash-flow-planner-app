@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import sys
 from collections.abc import Callable
 
 from PySide6.QtCore import Property, QObject, QSettings, QThreadPool, Signal, Slot
 
 from src.app.user_manual import UserManualError, open_user_manual
 from src.app.viewmodels.error_support import ErrorSupport
-from src.app.workers.macos_ocr_install_worker import MacosOcrInstallWorker
+from src.app.workers.receipt_ocr_install_worker import ReceiptOcrInstallWorker
 from src.integrations.exchange_rate_fetcher import (
     can_fetch_live_rates,
     is_daily_fetch_limit_reached,
@@ -17,9 +16,10 @@ from src.integrations.exchange_rate_fetcher import (
     use_mock_rates,
 )
 from src.integrations.receipt_ocr import receipt_ocr_is_available
-from src.integrations.receipt_ocr.macos_ocr_install import (
-    can_install_macos_ocr,
-    install_macos_ocr_bindings,
+from src.integrations.receipt_ocr.receipt_ocr_install import (
+    can_install_receipt_ocr,
+    install_receipt_ocr_bindings,
+    ocr_platform_id,
 )
 
 _DARK_MODE_KEY = "darkMode"
@@ -50,18 +50,18 @@ class SettingsViewModel(QObject):
     liveRatesDailyLimitReachedChanged = Signal()
     useMockExchangeRatesChanged = Signal()
     receiptOcrAvailableChanged = Signal()
-    canInstallMacosOcrChanged = Signal()
-    macosOcrInstallBusyChanged = Signal()
+    canInstallOnDeviceOcrChanged = Signal()
+    onDeviceOcrInstallBusyChanged = Signal()
     errorChanged = Signal()
 
     def __init__(
         self,
         parent: QObject | None = None,
         *,
-        is_macos: bool | None = None,
+        ocr_platform: str | None = None,
         receipt_ocr_available: Callable[[], bool] | None = None,
-        can_install_macos_ocr_fn: Callable[[], bool] | None = None,
-        macos_ocr_installer: Callable[[], None] | None = None,
+        can_install_ocr_fn: Callable[[], bool] | None = None,
+        ocr_installer: Callable[[], None] | None = None,
     ) -> None:
         super().__init__(parent)
         self._errors = ErrorSupport(self)
@@ -81,17 +81,15 @@ class SettingsViewModel(QObject):
         self._seconds_until_live_rates_fetch = seconds_until_next_fetch()
         self._live_rates_daily_limit_reached = is_daily_fetch_limit_reached()
         self._use_mock_exchange_rates = use_mock_rates()
-        self._is_macos = sys.platform == "darwin" if is_macos is None else is_macos
+        self._ocr_platform = ocr_platform if ocr_platform is not None else ocr_platform_id()
         self._receipt_ocr_available_fn = receipt_ocr_available or receipt_ocr_is_available
-        self._can_install_macos_ocr_fn = can_install_macos_ocr_fn or (
-            lambda: can_install_macos_ocr()
-        )
-        self._macos_ocr_installer = macos_ocr_installer or install_macos_ocr_bindings
+        self._can_install_ocr_fn = can_install_ocr_fn or (lambda: can_install_receipt_ocr())
+        self._ocr_installer = ocr_installer or install_receipt_ocr_bindings
         self._receipt_ocr_available = False
-        self._can_install_macos_ocr = False
-        self._macos_ocr_install_busy = False
-        self._macos_ocr_install_worker: MacosOcrInstallWorker | None = None
-        self._refresh_macos_ocr_state()
+        self._can_install_on_device_ocr = False
+        self._on_device_ocr_install_busy = False
+        self._ocr_install_worker: ReceiptOcrInstallWorker | None = None
+        self._refresh_ocr_state()
 
     @Property(bool, notify=darkModeChanged)
     def darkMode(self) -> bool:
@@ -109,21 +107,21 @@ class SettingsViewModel(QObject):
     def cloudReceiptOcrEnabled(self) -> bool:
         return self._cloud_receipt_ocr_enabled
 
-    @Property(bool, constant=True)
-    def isMacos(self) -> bool:
-        return self._is_macos
+    @Property(str, constant=True)
+    def ocrPlatform(self) -> str:
+        return self._ocr_platform
 
     @Property(bool, notify=receiptOcrAvailableChanged)
     def receiptOcrAvailable(self) -> bool:
         return self._receipt_ocr_available
 
-    @Property(bool, notify=canInstallMacosOcrChanged)
-    def canInstallMacosOcr(self) -> bool:
-        return self._can_install_macos_ocr
+    @Property(bool, notify=canInstallOnDeviceOcrChanged)
+    def canInstallOnDeviceOcr(self) -> bool:
+        return self._can_install_on_device_ocr
 
-    @Property(bool, notify=macosOcrInstallBusyChanged)
-    def macosOcrInstallBusy(self) -> bool:
-        return self._macos_ocr_install_busy
+    @Property(bool, notify=onDeviceOcrInstallBusyChanged)
+    def onDeviceOcrInstallBusy(self) -> bool:
+        return self._on_device_ocr_install_busy
 
     @Property(bool, notify=liveRatesFetchAvailableChanged)
     def liveRatesFetchAvailable(self) -> bool:
@@ -166,31 +164,31 @@ class SettingsViewModel(QObject):
         self._errors.retranslate()
 
     @Slot()
-    def installMacosOcr(self) -> None:
+    def installOnDeviceOcr(self) -> None:
         try:
             self._clear_error()
-            if self._macos_ocr_install_busy:
+            if self._on_device_ocr_install_busy:
                 return
             if self._receipt_ocr_available:
                 return
-            if not self._can_install_macos_ocr:
+            if not self._can_install_on_device_ocr:
                 msg = (
                     "On-device receipt scanning cannot be installed in this app build."
-                    if self._is_macos
-                    else "On-device receipt scanning can only be installed on macOS."
+                    if self._ocr_platform in {"macos", "windows", "linux"}
+                    else "On-device receipt scanning is not available on this platform."
                 )
                 self._set_error(msg)
                 return
-            self._macos_ocr_install_busy = True
-            self.macosOcrInstallBusyChanged.emit()
-            worker = MacosOcrInstallWorker(self._macos_ocr_installer)
-            worker.signals.finished.connect(self._on_macos_ocr_install_finished)
-            worker.signals.error.connect(self._on_macos_ocr_install_error)
-            self._macos_ocr_install_worker = worker
+            self._on_device_ocr_install_busy = True
+            self.onDeviceOcrInstallBusyChanged.emit()
+            worker = ReceiptOcrInstallWorker(self._ocr_installer)
+            worker.signals.finished.connect(self._on_ocr_install_finished)
+            worker.signals.error.connect(self._on_ocr_install_error)
+            self._ocr_install_worker = worker
             QThreadPool.globalInstance().start(worker)
         except Exception as exc:
-            self._macos_ocr_install_busy = False
-            self.macosOcrInstallBusyChanged.emit()
+            self._on_device_ocr_install_busy = False
+            self.onDeviceOcrInstallBusyChanged.emit()
             self._set_error(exc)
 
     @Slot()
@@ -250,29 +248,29 @@ class SettingsViewModel(QObject):
         self._use_mock_exchange_rates = enabled
         self.useMockExchangeRatesChanged.emit()
 
-    def _on_macos_ocr_install_finished(self) -> None:
-        self._macos_ocr_install_worker = None
-        if self._macos_ocr_install_busy:
-            self._macos_ocr_install_busy = False
-            self.macosOcrInstallBusyChanged.emit()
-        self._refresh_macos_ocr_state()
+    def _on_ocr_install_finished(self) -> None:
+        self._ocr_install_worker = None
+        if self._on_device_ocr_install_busy:
+            self._on_device_ocr_install_busy = False
+            self.onDeviceOcrInstallBusyChanged.emit()
+        self._refresh_ocr_state()
 
-    def _on_macos_ocr_install_error(self, message: str) -> None:
-        self._macos_ocr_install_worker = None
-        if self._macos_ocr_install_busy:
-            self._macos_ocr_install_busy = False
-            self.macosOcrInstallBusyChanged.emit()
+    def _on_ocr_install_error(self, message: str) -> None:
+        self._ocr_install_worker = None
+        if self._on_device_ocr_install_busy:
+            self._on_device_ocr_install_busy = False
+            self.onDeviceOcrInstallBusyChanged.emit()
         self._set_error(message)
 
-    def _refresh_macos_ocr_state(self) -> None:
-        available = bool(self._is_macos and self._receipt_ocr_available_fn())
-        can_install = bool(not available and self._can_install_macos_ocr_fn())
+    def _refresh_ocr_state(self) -> None:
+        available = bool(self._receipt_ocr_available_fn())
+        can_install = bool(not available and self._can_install_ocr_fn())
         if available != self._receipt_ocr_available:
             self._receipt_ocr_available = available
             self.receiptOcrAvailableChanged.emit()
-        if can_install != self._can_install_macos_ocr:
-            self._can_install_macos_ocr = can_install
-            self.canInstallMacosOcrChanged.emit()
+        if can_install != self._can_install_on_device_ocr:
+            self._can_install_on_device_ocr = can_install
+            self.canInstallOnDeviceOcrChanged.emit()
 
     def _set_error(self, exc: BaseException | str) -> None:
         if isinstance(exc, BaseException):

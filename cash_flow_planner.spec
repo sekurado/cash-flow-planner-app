@@ -62,10 +62,22 @@ _hiddenimports = [
     "logging.config",
 ]
 
-# Receipt OCR: Vision is lazy-imported. Collect PyObjC only on macOS when the
-# optional ocr-macos extra is installed at freeze time.
+# Receipt OCR: platform backends are lazy-imported. Collect native bindings only
+# when the matching extra is installed at freeze time.
 if sys.platform == "darwin" and importlib.util.find_spec("Vision") is not None:
     _hiddenimports.extend(["Vision", "Foundation", "objc"])
+if sys.platform == "win32" and importlib.util.find_spec("winrt.windows.media.ocr") is not None:
+    _hiddenimports.extend(
+        [
+            "winrt",
+            "winrt.windows.media.ocr",
+            "winrt.windows.graphics.imaging",
+            "winrt.windows.storage",
+            "winrt.windows.storage.streams",
+        ]
+    )
+if sys.platform.startswith("linux") and importlib.util.find_spec("pytesseract") is not None:
+    _hiddenimports.extend(["pytesseract", "PIL", "PIL.Image"])
 
 a = Analysis(
     ["main.py"],

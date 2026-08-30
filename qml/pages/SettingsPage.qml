@@ -360,17 +360,18 @@ Page {
 
                 SettingsCard {
                     SettingsRow {
-                        visible: settingsViewModel.isMacos
                         label: qsTr("On-device receipt scanning")
                         sublabel: settingsViewModel.receiptOcrAvailable
-                            ? qsTr("Ready. Uses Apple Vision on this Mac. Photos stay on this device.")
-                            : (settingsViewModel.canInstallMacosOcr
-                                ? qsTr("Required for Scan. Installs Apple Vision bindings for this app. Network access is required.")
+                            ? qsTr("Ready. On-device OCR is available. Photos stay on this device.")
+                            : (settingsViewModel.canInstallOnDeviceOcr
+                                ? (settingsViewModel.ocrPlatform === "linux"
+                                    ? qsTr("Required for Scan. Installs Tesseract bindings. Also install the Tesseract engine (for example: apt install tesseract-ocr). Network access is required.")
+                                    : qsTr("Required for Scan. Installs on-device OCR for this app. Network access is required."))
                                 : qsTr("This app build does not include on-device scanning."))
                         showDivider: true
 
                         BusyIndicator {
-                            visible: settingsViewModel.macosOcrInstallBusy
+                            visible: settingsViewModel.onDeviceOcrInstallBusy
                             running: visible
                             Layout.preferredWidth: 24
                             Layout.preferredHeight: 24
@@ -378,19 +379,19 @@ Page {
                         }
 
                         Button {
-                            visible: settingsViewModel.canInstallMacosOcr
-                            enabled: !settingsViewModel.macosOcrInstallBusy
+                            visible: settingsViewModel.canInstallOnDeviceOcr
+                            enabled: !settingsViewModel.onDeviceOcrInstallBusy
                             Layout.alignment: Qt.AlignVCenter
                             Layout.rightMargin: ThemeTokens.spaceMd
                             Layout.topMargin: ThemeTokens.spaceMd
                             Layout.bottomMargin: ThemeTokens.spaceMd
                             flat: true
-                            text: settingsViewModel.macosOcrInstallBusy
+                            text: settingsViewModel.onDeviceOcrInstallBusy
                                 ? qsTr("Installing…")
                                 : qsTr("Install")
                             Material.foreground: ThemeTokens.primary
                             Accessible.name: qsTr("Install on-device receipt scanning")
-                            onClicked: settingsViewModel.installMacosOcr()
+                            onClicked: settingsViewModel.installOnDeviceOcr()
                         }
                     }
 

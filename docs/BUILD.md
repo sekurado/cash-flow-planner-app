@@ -57,38 +57,41 @@ sudo apt-get install -y \
 `appimagetool` is downloaded automatically by `build.sh` into `build/tools/` when
 not already on your `PATH`.
 
-### Optional receipt OCR (macOS Vision)
+### Optional receipt OCR
 
-On-device receipt scanning uses the **macOS Vision** framework (`VNRecognizeTextRequest`)
-through PyObjC. It is **not** a core dependency: Linux, Windows, and CI stay installable
-without it. Core spending entry stays fully offline (NFR-01).
+On-device receipt scanning uses platform OCR. Bindings are **not** core dependencies:
+Linux, Windows, and CI stay installable without them. Core spending entry stays fully
+offline (NFR-01).
 
-| Platform | Native OCR in v1 | What to install |
-|----------|------------------|-----------------|
-| macOS | Vision via `MacosVisionOcrProvider` | `pip install -e ".[ocr-macos]"` (needs Xcode Command Line Tools) |
-| Windows | Stub — Scan shows a manual-entry error | Nothing extra |
-| Linux | Stub — do **not** bundle Tesseract | Nothing extra |
+| Platform | Native OCR | What to install |
+|----------|------------|-----------------|
+| macOS | Vision via `MacosVisionOcrProvider` | `pip install -e ".[ocr-macos]"` |
+| Windows | `Windows.Media.Ocr` via `WindowsOcrProvider` | `pip install -e ".[ocr-windows]"` |
+| Linux | Tesseract via `TesseractOcrProvider` | `pip install -e ".[ocr-linux]"` and a system `tesseract` package (for example `apt install tesseract-ocr`) |
 
-**Source runs on macOS**
+**Source runs**
 
-Missing Vision bindings: Settings → Receipts → **Install** (downloads PyObjC from PyPI into the
-running interpreter; network required). Equivalent CLI:
+Missing bindings: Settings → Receipts → **Install** (downloads the platform extra from
+PyPI into the running interpreter; network required). Equivalent CLI:
 
 ```bash
-pip install -e ".[dev,ocr-macos]"
+pip install -e ".[dev,ocr-macos]"     # macOS
+pip install -e ".[dev,ocr-windows]"   # Windows
+pip install -e ".[dev,ocr-linux]"     # Linux (also install tesseract)
 ```
 
-If PyObjC is missing, Scan still opens the form: the ViewModel surfaces
+If OCR is missing, Scan still opens the form: the ViewModel surfaces
 `ReceiptOcrUnavailableError` and the user can type the expense.
 
 **PyInstaller / installer builds**
 
-- `MacosVisionOcrProvider` **lazy-imports** `Vision` and `Foundation`, so Linux/Windows
-  freezes never pull macOS-only frameworks.
-- `cash_flow_planner.spec` adds `Vision`, `Foundation`, and `objc` to `hiddenimports`
-  **only on macOS** and only when those modules are importable at freeze time.
-- `./scripts/build.sh` installs the `ocr-macos` extra on Darwin so a local macOS DMG
-  can ship working Scan. Windows (`build.ps1`) and Linux do not install that extra.
+- Platform providers **lazy-import** native bindings, so other-OS freezes never pull
+  those frameworks.
+- `cash_flow_planner.spec` adds hidden imports **only on the build OS** and only when
+  those modules are importable at freeze time.
+- `./scripts/build.sh` installs `ocr-macos` on Darwin and `ocr-linux` on Linux.
+  `build.ps1` installs `ocr-windows`. Linux AppImages still require a host `tesseract`
+  binary; do **not** bundle Tesseract.
 - Cloud document APIs are a Settings stub (`receipt_ocr_cloud_enabled`, default off).
   They add no freeze-time binaries and do not upload receipt photos.
 

@@ -36,6 +36,16 @@ ocr-macos = [
     "pyobjc-framework-Vision",
     "pyobjc-framework-Cocoa",
 ]
+ocr-windows = [
+    "winrt-Windows.Media.Ocr[all]",
+    "winrt-Windows.Graphics.Imaging[all]",
+    "winrt-Windows.Storage[all]",
+    "winrt-Windows.Storage.Streams[all]",
+]
+ocr-linux = [
+    "pytesseract",
+    "pillow",
+]
 
 [tool.poe.tasks.i18n-update]
 help = "Extract translatable strings from QML into .ts files"

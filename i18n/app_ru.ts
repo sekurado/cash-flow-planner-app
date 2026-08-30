@@ -4,17 +4,17 @@
 <context>
     <name>AppErrors</name>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="263"/>
+        <location filename="../src/app/i18n/user_messages.py" line="302"/>
         <source>Invalid data. Please check your input.</source>
         <translation>Неверные данные. Проверьте введённые значения.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="264"/>
+        <location filename="../src/app/i18n/user_messages.py" line="303"/>
         <source>Live exchange-rate fetching is not enabled.</source>
         <translation>Получение актуальных курсов валют не включено.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="265"/>
+        <location filename="../src/app/i18n/user_messages.py" line="304"/>
         <source>Base currency is required to fetch live exchange rates.</source>
         <translation>Для загрузки курсов валют требуется базовая валюта.</translation>
     </message>
@@ -23,52 +23,52 @@
         <translation type="vanished">Нет результатов симуляции для экспорта.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="269"/>
+        <location filename="../src/app/i18n/user_messages.py" line="308"/>
         <source>Name is required</source>
         <translation>Требуется название</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="270"/>
+        <location filename="../src/app/i18n/user_messages.py" line="309"/>
         <source>Currency is required</source>
         <translation>Требуется валюта</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="271"/>
+        <location filename="../src/app/i18n/user_messages.py" line="310"/>
         <source>Exchange rate API returned invalid JSON</source>
         <translation>API курсов валют вернуло недопустимый JSON</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="272"/>
+        <location filename="../src/app/i18n/user_messages.py" line="311"/>
         <source>Exchange rate API response is missing conversion rates</source>
         <translation>В ответе API курсов валют отсутствуют курсы конвертации</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="275"/>
+        <location filename="../src/app/i18n/user_messages.py" line="314"/>
         <source>Exchange rate API returned a zero rate</source>
         <translation>API курсов валют вернуло нулевой курс</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="276"/>
+        <location filename="../src/app/i18n/user_messages.py" line="315"/>
         <source>Simulation params must include a numeric initial_balance</source>
         <translation>Параметры симуляции должны содержать числовой начальный баланс</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="279"/>
+        <location filename="../src/app/i18n/user_messages.py" line="318"/>
         <source>Simulation params must include a non-empty base_currency</source>
         <translation>Параметры симуляции должны содержать непустую базовую валюту</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="282"/>
+        <location filename="../src/app/i18n/user_messages.py" line="321"/>
         <source>Simulation params must include ISO start_date and end_date</source>
         <translation>Параметры симуляции должны содержать даты начала и окончания в формате ISO</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="285"/>
+        <location filename="../src/app/i18n/user_messages.py" line="324"/>
         <source>Exchange rates must target USD, got GBP</source>
         <translation>Курсы обмена должны быть к USD, получен GBP</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="286"/>
+        <location filename="../src/app/i18n/user_messages.py" line="325"/>
         <source>Exchange rates cannot use USD as the source currency</source>
         <translation>USD нельзя использовать как исходную валюту курса обмена</translation>
     </message>
@@ -81,127 +81,160 @@
         <translation type="vanished">Запись не найдена: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="268"/>
+        <location filename="../src/app/i18n/user_messages.py" line="307"/>
         <source>No projection result to export.</source>
         <translation>Нет результата проекции для экспорта.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="287"/>
+        <location filename="../src/app/i18n/user_messages.py" line="326"/>
         <source>Forecast not found: %1</source>
         <translation>Прогноз не найден: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="288"/>
+        <location filename="../src/app/i18n/user_messages.py" line="327"/>
         <source>A forecast named &quot;%1&quot; already exists</source>
         <translation>Прогноз с именем «%1» уже существует</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="289"/>
+        <location filename="../src/app/i18n/user_messages.py" line="328"/>
         <source>Cash flow not found: %1</source>
         <translation>Денежный поток не найден: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="290"/>
+        <location filename="../src/app/i18n/user_messages.py" line="329"/>
         <source>Invalid date pattern: %1</source>
         <translation>Недопустимый шаблон даты: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="291"/>
+        <location filename="../src/app/i18n/user_messages.py" line="330"/>
         <source>Unsupported file type: %1</source>
         <translation>Неподдерживаемый тип файла: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="292"/>
+        <location filename="../src/app/i18n/user_messages.py" line="331"/>
         <source>No exchange rate found for %1 → %2</source>
         <translation>Курс обмена не найден для %1 → %2</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="293"/>
+        <location filename="../src/app/i18n/user_messages.py" line="332"/>
         <source>Simulation range of %1 days exceeds the %2-day (10-year) limit</source>
         <translation>Диапазон симуляции %1 дн. превышает лимит %2 дн. (10 лет)</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="296"/>
+        <location filename="../src/app/i18n/user_messages.py" line="335"/>
         <source>Exchange rate API returned HTTP %1</source>
         <translation>API курсов валют вернуло HTTP %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="297"/>
+        <location filename="../src/app/i18n/user_messages.py" line="336"/>
         <source>Mock exchange rates are not defined for base currency %1</source>
         <translation>Для базовой валюты %1 не заданы тестовые курсы</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="300"/>
+        <location filename="../src/app/i18n/user_messages.py" line="339"/>
         <source>Mock exchange rates are missing symbols: %1</source>
         <translation>В тестовых курсах отсутствуют символы: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="301"/>
+        <location filename="../src/app/i18n/user_messages.py" line="340"/>
         <source>%1 must be a mapping</source>
         <translation>%1 должно быть объектом с полями</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="302"/>
+        <location filename="../src/app/i18n/user_messages.py" line="341"/>
         <source>Daily live rate fetch limit reached (10 per day). Try again tomorrow.</source>
         <translation>Достигнут дневной лимит загрузки курсов (10 в день). Попробуйте завтра.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="305"/>
+        <location filename="../src/app/i18n/user_messages.py" line="344"/>
         <source>Please wait %1 second(s) before fetching live rates again.</source>
         <translation>Подождите %1 сек. перед повторной загрузкой курсов.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="308"/>
+        <location filename="../src/app/i18n/user_messages.py" line="347"/>
         <source>Please wait %1 minute(s) before fetching live rates again.</source>
         <translation>Подождите %1 мин. перед повторной загрузкой курсов.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="311"/>
+        <location filename="../src/app/i18n/user_messages.py" line="350"/>
         <source>User manual is not available.</source>
         <translation>Руководство пользователя недоступно.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="312"/>
+        <location filename="../src/app/i18n/user_messages.py" line="351"/>
         <source>Could not open the user manual.</source>
         <translation>Не удалось открыть руководство пользователя.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="313"/>
+        <location filename="../src/app/i18n/user_messages.py" line="352"/>
         <source>Receipt image storage is not configured</source>
         <translation>Хранилище изображений чеков не настроено</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="314"/>
+        <location filename="../src/app/i18n/user_messages.py" line="353"/>
         <source>Receipt OCR on macOS requires PyObjC Vision bindings. Install on-device scanning from Settings, or enter the expense manually.</source>
         <translation>Распознавание чеков на macOS требует привязок PyObjC Vision. Установите распознавание на устройстве в Настройках или введите расход вручную.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="319"/>
-        <source>On-device receipt scanning can only be installed on macOS.</source>
-        <translation>Распознавание чеков на устройстве можно установить только на macOS.</translation>
+        <location filename="../src/app/i18n/user_messages.py" line="358"/>
+        <source>Receipt OCR on Windows requires WinRT OCR bindings. Install on-device scanning from Settings, or enter the expense manually.</source>
+        <translation>Распознавание чеков в Windows требует привязок WinRT OCR. Установите распознавание на устройстве в Настройках или введите расход вручную.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="323"/>
+        <location filename="../src/app/i18n/user_messages.py" line="363"/>
+        <source>Receipt OCR on Linux requires Tesseract Python bindings. Install on-device scanning from Settings, or enter the expense manually.</source>
+        <translation>Распознавание чеков в Linux требует привязок Python Tesseract. Установите распознавание на устройстве в Настройках или введите расход вручную.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="368"/>
+        <source>Windows OCR is not available. Install an OCR language pack in Windows Settings and try again, or enter the expense manually.</source>
+        <translation>Распознавание Windows недоступно. Установите языковой пакет OCR в параметрах Windows и повторите попытку или введите расход вручную.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="373"/>
+        <source>The Tesseract OCR engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try again, or enter the expense manually.</source>
+        <translation>Движок Tesseract не найден. Установите его через пакетный менеджер (например: apt install tesseract-ocr) и повторите попытку или введите расход вручную.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="379"/>
+        <source>On-device receipt scanning is not available on this platform.</source>
+        <translation>Распознавание чеков на устройстве недоступно на этой платформе.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="396"/>
+        <source>Installed OCR packages but scanning is still unavailable. Restart the app and try Scan again.</source>
+        <translation>Пакеты OCR установлены, но распознавание по-прежнему недоступно. Перезапустите приложение и снова нажмите «Сканировать».</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="401"/>
+        <source>Python Tesseract bindings are installed, but the Tesseract engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try Scan again.</source>
+        <translation>Привязки Python Tesseract установлены, но движок Tesseract не найден. Установите его через пакетный менеджер (например: apt install tesseract-ocr) и снова нажмите «Сканировать».</translation>
+    </message>
+    <message>
+        <source>On-device receipt scanning can only be installed on macOS.</source>
+        <translation type="vanished">Распознавание чеков на устройстве можно установить только на macOS.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/i18n/user_messages.py" line="383"/>
         <source>On-device receipt scanning cannot be installed in this app build.</source>
         <translation>Распознавание чеков на устройстве нельзя установить в этой сборке приложения.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="327"/>
+        <location filename="../src/app/i18n/user_messages.py" line="387"/>
         <source>Could not install on-device receipt scanning. Check your network connection and try again.</source>
         <translation>Не удалось установить распознавание чеков на устройстве. Проверьте подключение к сети и повторите попытку.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="332"/>
+        <location filename="../src/app/i18n/user_messages.py" line="392"/>
         <source>Installing on-device receipt scanning timed out. Check your network and try again.</source>
         <translation>Установка распознавания чеков на устройстве превысила время ожидания. Проверьте сеть и повторите попытку.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="336"/>
         <source>Installed OCR packages but Vision is still unavailable. Restart the app and try Scan again.</source>
-        <translation>Пакеты OCR установлены, но Vision по-прежнему недоступен. Перезапустите приложение и снова нажмите «Сканировать».</translation>
+        <translation type="vanished">Пакеты OCR установлены, но Vision по-прежнему недоступен. Перезапустите приложение и снова нажмите «Сканировать».</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="341"/>
+        <location filename="../src/app/i18n/user_messages.py" line="407"/>
         <source>Could not install on-device receipt scanning: %1</source>
         <translation>Не удалось установить распознавание чеков на устройстве: %1</translation>
     </message>
@@ -210,17 +243,17 @@
         <translation type="vanished">Распознавание чеков на macOS требует привязок PyObjC Vision. Установите extra &apos;ocr-macos&apos; или введите расход вручную.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="342"/>
+        <location filename="../src/app/i18n/user_messages.py" line="408"/>
         <source>Receipt scanning is not available on this platform (%1). Enter the expense manually.</source>
         <translation>Сканирование чеков недоступно на этой платформе (%1). Введите расход вручную.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="346"/>
+        <location filename="../src/app/i18n/user_messages.py" line="412"/>
         <source>Receipt image not found: %1</source>
         <translation>Изображение чека не найдено: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="347"/>
+        <location filename="../src/app/i18n/user_messages.py" line="413"/>
         <source>Could not read text from receipt image: %1</source>
         <translation>Не удалось прочитать текст с изображения чека: %1</translation>
     </message>
@@ -866,22 +899,22 @@
 <context>
     <name>EntriesViewModel</name>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="348"/>
+        <location filename="../src/app/i18n/user_messages.py" line="414"/>
         <source>Every day</source>
         <translation>Каждый день</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="349"/>
+        <location filename="../src/app/i18n/user_messages.py" line="415"/>
         <source>Monthly on the %1</source>
         <translation>Ежемесячно %1</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="350"/>
+        <location filename="../src/app/i18n/user_messages.py" line="416"/>
         <source>Yearly on %1 %2</source>
         <translation>Ежегодно %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="351"/>
+        <location filename="../src/app/i18n/user_messages.py" line="417"/>
         <source>Once on %1 %2 %3</source>
         <translation>Однократно %1 %2 %3</translation>
     </message>
@@ -1134,32 +1167,32 @@
 <context>
     <name>ForecastTemplates</name>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="352"/>
+        <location filename="../src/app/i18n/user_messages.py" line="418"/>
         <source>SaaS startup</source>
         <translation>SaaS-стартап</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="353"/>
+        <location filename="../src/app/i18n/user_messages.py" line="419"/>
         <source>Monthly recurring revenue, cloud costs, and payroll for an early-stage SaaS company.</source>
         <translation>Ежемесячная регулярная выручка, облачные расходы и зарплата для SaaS-компании на ранней стадии.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="357"/>
+        <location filename="../src/app/i18n/user_messages.py" line="423"/>
         <source>Consulting firm</source>
         <translation>Консалтинговая фирма</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="358"/>
+        <location filename="../src/app/i18n/user_messages.py" line="424"/>
         <source>Client retainers, contractor costs, and operating expenses for a small professional services firm.</source>
         <translation>Абонентская плата клиентов, расходы на подрядчиков и операционные расходы небольшой консалтинговой фирмы.</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="363"/>
+        <location filename="../src/app/i18n/user_messages.py" line="429"/>
         <source>Retail shop</source>
         <translation>Розничный магазин</translation>
     </message>
     <message>
-        <location filename="../src/app/i18n/user_messages.py" line="364"/>
+        <location filename="../src/app/i18n/user_messages.py" line="430"/>
         <source>Point-of-sale revenue, rent, inventory COGS, and seasonal patterns for a brick-and-mortar retail store.</source>
         <translation>Выручка в точке продаж, аренда, себестоимость товаров и сезонность для розничного магазина.</translation>
     </message>
@@ -2601,93 +2634,106 @@ The previous day’s closing balance becomes the next day’s starting point, pr
         <translation>Чеки</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="364"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="363"/>
         <source>On-device receipt scanning</source>
         <translation>Распознавание чеков на устройстве</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="366"/>
-        <source>Ready. Uses Apple Vision on this Mac. Photos stay on this device.</source>
-        <translation>Готово. Используется Apple Vision на этом Mac. Фото остаются на этом устройстве.</translation>
+        <location filename="../qml/pages/SettingsPage.qml" line="365"/>
+        <source>Ready. On-device OCR is available. Photos stay on this device.</source>
+        <translation>Готово. Распознавание на устройстве доступно. Фото остаются на этом устройстве.</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="368"/>
-        <source>Required for Scan. Installs Apple Vision bindings for this app. Network access is required.</source>
-        <translation>Нужно для сканирования. Устанавливает привязки Apple Vision для этого приложения. Требуется доступ к сети.</translation>
+        <source>Required for Scan. Installs Tesseract bindings. Also install the Tesseract engine (for example: apt install tesseract-ocr). Network access is required.</source>
+        <translation>Нужно для сканирования. Устанавливает привязки Tesseract. Также установите движок Tesseract (например: apt install tesseract-ocr). Требуется доступ к сети.</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="369"/>
+        <source>Required for Scan. Installs on-device OCR for this app. Network access is required.</source>
+        <translation>Нужно для сканирования. Устанавливает распознавание на устройстве для этого приложения. Требуется доступ к сети.</translation>
+    </message>
+    <message>
+        <source>Ready. Uses Apple Vision on this Mac. Photos stay on this device.</source>
+        <translation type="vanished">Готово. Используется Apple Vision на этом Mac. Фото остаются на этом устройстве.</translation>
+    </message>
+    <message>
+        <source>Required for Scan. Installs Apple Vision bindings for this app. Network access is required.</source>
+        <translation type="vanished">Нужно для сканирования. Устанавливает привязки Apple Vision для этого приложения. Требуется доступ к сети.</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="370"/>
         <source>This app build does not include on-device scanning.</source>
         <translation>Эта сборка приложения не включает распознавание на устройстве.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="389"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="390"/>
         <source>Installing…</source>
         <translation>Установка…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="390"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="391"/>
         <source>Install</source>
         <translation>Установить</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="392"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="393"/>
         <source>Install on-device receipt scanning</source>
         <translation>Установить распознавание чеков на устройстве</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="398"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="411"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="399"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="412"/>
         <source>Cloud receipt scanning</source>
         <translation>Облачное распознавание чеков</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="399"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="400"/>
         <source>Off by default. Receipt photos stay on this device. Enabling this does not upload images; a cloud provider is not connected yet.</source>
         <translation>Выключено по умолчанию. Фото чеков остаются на этом устройстве. Включение не отправляет изображения: облачный сервис ещё не подключён.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="426"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="427"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="431"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="432"/>
         <source>User manual</source>
         <translation>Руководство пользователя</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="432"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="433"/>
         <source>Open the bundled PDF guide in your system&apos;s default viewer</source>
         <translation>Откройте встроенное PDF-руководство в системной программе просмотра</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="441"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="442"/>
         <source>Open ▶</source>
         <translation>Открыть ▶</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="443"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="444"/>
         <source>Open user manual</source>
         <translation>Открыть руководство пользователя</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="449"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="450"/>
         <source>Methodology</source>
         <translation>Методология</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="450"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="451"/>
         <source>How cash shortfalls, date patterns, currencies, and scenarios are calculated</source>
         <translation>Как рассчитываются кассовые разрывы, шаблоны дат, валюты и сценарии</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="461"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="462"/>
         <source>View ▶</source>
         <translation>Открыть ▶</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="463"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="464"/>
         <source>View methodology</source>
         <translation>Открыть методологию</translation>
     </message>

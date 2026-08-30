@@ -47,6 +47,7 @@ function Install-PythonDependencies {
     python -m pip install --upgrade pip
     python -m pip install -r requirements.txt
     python -m pip install -e .
+    python -m pip install -e ".[ocr-windows]"
     python -m pip install pyinstaller pyinstaller-hooks-contrib
 }
 

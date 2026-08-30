@@ -186,12 +186,15 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
 _INSTALL_STRINGS: dict[str, dict[str, str]] = {
     "en": {
         "On-device receipt scanning": "On-device receipt scanning",
-        "Ready. Uses Apple Vision on this Mac. Photos stay on this device.": (
-            "Ready. Uses Apple Vision on this Mac. Photos stay on this device."
+        "Ready. On-device OCR is available. Photos stay on this device.": (
+            "Ready. On-device OCR is available. Photos stay on this device."
         ),
-        "Required for Scan. Installs Apple Vision bindings for this app. Network access is required.": (
-            "Required for Scan. Installs Apple Vision bindings for this app. "
-            "Network access is required."
+        "Required for Scan. Installs on-device OCR for this app. Network access is required.": (
+            "Required for Scan. Installs on-device OCR for this app. Network access is required."
+        ),
+        "Required for Scan. Installs Tesseract bindings. Also install the Tesseract engine (for example: apt install tesseract-ocr). Network access is required.": (
+            "Required for Scan. Installs Tesseract bindings. Also install the Tesseract engine "
+            "(for example: apt install tesseract-ocr). Network access is required."
         ),
         "This app build does not include on-device scanning.": (
             "This app build does not include on-device scanning."
@@ -199,8 +202,8 @@ _INSTALL_STRINGS: dict[str, dict[str, str]] = {
         "Install": "Install",
         "Installing…": "Installing…",
         "Install on-device receipt scanning": "Install on-device receipt scanning",
-        "On-device receipt scanning can only be installed on macOS.": (
-            "On-device receipt scanning can only be installed on macOS."
+        "On-device receipt scanning is not available on this platform.": (
+            "On-device receipt scanning is not available on this platform."
         ),
         "On-device receipt scanning cannot be installed in this app build.": (
             "On-device receipt scanning cannot be installed in this app build."
@@ -212,22 +215,50 @@ _INSTALL_STRINGS: dict[str, dict[str, str]] = {
         "Installing on-device receipt scanning timed out. Check your network and try again.": (
             "Installing on-device receipt scanning timed out. Check your network and try again."
         ),
-        "Installed OCR packages but Vision is still unavailable. Restart the app and try Scan again.": (
-            "Installed OCR packages but Vision is still unavailable. "
+        "Installed OCR packages but scanning is still unavailable. Restart the app and try Scan again.": (
+            "Installed OCR packages but scanning is still unavailable. "
             "Restart the app and try Scan again."
         ),
         "Could not install on-device receipt scanning: %1": (
             "Could not install on-device receipt scanning: %1"
         ),
+        "Receipt OCR on Windows requires WinRT OCR bindings. Install on-device scanning from Settings, or enter the expense manually.": (
+            "Receipt OCR on Windows requires WinRT OCR bindings. "
+            "Install on-device scanning from Settings, or enter the expense manually."
+        ),
+        "Receipt OCR on Linux requires Tesseract Python bindings. Install on-device scanning from Settings, or enter the expense manually.": (
+            "Receipt OCR on Linux requires Tesseract Python bindings. "
+            "Install on-device scanning from Settings, or enter the expense manually."
+        ),
+        "The Tesseract OCR engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try again, or enter the expense manually.": (
+            "The Tesseract OCR engine was not found. Install it with your package "
+            "manager (for example: apt install tesseract-ocr) and try again, "
+            "or enter the expense manually."
+        ),
+        "Python Tesseract bindings are installed, but the Tesseract engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try Scan again.": (
+            "Python Tesseract bindings are installed, but the Tesseract engine was not found. "
+            "Install it with your package manager (for example: apt install tesseract-ocr) "
+            "and try Scan again."
+        ),
+        "Windows OCR is not available. Install an OCR language pack in Windows Settings and try again, or enter the expense manually.": (
+            "Windows OCR is not available. Install an OCR language pack in Windows "
+            "Settings and try again, or enter the expense manually."
+        ),
     },
     "fr": {
         "On-device receipt scanning": "Numérisation de tickets sur l'appareil",
-        "Ready. Uses Apple Vision on this Mac. Photos stay on this device.": (
-            "Prêt. Utilise Apple Vision sur ce Mac. Les photos restent sur cet appareil."
+        "Ready. On-device OCR is available. Photos stay on this device.": (
+            "Prêt. La reconnaissance sur l'appareil est disponible. "
+            "Les photos restent sur cet appareil."
         ),
-        "Required for Scan. Installs Apple Vision bindings for this app. Network access is required.": (
-            "Requis pour Numériser. Installe les liaisons Apple Vision pour cette application. "
-            "Une connexion réseau est nécessaire."
+        "Required for Scan. Installs on-device OCR for this app. Network access is required.": (
+            "Requis pour Numériser. Installe la reconnaissance sur l'appareil pour cette "
+            "application. Une connexion réseau est nécessaire."
+        ),
+        "Required for Scan. Installs Tesseract bindings. Also install the Tesseract engine (for example: apt install tesseract-ocr). Network access is required.": (
+            "Requis pour Numériser. Installe les liaisons Tesseract. Installez aussi le moteur "
+            "Tesseract (par exemple : apt install tesseract-ocr). Une connexion réseau "
+            "est nécessaire."
         ),
         "This app build does not include on-device scanning.": (
             "Cette version de l'application n'inclut pas la numérisation sur l'appareil."
@@ -235,8 +266,8 @@ _INSTALL_STRINGS: dict[str, dict[str, str]] = {
         "Install": "Installer",
         "Installing…": "Installation…",
         "Install on-device receipt scanning": "Installer la numérisation de tickets sur l'appareil",
-        "On-device receipt scanning can only be installed on macOS.": (
-            "La numérisation de tickets sur l'appareil ne peut être installée que sous macOS."
+        "On-device receipt scanning is not available on this platform.": (
+            "La numérisation de tickets sur l'appareil n'est pas disponible sur cette plateforme."
         ),
         "On-device receipt scanning cannot be installed in this app build.": (
             "La numérisation de tickets sur l'appareil ne peut pas être installée "
@@ -250,22 +281,50 @@ _INSTALL_STRINGS: dict[str, dict[str, str]] = {
             "L'installation de la numérisation de tickets sur l'appareil a expiré. "
             "Vérifiez votre réseau et réessayez."
         ),
-        "Installed OCR packages but Vision is still unavailable. Restart the app and try Scan again.": (
-            "Les paquets OCR sont installés, mais Vision est toujours indisponible. "
+        "Installed OCR packages but scanning is still unavailable. Restart the app and try Scan again.": (
+            "Les paquets OCR sont installés, mais la numérisation est toujours indisponible. "
             "Redémarrez l'application et réessayez Numériser."
         ),
         "Could not install on-device receipt scanning: %1": (
             "Impossible d'installer la numérisation de tickets sur l'appareil : %1"
         ),
+        "Receipt OCR on Windows requires WinRT OCR bindings. Install on-device scanning from Settings, or enter the expense manually.": (
+            "La reconnaissance de tickets sous Windows nécessite les liaisons WinRT OCR. "
+            "Installez la numérisation sur l'appareil depuis Réglages, "
+            "ou saisissez la dépense manuellement."
+        ),
+        "Receipt OCR on Linux requires Tesseract Python bindings. Install on-device scanning from Settings, or enter the expense manually.": (
+            "La reconnaissance de tickets sous Linux nécessite les liaisons Python Tesseract. "
+            "Installez la numérisation sur l'appareil depuis Réglages, "
+            "ou saisissez la dépense manuellement."
+        ),
+        "The Tesseract OCR engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try again, or enter the expense manually.": (
+            "Le moteur Tesseract est introuvable. Installez-le avec votre gestionnaire de "
+            "paquets (par exemple : apt install tesseract-ocr) et réessayez, "
+            "ou saisissez la dépense manuellement."
+        ),
+        "Python Tesseract bindings are installed, but the Tesseract engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try Scan again.": (
+            "Les liaisons Python Tesseract sont installées, mais le moteur Tesseract "
+            "est introuvable. Installez-le avec votre gestionnaire de paquets "
+            "(par exemple : apt install tesseract-ocr) et réessayez Numériser."
+        ),
+        "Windows OCR is not available. Install an OCR language pack in Windows Settings and try again, or enter the expense manually.": (
+            "La reconnaissance Windows n'est pas disponible. Installez un pack de langue OCR "
+            "dans les paramètres Windows et réessayez, ou saisissez la dépense manuellement."
+        ),
     },
     "ru": {
         "On-device receipt scanning": "Распознавание чеков на устройстве",
-        "Ready. Uses Apple Vision on this Mac. Photos stay on this device.": (
-            "Готово. Используется Apple Vision на этом Mac. Фото остаются на этом устройстве."
+        "Ready. On-device OCR is available. Photos stay on this device.": (
+            "Готово. Распознавание на устройстве доступно. Фото остаются на этом устройстве."
         ),
-        "Required for Scan. Installs Apple Vision bindings for this app. Network access is required.": (
-            "Нужно для сканирования. Устанавливает привязки Apple Vision для этого приложения. "
-            "Требуется доступ к сети."
+        "Required for Scan. Installs on-device OCR for this app. Network access is required.": (
+            "Нужно для сканирования. Устанавливает распознавание на устройстве для этого "
+            "приложения. Требуется доступ к сети."
+        ),
+        "Required for Scan. Installs Tesseract bindings. Also install the Tesseract engine (for example: apt install tesseract-ocr). Network access is required.": (
+            "Нужно для сканирования. Устанавливает привязки Tesseract. Также установите "
+            "движок Tesseract (например: apt install tesseract-ocr). Требуется доступ к сети."
         ),
         "This app build does not include on-device scanning.": (
             "Эта сборка приложения не включает распознавание на устройстве."
@@ -273,8 +332,8 @@ _INSTALL_STRINGS: dict[str, dict[str, str]] = {
         "Install": "Установить",
         "Installing…": "Установка…",
         "Install on-device receipt scanning": "Установить распознавание чеков на устройстве",
-        "On-device receipt scanning can only be installed on macOS.": (
-            "Распознавание чеков на устройстве можно установить только на macOS."
+        "On-device receipt scanning is not available on this platform.": (
+            "Распознавание чеков на устройстве недоступно на этой платформе."
         ),
         "On-device receipt scanning cannot be installed in this app build.": (
             "Распознавание чеков на устройстве нельзя установить в этой сборке приложения."
@@ -287,21 +346,51 @@ _INSTALL_STRINGS: dict[str, dict[str, str]] = {
             "Установка распознавания чеков на устройстве превысила время ожидания. "
             "Проверьте сеть и повторите попытку."
         ),
-        "Installed OCR packages but Vision is still unavailable. Restart the app and try Scan again.": (
-            "Пакеты OCR установлены, но Vision по-прежнему недоступен. "
+        "Installed OCR packages but scanning is still unavailable. Restart the app and try Scan again.": (
+            "Пакеты OCR установлены, но распознавание по-прежнему недоступно. "
             "Перезапустите приложение и снова нажмите «Сканировать»."
         ),
         "Could not install on-device receipt scanning: %1": (
             "Не удалось установить распознавание чеков на устройстве: %1"
         ),
+        "Receipt OCR on Windows requires WinRT OCR bindings. Install on-device scanning from Settings, or enter the expense manually.": (
+            "Распознавание чеков в Windows требует привязок WinRT OCR. "
+            "Установите распознавание на устройстве в Настройках "
+            "или введите расход вручную."
+        ),
+        "Receipt OCR on Linux requires Tesseract Python bindings. Install on-device scanning from Settings, or enter the expense manually.": (
+            "Распознавание чеков в Linux требует привязок Python Tesseract. "
+            "Установите распознавание на устройстве в Настройках "
+            "или введите расход вручную."
+        ),
+        "The Tesseract OCR engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try again, or enter the expense manually.": (
+            "Движок Tesseract не найден. Установите его через пакетный менеджер "
+            "(например: apt install tesseract-ocr) и повторите попытку "
+            "или введите расход вручную."
+        ),
+        "Python Tesseract bindings are installed, but the Tesseract engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try Scan again.": (
+            "Привязки Python Tesseract установлены, но движок Tesseract не найден. "
+            "Установите его через пакетный менеджер "
+            "(например: apt install tesseract-ocr) и снова нажмите «Сканировать»."
+        ),
+        "Windows OCR is not available. Install an OCR language pack in Windows Settings and try again, or enter the expense manually.": (
+            "Распознавание Windows недоступно. Установите языковой пакет OCR "
+            "в параметрах Windows и повторите попытку или введите расход вручную."
+        ),
     },
     "es": {
         "On-device receipt scanning": "Escaneo de recibos en el dispositivo",
-        "Ready. Uses Apple Vision on this Mac. Photos stay on this device.": (
-            "Listo. Usa Apple Vision en este Mac. Las fotos permanecen en este dispositivo."
+        "Ready. On-device OCR is available. Photos stay on this device.": (
+            "Listo. El OCR en el dispositivo está disponible. "
+            "Las fotos permanecen en este dispositivo."
         ),
-        "Required for Scan. Installs Apple Vision bindings for this app. Network access is required.": (
-            "Obligatorio para Escanear. Instala los enlaces de Apple Vision para esta aplicación. "
+        "Required for Scan. Installs on-device OCR for this app. Network access is required.": (
+            "Obligatorio para Escanear. Instala el OCR en el dispositivo para esta "
+            "aplicación. Se requiere acceso a la red."
+        ),
+        "Required for Scan. Installs Tesseract bindings. Also install the Tesseract engine (for example: apt install tesseract-ocr). Network access is required.": (
+            "Obligatorio para Escanear. Instala los enlaces de Tesseract. Instale también "
+            "el motor Tesseract (por ejemplo: apt install tesseract-ocr). "
             "Se requiere acceso a la red."
         ),
         "This app build does not include on-device scanning.": (
@@ -310,8 +399,8 @@ _INSTALL_STRINGS: dict[str, dict[str, str]] = {
         "Install": "Instalar",
         "Installing…": "Instalando…",
         "Install on-device receipt scanning": "Instalar el escaneo de recibos en el dispositivo",
-        "On-device receipt scanning can only be installed on macOS.": (
-            "El escaneo de recibos en el dispositivo solo se puede instalar en macOS."
+        "On-device receipt scanning is not available on this platform.": (
+            "El escaneo de recibos en el dispositivo no está disponible en esta plataforma."
         ),
         "On-device receipt scanning cannot be installed in this app build.": (
             "El escaneo de recibos en el dispositivo no se puede instalar "
@@ -325,21 +414,51 @@ _INSTALL_STRINGS: dict[str, dict[str, str]] = {
             "La instalación del escaneo de recibos en el dispositivo agotó el tiempo de espera. "
             "Compruebe la red e inténtelo de nuevo."
         ),
-        "Installed OCR packages but Vision is still unavailable. Restart the app and try Scan again.": (
-            "Se instalaron los paquetes de OCR, pero Vision sigue no disponible. "
+        "Installed OCR packages but scanning is still unavailable. Restart the app and try Scan again.": (
+            "Se instalaron los paquetes de OCR, pero el escaneo sigue no disponible. "
             "Reinicie la aplicación e intente Escanear de nuevo."
         ),
         "Could not install on-device receipt scanning: %1": (
             "No se pudo instalar el escaneo de recibos en el dispositivo: %1"
         ),
+        "Receipt OCR on Windows requires WinRT OCR bindings. Install on-device scanning from Settings, or enter the expense manually.": (
+            "El OCR de recibos en Windows requiere los enlaces WinRT de OCR. "
+            "Instale el escaneo en el dispositivo desde Ajustes, "
+            "o introduzca el gasto manualmente."
+        ),
+        "Receipt OCR on Linux requires Tesseract Python bindings. Install on-device scanning from Settings, or enter the expense manually.": (
+            "El OCR de recibos en Linux requiere los enlaces Python de Tesseract. "
+            "Instale el escaneo en el dispositivo desde Ajustes, "
+            "o introduzca el gasto manualmente."
+        ),
+        "The Tesseract OCR engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try again, or enter the expense manually.": (
+            "No se encontró el motor Tesseract. Instálelo con su gestor de paquetes "
+            "(por ejemplo: apt install tesseract-ocr) e inténtelo de nuevo, "
+            "o introduzca el gasto manualmente."
+        ),
+        "Python Tesseract bindings are installed, but the Tesseract engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try Scan again.": (
+            "Los enlaces Python de Tesseract están instalados, pero no se encontró el motor "
+            "Tesseract. Instálelo con su gestor de paquetes "
+            "(por ejemplo: apt install tesseract-ocr) e intente Escanear de nuevo."
+        ),
+        "Windows OCR is not available. Install an OCR language pack in Windows Settings and try again, or enter the expense manually.": (
+            "El OCR de Windows no está disponible. Instale un paquete de idioma OCR "
+            "en Configuración de Windows e inténtelo de nuevo, "
+            "o introduzca el gasto manualmente."
+        ),
     },
     "de": {
         "On-device receipt scanning": "Belegerkennung auf dem Gerät",
-        "Ready. Uses Apple Vision on this Mac. Photos stay on this device.": (
-            "Bereit. Verwendet Apple Vision auf diesem Mac. Fotos bleiben auf diesem Gerät."
+        "Ready. On-device OCR is available. Photos stay on this device.": (
+            "Bereit. OCR auf dem Gerät ist verfügbar. Fotos bleiben auf diesem Gerät."
         ),
-        "Required for Scan. Installs Apple Vision bindings for this app. Network access is required.": (
-            "Erforderlich für Scannen. Installiert Apple-Vision-Bindungen für diese App. "
+        "Required for Scan. Installs on-device OCR for this app. Network access is required.": (
+            "Erforderlich für Scannen. Installiert OCR auf dem Gerät für diese App. "
+            "Netzwerkzugriff ist erforderlich."
+        ),
+        "Required for Scan. Installs Tesseract bindings. Also install the Tesseract engine (for example: apt install tesseract-ocr). Network access is required.": (
+            "Erforderlich für Scannen. Installiert Tesseract-Bindungen. Installieren Sie "
+            "auch die Tesseract-Engine (z. B. apt install tesseract-ocr). "
             "Netzwerkzugriff ist erforderlich."
         ),
         "This app build does not include on-device scanning.": (
@@ -348,8 +467,8 @@ _INSTALL_STRINGS: dict[str, dict[str, str]] = {
         "Install": "Installieren",
         "Installing…": "Wird installiert…",
         "Install on-device receipt scanning": "Belegerkennung auf dem Gerät installieren",
-        "On-device receipt scanning can only be installed on macOS.": (
-            "Die Belegerkennung auf dem Gerät kann nur unter macOS installiert werden."
+        "On-device receipt scanning is not available on this platform.": (
+            "Die Belegerkennung auf dem Gerät ist auf dieser Plattform nicht verfügbar."
         ),
         "On-device receipt scanning cannot be installed in this app build.": (
             "Die Belegerkennung auf dem Gerät kann in dieser App-Version nicht installiert werden."
@@ -362,12 +481,37 @@ _INSTALL_STRINGS: dict[str, dict[str, str]] = {
             "Die Installation der Belegerkennung auf dem Gerät ist abgelaufen. "
             "Prüfen Sie das Netzwerk und versuchen Sie es erneut."
         ),
-        "Installed OCR packages but Vision is still unavailable. Restart the app and try Scan again.": (
-            "OCR-Pakete wurden installiert, aber Vision ist weiterhin nicht verfügbar. "
+        "Installed OCR packages but scanning is still unavailable. Restart the app and try Scan again.": (
+            "OCR-Pakete wurden installiert, aber das Scannen ist weiterhin nicht verfügbar. "
             "Starten Sie die App neu und versuchen Sie Scannen erneut."
         ),
         "Could not install on-device receipt scanning: %1": (
             "Die Belegerkennung auf dem Gerät konnte nicht installiert werden: %1"
+        ),
+        "Receipt OCR on Windows requires WinRT OCR bindings. Install on-device scanning from Settings, or enter the expense manually.": (
+            "Beleg-OCR unter Windows benötigt WinRT-OCR-Bindungen. "
+            "Installieren Sie die Erkennung auf dem Gerät unter Einstellungen, "
+            "oder geben Sie die Ausgabe manuell ein."
+        ),
+        "Receipt OCR on Linux requires Tesseract Python bindings. Install on-device scanning from Settings, or enter the expense manually.": (
+            "Beleg-OCR unter Linux benötigt Tesseract-Python-Bindungen. "
+            "Installieren Sie die Erkennung auf dem Gerät unter Einstellungen, "
+            "oder geben Sie die Ausgabe manuell ein."
+        ),
+        "The Tesseract OCR engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try again, or enter the expense manually.": (
+            "Die Tesseract-Engine wurde nicht gefunden. Installieren Sie sie mit Ihrem "
+            "Paketmanager (z. B. apt install tesseract-ocr) und versuchen Sie es erneut, "
+            "oder geben Sie die Ausgabe manuell ein."
+        ),
+        "Python Tesseract bindings are installed, but the Tesseract engine was not found. Install it with your package manager (for example: apt install tesseract-ocr) and try Scan again.": (
+            "Python-Tesseract-Bindungen sind installiert, aber die Tesseract-Engine "
+            "wurde nicht gefunden. Installieren Sie sie mit Ihrem Paketmanager "
+            "(z. B. apt install tesseract-ocr) und versuchen Sie Scannen erneut."
+        ),
+        "Windows OCR is not available. Install an OCR language pack in Windows Settings and try again, or enter the expense manually.": (
+            "Windows-OCR ist nicht verfügbar. Installieren Sie ein OCR-Sprachpaket "
+            "in den Windows-Einstellungen und versuchen Sie es erneut, "
+            "oder geben Sie die Ausgabe manuell ein."
         ),
     },
 }

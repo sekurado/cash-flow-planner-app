@@ -5,18 +5,18 @@ from collections.abc import Callable
 from PySide6.QtCore import QObject, QRunnable, Signal
 
 
-class MacosOcrInstallWorkerSignals(QObject):
+class ReceiptOcrInstallWorkerSignals(QObject):
     finished = Signal()
     error = Signal(str)
 
 
-class MacosOcrInstallWorker(QRunnable):
-    """Install macOS Vision OCR bindings off the UI thread."""
+class ReceiptOcrInstallWorker(QRunnable):
+    """Install on-device OCR bindings off the UI thread."""
 
     def __init__(self, installer: Callable[[], None]) -> None:
         super().__init__()
         self._installer = installer
-        self.signals = MacosOcrInstallWorkerSignals()
+        self.signals = ReceiptOcrInstallWorkerSignals()
 
     def run(self) -> None:
         try:

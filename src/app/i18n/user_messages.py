@@ -67,8 +67,38 @@ _STATIC_ERRORS: dict[str, str] = {
         "Receipt OCR on macOS requires PyObjC Vision bindings. "
         "Install on-device scanning from Settings, or enter the expense manually."
     ),
-    "On-device receipt scanning can only be installed on macOS.": (
-        "On-device receipt scanning can only be installed on macOS."
+    (
+        "Receipt OCR on Windows requires WinRT OCR bindings. "
+        "Install on-device scanning from Settings, or enter the expense manually."
+    ): (
+        "Receipt OCR on Windows requires WinRT OCR bindings. "
+        "Install on-device scanning from Settings, or enter the expense manually."
+    ),
+    (
+        "Receipt OCR on Linux requires Tesseract Python bindings. "
+        "Install on-device scanning from Settings, or enter the expense manually."
+    ): (
+        "Receipt OCR on Linux requires Tesseract Python bindings. "
+        "Install on-device scanning from Settings, or enter the expense manually."
+    ),
+    (
+        "Windows OCR is not available. Install an OCR language pack in Windows "
+        "Settings and try again, or enter the expense manually."
+    ): (
+        "Windows OCR is not available. Install an OCR language pack in Windows "
+        "Settings and try again, or enter the expense manually."
+    ),
+    (
+        "The Tesseract OCR engine was not found. Install it with your package "
+        "manager (for example: apt install tesseract-ocr) and try again, "
+        "or enter the expense manually."
+    ): (
+        "The Tesseract OCR engine was not found. Install it with your package "
+        "manager (for example: apt install tesseract-ocr) and try again, "
+        "or enter the expense manually."
+    ),
+    "On-device receipt scanning is not available on this platform.": (
+        "On-device receipt scanning is not available on this platform."
     ),
     "On-device receipt scanning cannot be installed in this app build.": (
         "On-device receipt scanning cannot be installed in this app build."
@@ -82,11 +112,20 @@ _STATIC_ERRORS: dict[str, str] = {
         "Installing on-device receipt scanning timed out. Check your network and try again."
     ),
     (
-        "Installed OCR packages but Vision is still unavailable. "
+        "Installed OCR packages but scanning is still unavailable. "
         "Restart the app and try Scan again."
     ): (
-        "Installed OCR packages but Vision is still unavailable. "
+        "Installed OCR packages but scanning is still unavailable. "
         "Restart the app and try Scan again."
+    ),
+    (
+        "Python Tesseract bindings are installed, but the Tesseract engine was not found. "
+        "Install it with your package manager (for example: apt install tesseract-ocr) "
+        "and try Scan again."
+    ): (
+        "Python Tesseract bindings are installed, but the Tesseract engine was not found. "
+        "Install it with your package manager (for example: apt install tesseract-ocr) "
+        "and try Scan again."
     ),
 }
 
@@ -318,7 +357,28 @@ def _register_i18n_catalog() -> None:
     )
     QCoreApplication.translate(
         "AppErrors",
-        "On-device receipt scanning can only be installed on macOS.",
+        "Receipt OCR on Windows requires WinRT OCR bindings. "
+        "Install on-device scanning from Settings, or enter the expense manually.",
+    )
+    QCoreApplication.translate(
+        "AppErrors",
+        "Receipt OCR on Linux requires Tesseract Python bindings. "
+        "Install on-device scanning from Settings, or enter the expense manually.",
+    )
+    QCoreApplication.translate(
+        "AppErrors",
+        "Windows OCR is not available. Install an OCR language pack in Windows "
+        "Settings and try again, or enter the expense manually.",
+    )
+    QCoreApplication.translate(
+        "AppErrors",
+        "The Tesseract OCR engine was not found. Install it with your package "
+        "manager (for example: apt install tesseract-ocr) and try again, "
+        "or enter the expense manually.",
+    )
+    QCoreApplication.translate(
+        "AppErrors",
+        "On-device receipt scanning is not available on this platform.",
     )
     QCoreApplication.translate(
         "AppErrors",
@@ -335,8 +395,14 @@ def _register_i18n_catalog() -> None:
     )
     QCoreApplication.translate(
         "AppErrors",
-        "Installed OCR packages but Vision is still unavailable. "
+        "Installed OCR packages but scanning is still unavailable. "
         "Restart the app and try Scan again.",
+    )
+    QCoreApplication.translate(
+        "AppErrors",
+        "Python Tesseract bindings are installed, but the Tesseract engine was not found. "
+        "Install it with your package manager (for example: apt install tesseract-ocr) "
+        "and try Scan again.",
     )
     QCoreApplication.translate("AppErrors", "Could not install on-device receipt scanning: %1")
     QCoreApplication.translate(
